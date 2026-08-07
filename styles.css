@@ -3201,6 +3201,27 @@ body {
   overflow-x: clip;
 }
 
+/* ---------- Video band ---------- */
+
+/* A full-bleed break between two sections that are both capped at 1160px, the
+   same job the gallery strip does on the homepage. */
+.video-band {
+  overflow: hidden;
+  font-size: 0;
+}
+
+/* A capped height with object-fit rather than the clip's own aspect ratio: at
+   16/9 a full-width band would stand 810px tall on a 1440 desktop, and taller
+   still beyond that. The cap keeps it short of the fold; cover crops to the
+   middle of the frame rather than letterboxing. */
+.video-band-media {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 48vw, 700px);
+  object-fit: cover;
+  border: 0;
+}
+
 /* ---------- Approach ---------- */
 
 .approach {
