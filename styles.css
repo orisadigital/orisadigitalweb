@@ -3595,12 +3595,56 @@ body {
 /* ---------- Looping gallery ---------- */
 
 .gallery {
-  /* full bleed — the strip runs off both edges of the page */
+  position: relative;
+  /* full bleed — the strip runs off both edges of the page. It also does the
+     tucking for .gallery-wordmark: the word overhangs the bottom edge and this
+     is what cuts it off, exactly where the CTA takes over. */
   overflow: hidden;
-  padding: clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 72px);
+  /* The top figure carries more than the strip needs: the wordmark is anchored
+     to the bottom edge and grows with the viewport, so this is the headroom
+     that keeps its ascenders from being clipped on wide screens. */
+  padding: clamp(40px, 8vw, 190px) 0 clamp(40px, 6vw, 72px);
+}
+
+/* The word sitting behind the strip. Grey enough to read as texture rather than
+   a heading — it is set well below the 4.5:1 the real copy holds to, which is
+   the point, and why it is aria-hidden rather than a real heading.
+
+   translateY drops the foot of it past the section's bottom edge, where
+   overflow: hidden clips it. The CTA below is opaque neon and starts on that
+   same line, so the cut reads as the word running underneath "Let's Talk".
+   line-height is pulled to 0.72 first, so the box hugs Anton's caps — against
+   a default line box the same percentage would only eat empty space under the
+   baseline and nothing would appear to tuck at all. */
+.gallery-wordmark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  margin: 0;
+  transform: translateY(8%);
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  /* Sized to run the full width of the viewport rather than to a type scale:
+     "Our Work" in Anton measures 3.697em with the tracking below, so ~26.5vw
+     lands it just inside the edges. The cap only engages past ~2400px, where
+     the section runs out of height to hold the letters. */
+  font-size: clamp(3rem, 26.5vw, 40rem);
+  font-weight: 400;
+  line-height: 0.72;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(50, 56, 58, 0.07);
+  pointer-events: none;
+  user-select: none;
 }
 
 .gallery-track {
+  /* lifts the strip clear of the wordmark behind it */
+  position: relative;
+  z-index: 1;
   display: flex;
   /* max-content so the shift lands exactly one group along */
   width: max-content;

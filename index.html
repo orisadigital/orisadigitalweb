@@ -475,6 +475,10 @@
     <!-- main.js clones the group until the strip covers the viewport, so the
          loop has no gap. data-loop is the drift speed in px per second. -->
     <section class="gallery" aria-label="Recent work">
+      <!-- Decorative only: the section is already named "Recent work", so this
+           would just be the same words twice to a screen reader. -->
+      <p class="gallery-wordmark" aria-hidden="true">Our Work</p>
+
       <div class="gallery-track" data-loop="60">
         <ul class="gallery-group">
           <li class="gallery-item">
