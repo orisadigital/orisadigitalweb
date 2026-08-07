@@ -444,11 +444,12 @@
                 </label>
 
                 <label class="calc-option calc-option--multi">
-                  <input type="checkbox" name="addons" value="pop-up-call" data-priced-by="options">
+                  <!-- no data-price: the count below decides it -->
+                  <input type="checkbox" name="addons" value="pop-up-call">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Pop Up Call</span>
                     <span class="calc-option-text">A call button that follows visitors.</span>
-                    <span class="calc-option-price">Priced by options</span>
+                    <span class="calc-option-price">+RM300</span>
                   </span>
                   <span class="calc-option-tick" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
@@ -557,6 +558,28 @@
                   <p class="calc-slider-rate">
                     <span class="calc-slider-sum">1 language, the main one</span>
                     <span class="calc-slider-total">Included in base price</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="calc-subfield" data-for-addon="pop-up-call" hidden>
+                <p class="calc-subfield-label" id="popup-label">How many pop up calls?</p>
+
+                <div class="calc-slider-field">
+                  <div class="calc-slider" data-unit-price="300" data-included="0" data-unit="pop up call">
+                    <input class="calc-slider-input" type="range" id="popup-count" name="popup-count"
+                           min="1" max="5" step="1" value="1"
+                           aria-labelledby="popup-label" aria-describedby="popup-rate">
+
+                    <div class="calc-slider-rail">
+                      <span class="calc-slider-fill"></span>
+                    </div>
+                    <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
+                  </div>
+
+                  <p class="calc-slider-rate" id="popup-rate">
+                    <span class="calc-slider-sum">+1 pop up call &times; RM300</span>
+                    <span class="calc-slider-total">RM300</span>
                   </p>
                 </div>
               </div>
