@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Design — Orisa Digital</title>
+  <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
+  <link rel="apple-touch-icon" href="image/favicon.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- defer preserves order, so GSAP is ready before main.js runs -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <!-- Icon sprite. The WhatsApp and Telegram paths are long and are needed in
+       both the header menu and the footer, so they live here once. -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+    </symbol>
+    <symbol id="icon-telegram" viewBox="0 0 24 24">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.009-1.252-.242-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </symbol>
+    <!-- The marquee repeats this once per item, twice over — worth a symbol. -->
+    <symbol id="icon-star" viewBox="0 0 24 24">
+      <path d="M12 1.6c.62 5.4 4.4 9.18 9.8 9.8-5.4.62-9.18 4.4-9.8 9.8-.62-5.4-4.4-9.18-9.8-9.8 5.4-.62 9.18-4.4 9.8-9.8Z"/>
+    </symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="header-bar">
+      <!-- The lockup already carries the wordmark, so there is no text beside
+           it; the link's aria-label names the company for assistive tech. -->
+      <a class="logo" href="/" aria-label="Orisa Digital — home">
+        <img class="logo-mark" src="image/orisa.png" width="577" height="209" alt="" aria-hidden="true">
+      </a>
+
+      <!-- Two labels, one shown per breakpoint: the phone header has no room
+           for the long one. display:none keeps the spare out of the
+           accessibility tree, so it is never announced twice. -->
+      <p class="availability">
+        <span class="availability-dot" aria-hidden="true"></span>
+        <span class="availability-full">Open for New Projects</span>
+        <span class="availability-short">Open for Work</span>
+      </p>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li>
+            <a class="nav-link is-current" href="/web-design" aria-current="page">
+              <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="2.75" y="4" width="18.5" height="12.5" rx="2"/>
+                <path d="M12 16.5v3.5M8.75 20h6.5"/>
+              </svg>
+              Web Design
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="/mobile-app">
+              <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="7" y="2.75" width="10" height="18.5" rx="2.5"/>
+                <path d="M10.75 18.25h2.5"/>
+              </svg>
+              Mobile App
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="/green-energy">
+              <svg class="nav-icon nav-icon--leaf" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6"/>
+              </svg>
+              Green Energy
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="/about">About</a>
+          </li>
+        </ul>
+      </nav>
+
+      <span class="header-divider" aria-hidden="true"></span>
+
+      <div class="header-actions">
+        <div class="chat-menu">
+          <button class="chat-toggle" type="button" aria-expanded="false" aria-haspopup="true"
+                  aria-controls="chat-options" aria-label="Contact us">
+            <svg class="chat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20.5 11.3c0 3.98-3.8 7.2-8.5 7.2-.86 0-1.7-.11-2.48-.31L4.5 19.8l1.2-3.44C4.2 15.1 3.5 13.3 3.5 11.3c0-3.98 3.8-7.2 8.5-7.2s8.5 3.22 8.5 7.2Z"/>
+            </svg>
+          </button>
+
+          <ul class="chat-options" id="chat-options">
+            <li>
+              <a class="chat-option chat-option--whatsapp" data-angle="78" href="https://wa.me/60139975304"
+                 target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <use href="#icon-whatsapp"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="chat-option chat-option--telegram" data-angle="112" href="https://t.me/faruqijeniri"
+                 target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <use href="#icon-telegram"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="chat-option chat-option--phone" data-angle="146" href="tel:+60139975304" aria-label="Call us">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02l-2.2 2.2Z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-panel">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 7h18M3 12h18M3 17h18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-backdrop" hidden></div>
+
+  <aside class="drawer" id="menu-panel" aria-hidden="true" aria-label="Menu">
+    <div class="drawer-card drawer-card--glass">
+      <p class="drawer-eyebrow">Menu</p>
+      <ul class="drawer-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/web-design">Web Design</a></li>
+        <li><a href="/mobile-app">Mobile App</a></li>
+        <li><a href="/green-energy">Green Energy</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+
+    <a class="drawer-card drawer-card--neon" href="/contact">
+      <span class="drawer-eyebrow">Got a project?</span>
+      <span class="drawer-cta">
+        Start a project
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </span>
+    </a>
+
+    <div class="drawer-card drawer-card--black">
+      <p class="drawer-eyebrow">Say hello</p>
+      <!-- TODO: real contact details -->
+      <p class="drawer-contact">hello@orisadigital.com</p>
+      <p class="drawer-place">Kuching, Sarawak</p>
+    </div>
+  </aside>
+
+  <main class="page">
+    <section class="hero" id="top">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
+        <source src="image/9.mp4" type="video/mp4">
+      </video>
+      <div class="hero-veil" aria-hidden="true"></div>
+
+      <!-- TODO: replace with your own headline and intro -->
+      <div class="hero-content">
+        <p class="hero-eyebrow">Web Design</p>
+        <h1 class="hero-title">
+          <span class="hero-line" data-scramble>Web Design That</span>
+          <span class="hero-line" data-scramble>Drives Growth</span>
+        </h1>
+        <p class="hero-desc">
+          Modern, responsive websites designed to engage visitors, build trust,
+          and turn traffic into real business results.
+        </p>
+      </div>
+    </section>
+
+    <!-- main.js clones the group until the strip covers the viewport; the second
+         copy below is the no-JS fallback, where the CSS shift of -50% needs
+         exactly two groups to loop without a seam. -->
+    <section class="marquee" aria-label="What we do">
+      <div class="marquee-track" data-loop="34">
+        <ul class="marquee-group">
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Graphic Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            UI/UX Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Web Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Web Development
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Vibe Coding
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Copywriting
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Photography
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Videography
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" aria-hidden="true" focusable="false"><use href="#icon-star"/></svg>
+            Motion Graphic
+          </li>
+        </ul>
+
+        <ul class="marquee-group" aria-hidden="true">
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Graphic Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            UI/UX Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Web Design
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Web Development
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Vibe Coding
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Copywriting
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Photography
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Videography
+          </li>
+          <li class="marquee-item">
+            <svg class="ai-star" focusable="false"><use href="#icon-star"/></svg>
+            Motion Graphic
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="feature" aria-labelledby="feature-title">
+      <div class="feature-inner">
+        <div class="feature-copy">
+          <p class="section-eyebrow">Web Design Kuching, Sarawak</p>
+          <h2 class="section-title feature-title" id="feature-title">Premium Web Design For<br>
+            Modern Businesses.</h2>
+          <p class="section-text feature-text">
+            We design and develop premium, high-performing websites for
+            <strong>businesses, corporations, and government agencies across
+            Sarawak</strong>, creating digital experiences that strengthen brands,
+            engage audiences, and drive sustainable growth.
+          </p>
+        </div>
+
+        <figure class="feature-figure">
+          <img src="image/Web%20Design%20Kuching.webp" width="2048" height="1536"
+               loading="lazy" decoding="async"
+               alt="Websites designed by Orisa Digital shown on a laptop and two browser windows">
+        </figure>
+      </div>
+
+      <!-- Runs edge to edge inside the band. Same looping strip as the home
+           page: main.js clones the group until it covers the viewport. -->
+      <div class="gallery feature-gallery" aria-label="Recent work">
+        <div class="gallery-track" data-loop="60">
+          <ul class="gallery-group">
+            <li class="gallery-item">
+              <img src="image/astana.png" width="1920" height="936" loading="lazy"
+                   decoding="async" alt="Astana — project preview">
+            </li>
+            <li class="gallery-item">
+              <img src="image/belian.png" width="1920" height="936" loading="lazy"
+                   decoding="async" alt="Belian — project preview">
+            </li>
+            <li class="gallery-item">
+              <img src="image/Invest.png" width="1920" height="936" loading="lazy"
+                   decoding="async" alt="Invest — project preview">
+            </li>
+            <li class="gallery-item">
+              <img src="image/mne.png" width="1920" height="936" loading="lazy"
+                   decoding="async" alt="MNE — project preview">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-labelledby="benefits-title">
+      <div class="benefits-inner">
+        <div class="benefits-copy">
+          <p class="section-eyebrow">Benefits</p>
+          <h2 class="section-title benefits-title" id="benefits-title">Built for<br>
+            Business Growth</h2>
+          <p class="section-text">
+            A great website does more than look good — it builds credibility,
+            attracts customers, and helps your business grow.
+          </p>
+        </div>
+
+        <ul class="benefits-grid">
+          <li class="benefit-card">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 2.75 4.75 5.5v5.4c0 4.2 2.9 8.1 7.25 9.35 4.35-1.25 7.25-5.15 7.25-9.35V5.5L12 2.75Z"/>
+                <path d="M9.25 11.9 11.4 14l3.6-3.9"/>
+              </svg>
+            </span>
+            <h3 class="benefit-title">Build Trust &amp; Credibility</h3>
+          </li>
+
+          <li class="benefit-card">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <circle cx="12" cy="12" r="9.25"/>
+                <path d="M2.9 9.25h18.2M2.9 14.75h18.2"/>
+                <path d="M12 2.75c2.4 2.6 3.6 5.9 3.6 9.25s-1.2 6.65-3.6 9.25c-2.4-2.6-3.6-5.9-3.6-9.25S9.6 5.35 12 2.75Z"/>
+              </svg>
+            </span>
+            <h3 class="benefit-title">Reach More Customers</h3>
+          </li>
+
+          <li class="benefit-card">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M3.75 4.5h16.5l-6.4 7.5v6.25l-3.7 2.05V12L3.75 4.5Z"/>
+              </svg>
+            </span>
+            <h3 class="benefit-title">Generate More Leads</h3>
+          </li>
+
+          <li class="benefit-card">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 20.5h17"/>
+                <path d="M7 20.5v-4.75M12 20.5v-8.75M17 20.5v-12.5"/>
+              </svg>
+            </span>
+            <h3 class="benefit-title">Grow Your Business</h3>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <div class="features-inner">
+        <div class="features-head">
+          <p class="section-eyebrow">Features</p>
+          <h2 class="section-title features-title" id="features-title">Powerful Features<br>
+            for Modern Businesses.</h2>
+          <p class="section-text">
+            Every website we build includes essential features designed to enhance
+            performance, security, user experience, and long-term business growth.
+          </p>
+        </div>
+
+        <!-- Bento: one wide tile, one tall accent tile running the full height,
+             and four single cells — which fills a 4x2 grid exactly. -->
+        <ul class="features-grid">
+          <li class="feature-tile feature-tile--wide">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <rect x="2.5" y="4.5" width="13" height="10" rx="2"/>
+                <path d="M9 14.5v3.5M6.5 18h5"/>
+                <rect x="17" y="9" width="4.5" height="10.5" rx="1.5"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">Responsive Design</h3>
+              <p class="feature-tile-text">
+                Every layout is built to hold up on phones, tablets, and desktops,
+                so the experience never depends on the screen it arrives on.
+              </p>
+            </div>
+          </li>
+
+          <li class="feature-tile feature-tile--tall">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5.5 3.5 19 11.2l-5.6 1.6L11 19 5.5 3.5Z"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">User Experience</h3>
+              <p class="feature-tile-text">
+                Clear structure and obvious next steps, so visitors find what they
+                came for instead of hunting for it.
+              </p>
+            </div>
+          </li>
+
+          <li class="feature-tile">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8Z"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">Fast Performance</h3>
+              <p class="feature-tile-text">
+                Lean code and optimised images keep pages quick — which keeps both
+                visitors and search engines happy.
+              </p>
+            </div>
+          </li>
+
+          <li class="feature-tile">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <rect x="4.5" y="10" width="15" height="10.5" rx="2.5"/>
+                <path d="M8 10V7.5a4 4 0 0 1 8 0V10"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">Secure &amp; Reliable</h3>
+              <p class="feature-tile-text">
+                HTTPS, hardened configuration, and regular backups, so the site stays
+                up and your data stays yours.
+              </p>
+            </div>
+          </li>
+
+          <li class="feature-tile">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z"/>
+                <path d="M3 12.5 12 17l9-4.5"/>
+                <path d="M3 17 12 21.5 21 17"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">CMS</h3>
+              <p class="feature-tile-text">
+                Update text, images, and pages yourself, through a content system
+                built around how your team actually works.
+              </p>
+            </div>
+          </li>
+
+          <li class="feature-tile">
+            <span class="icon-chip" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/>
+              </svg>
+            </span>
+            <div class="feature-tile-body">
+              <h3 class="feature-tile-title">Scalable</h3>
+              <p class="feature-tile-text">
+                Built with flexibility to grow alongside your business as your needs
+                evolve.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="approach" aria-labelledby="approach-title">
+      <div class="approach-inner">
+        <div class="approach-intro">
+          <p class="section-eyebrow">The Approach</p>
+          <h2 class="section-title" id="approach-title">How We<br>
+            Create Impact</h2>
+          <p class="section-text">
+            Our approach focuses on delivering innovative digital solutions that
+            strengthen your brand, improve efficiency, and unlock new opportunities
+            for growth.
+          </p>
+
+          <!-- Tracks whichever step is lit. Decorative: the steps themselves are
+               a numbered list, so this repeats nothing for assistive tech. -->
+          <div class="approach-progress" aria-hidden="true">
+            <p class="approach-progress-count">
+              <span data-step>01</span> / <span data-total>06</span>
+            </p>
+            <div class="approach-progress-track">
+              <span class="approach-progress-fill"></span>
+            </div>
+          </div>
+        </div>
+
+        <ol class="approach-steps">
+          <li class="approach-card">
+            <h3 class="approach-card-title">UI/UX Design and Research</h3>
+            <p class="approach-card-text">
+              We create intuitive, user-focused interfaces through research, strategy,
+              and thoughtful design to deliver seamless digital experiences.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Wireframe</h3>
+            <p class="approach-card-text">
+              We create clear wireframes that define structure, user flow, and
+              functionality before visual design begins.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Mockup</h3>
+            <p class="approach-card-text">
+              We transform wireframes into high-fidelity mockups that showcase the
+              final look and feel of your digital product.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Prototype</h3>
+            <p class="approach-card-text">
+              We create interactive prototypes that bring ideas to life, allowing you
+              to validate concepts before development begins.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Vibe Code and Develop</h3>
+            <p class="approach-card-text">
+              Build responsive, production-ready websites with AI-assisted workflows,
+              reducing turnaround time while maintaining performance and quality.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Deliver</h3>
+            <p class="approach-card-text">
+              We launch, optimise, and hand over a fully tested digital solution
+              that&rsquo;s ready to deliver real business results.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="cta-inner">
+        <p class="section-eyebrow section-eyebrow--center">Let&rsquo;s Talk</p>
+        <h2 class="section-title cta-title" id="cta-title">Let&rsquo;s Build<br>
+          Something Remarkable</h2>
+        <p class="section-text cta-text">
+          Tell us what you&rsquo;re planning — a new website, a mobile app, or a full
+          digital overhaul. We reply within one working day.
+        </p>
+
+        <div class="cta-actions">
+          <a class="cta-button" href="/contact">
+            <span class="cta-button-label">Start a project</span>
+            <span class="cta-button-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+          <!-- TODO: real contact details -->
+          <a class="cta-alt" href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="footer-logo" href="/" aria-label="Orisa Digital — home">
+          <img class="logo-mark" src="image/orisa.png" width="577" height="209"
+               loading="lazy" decoding="async" alt="" aria-hidden="true">
+        </a>
+        <p class="footer-tagline">
+          Premium websites, mobile apps, and digital solutions — built in Kuching,
+          for Sarawak.
+        </p>
+
+        <ul class="footer-social">
+          <li>
+            <a href="https://wa.me/60139975304" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <use href="#icon-whatsapp"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/faruqijeniri" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <use href="#icon-telegram"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h2 class="footer-heading">Explore</h2>
+        <ul class="footer-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Services</h2>
+        <ul class="footer-list">
+          <li><a href="/web-design">Web Design</a></li>
+          <li><a href="/mobile-app">Mobile App</a></li>
+          <li><a href="/green-energy">Green Energy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Say hello</h2>
+        <!-- TODO: real email address -->
+        <ul class="footer-list footer-list--contact">
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="2.75" y="5" width="18.5" height="14" rx="2.5"/>
+              <path d="M3.5 7.5 12 13.2 20.5 7.5"/>
+            </svg>
+            <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+          </li>
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.58.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.58 1 1 0 0 1-.25 1.02l-2.2 2.2Z"/>
+            </svg>
+            <a href="tel:+60139975304">+60 13 997 5304</a>
+          </li>
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 21.3s6.75-5.4 6.75-10.55a6.75 6.75 0 1 0-13.5 0C5.25 15.9 12 21.3 12 21.3Z"/>
+              <circle cx="12" cy="10.4" r="2.5"/>
+            </svg>
+            <span>Kuching, Sarawak</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-base">
+      <p class="footer-copy">
+        &copy; <span data-year>2026</span> Orisa Digital Company (017269150250). All rights reserved.
+      </p>
+
+      <a class="footer-top" href="#top">
+        Back to top
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 19V5M6 11l6-6 6 6"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Oversized brand line closing the page. Decorative — the footer already
+         names the company in the logo above — and main.js sets the size that
+         fills the column exactly. -->
+    <div class="footer-wordmark" aria-hidden="true">
+      <span class="footer-wordmark-text">Orisa Digital</span>
+    </div>
+  </footer>
+
+</body>
+</html>

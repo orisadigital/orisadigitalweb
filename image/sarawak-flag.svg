@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 123 123" role="img" aria-label="Flag of Sarawak">
+  <clipPath id="sarawak-round"><circle cx="61.5" cy="61.5" r="61.5"/></clipPath>
+  <g clip-path="url(#sarawak-round)">
+    <rect width="123" height="123" fill="#FFD018"/>
+    <polygon points="-185 0,-60.5 0,185.5 123,61 123" fill="#D01028"/>
+    <polygon points="-60.5 0,64 0,310 123,185.5 123" fill="#000000"/>
+    <path d="M74.36 18.38L72.77 46.33L99.07 36.73L79.89 57.12L106.20 66.67L78.40 69.96L92.42 94.20L69.01 78.85L64.17 106.42L56.10 79.61L34.67 97.63L45.72 71.90L17.73 71.93L42.73 59.33L21.26 41.35L48.51 47.77L43.63 20.20L60.38 42.63Z" fill="#FFD018"/>
+  </g>
+</svg>

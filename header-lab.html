@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header lab — Orisa Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #2f3437;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 48px 32px 96px;
+      background: #f4f5f6;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .lab-title {
+      max-width: 1100px;
+      margin: 0 auto 40px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.45;
+    }
+
+    .variant {
+      max-width: 1100px;
+      margin: 0 auto 56px;
+    }
+
+    .variant-label {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .variant-label b {
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    .variant-label span {
+      font-size: 13px;
+      opacity: 0.55;
+    }
+
+    /* The fake "page" each header floats over, so the glass has something to blur */
+    .stage {
+      position: relative;
+      height: 300px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(47, 52, 55, 0.1);
+      background: #fff;
+    }
+
+    .stage-bg {
+      position: absolute;
+      inset: 0;
+      padding: 96px 40px 0;
+    }
+
+    .stage-bg::before,
+    .stage-bg::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(6px);
+    }
+
+    .stage-bg::before {
+      width: 260px; height: 260px;
+      top: -60px; left: 18%;
+      background: radial-gradient(circle at 30% 30%, #7fb2ff, #2f6df0);
+      opacity: 0.85;
+    }
+
+    .stage-bg::after {
+      width: 200px; height: 200px;
+      top: -20px; right: 12%;
+      background: radial-gradient(circle at 40% 40%, #ffd27f, #f0902f);
+      opacity: 0.8;
+    }
+
+    .stage-text {
+      position: relative;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 52px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: rgba(47, 52, 55, 0.85);
+    }
+
+    /* ---------- shared logo ---------- */
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .logo-mark { height: 40px; width: auto; flex: none; display: block; }
+
+    .logo-text {
+      font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+      font-size: 21px;
+      line-height: 1;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .logo-suffix {
+      font-size: 0.6em;
+      letter-spacing: 0.14em;
+      margin-left: 0.5em;
+      opacity: 0.7;
+    }
+
+    /* ---------- A: floating wide bar (current) ---------- */
+
+    .hdr-a {
+      position: absolute;
+      top: 18px; left: 18px; right: 18px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 26px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid rgba(47, 52, 55, 0.08);
+      box-shadow:
+        0 1px 2px rgba(16, 20, 24, 0.04),
+        0 12px 32px rgba(16, 20, 24, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+
+    /* ---------- B: compact island, left aligned ---------- */
+
+    .hdr-b {
+      position: absolute;
+      top: 18px; left: 18px;
+      height: 60px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 30px rgba(16, 20, 24, 0.12);
+    }
+
+    /* ---------- C: flush edge-to-edge strip ---------- */
+
+    .hdr-c {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(47, 52, 55, 0.1);
+    }
+
+    /* ---------- D: dark glass (Delucks-style) ---------- */
+
+    .stage-dark { background: #0b0d17; }
+    .stage-dark .stage-text { color: rgba(255, 255, 255, 0.9); }
+    .stage-dark .stage-bg::before { opacity: 0.6; }
+    .stage-dark .stage-bg::after { opacity: 0.45; }
+
+    .hdr-d {
+      position: absolute;
+      top: 16px; left: 16px; right: 16px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 26px;
+      border-radius: 14px;
+      background: rgba(18, 22, 40, 0.55);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .hdr-d .logo { color: #fff; }
+    /* the knocked-out areas of the mark are transparent, so dark backgrounds need the light artwork */
+    .hdr-d .logo-mark { content: url("image/logo-mark-light.png"); }
+  </style>
+</head>
+<body>
+
+  <p class="lab-title">Header lab — pick a direction</p>
+
+  <section class="variant">
+    <div class="variant-label"><b>A — Floating wide bar</b> <span>what's on the site now · 18px inset, 18px radius</span></div>
+    <div class="stage">
+      <div class="stage-bg"><div class="stage-text">Something<br>scrolls under</div></div>
+      <div class="hdr-a">
+        <a class="logo" href="#"><img class="logo-mark" src="image/logo-mark.png" width="556" height="600" alt=""><span class="logo-text">Orisa Digital</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="variant">
+    <div class="variant-label"><b>B — Compact island</b> <span>pill shape, hugs the logo, brighter glass</span></div>
+    <div class="stage">
+      <div class="stage-bg"><div class="stage-text">Something<br>scrolls under</div></div>
+      <div class="hdr-b">
+        <a class="logo" href="#"><img class="logo-mark" src="image/logo-mark.png" width="556" height="600" alt=""><span class="logo-text">Orisa Digital</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="variant">
+    <div class="variant-label"><b>C — Flush strip</b> <span>edge to edge, no float, hairline bottom rule</span></div>
+    <div class="stage">
+      <div class="stage-bg"><div class="stage-text">Something<br>scrolls under</div></div>
+      <div class="hdr-c">
+        <a class="logo" href="#"><img class="logo-mark" src="image/logo-mark.png" width="556" height="600" alt=""><span class="logo-text">Orisa Digital</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="variant">
+    <div class="variant-label"><b>D — Dark glass</b> <span>the Delucks treatment · needs a dark page behind it</span></div>
+    <div class="stage stage-dark">
+      <div class="stage-bg"><div class="stage-text">Something<br>scrolls under</div></div>
+      <div class="hdr-d">
+        <a class="logo" href="#"><img class="logo-mark" src="image/logo-mark.png" width="556" height="600" alt=""><span class="logo-text">Orisa Digital</span></a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

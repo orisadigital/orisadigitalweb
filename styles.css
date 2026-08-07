@@ -1,0 +1,3470 @@
+:root {
+  /* Orisa Digital flat black — sampled from the logo artwork, and the only
+     black on the site. Nothing uses pure #000. */
+  --logo-black: #32383a;
+  --ink: var(--logo-black); /* type */
+  --black: var(--logo-black); /* solid fills */
+  --black-hover: #262b2d;
+  --neon: #ccff00;
+  /* status green — the only green on the site, reserved for "we're available" */
+  --live: #22c55e;
+  --page: #ffffff;
+  --header-height: 84px;
+  --header-offset: 22px;
+  /* Height of the nav row the bar wraps onto below 960px. Zero here, because
+     the bar is a single row; anything clearing the header has to add it. */
+  --header-nav-row: 0px;
+  --toggle-size: 44px;
+  --menu-icon-size: 24px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The <use> sprite. The `hidden` attribute alone isn't enough: the UA rule for
+   it only matches HTML elements, so an inline <svg> ignores it and lays out at
+   its default 300x150, pushing the page down. Symbols still resolve from a
+   display:none root. */
+.icon-sprite {
+  display: none;
+}
+
+/* Visible to screen readers, not on screen */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Floating glass header ---------- */
+
+.site-header {
+  position: fixed;
+  top: var(--header-offset);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 18px;
+  pointer-events: none;
+}
+
+.header-bar {
+  pointer-events: auto;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  /* Symmetric. The icon buttons carry their own internal padding, so
+     .header-actions is pulled right by exactly that much to make the icon ink
+     line up with the logo rather than the button box. */
+  padding: 0 30px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(47, 52, 55, 0.08);
+  box-shadow:
+    0 1px 2px rgba(16, 20, 24, 0.04),
+    0 12px 32px rgba(16, 20, 24, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+/* Browsers without backdrop-filter get a solid-enough bar instead of a washed-out one */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-bar {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* ---------- Logo ---------- */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* The lockup is 577x209 — sized by height, width follows the aspect ratio */
+.logo-mark {
+  height: 40px;
+  width: auto;
+  flex: none;
+  display: block;
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+/* ---------- Availability badge ---------- */
+
+.availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 0 16px;
+  padding: 7px 13px 7px 11px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(50, 56, 58, 0.78);
+}
+
+/* the phone label, swapped in at the narrow breakpoint */
+.availability-short {
+  display: none;
+}
+
+.availability-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--live);
+}
+
+/* the halo — a copy of the dot swelling out of it and fading */
+.availability-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--live);
+  animation: availability-pulse 2.2s ease-out infinite;
+}
+
+@keyframes availability-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  /* holds at nothing for the tail of the cycle, so the pulses read as
+     separate beats rather than one continuous ripple */
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .availability-dot::after {
+    animation: none;
+  }
+}
+
+/* ---------- Navigation ---------- */
+
+.nav {
+  margin-left: auto;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(50, 56, 58, 0.66);
+  text-decoration: none;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background: rgba(50, 56, 58, 0.055);
+}
+
+.nav-link.is-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+/* The stroke is currentColor, so setting colour on the icon alone tints it
+   without touching the label beside it. Full opacity: the 0.9 above is there to
+   settle the mono icons against the type, and only mutes a coloured one. */
+.nav-icon--leaf {
+  color: var(--live);
+  opacity: 1;
+}
+
+/* ---------- Hamburger ---------- */
+
+.header-divider {
+  width: 1px;
+  height: 26px;
+  margin: 0 14px 0 16px;
+  background: rgba(50, 56, 58, 0.14);
+}
+
+/* ---------- Right-hand actions ---------- */
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* cancel the icon's inset inside its button so the ink aligns to the padding */
+  margin-right: calc((var(--toggle-size) - var(--menu-icon-size)) / -2);
+}
+
+/* ---------- Chat radial menu ---------- */
+
+.chat-menu {
+  position: relative;
+  /* how far the options travel from the toggle */
+  --radial-r: 92px;
+  --option-size: 44px;
+}
+
+.chat-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: var(--black);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.chat-toggle:hover {
+  background: var(--black-hover);
+}
+
+.chat-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+/* Origin sits at the centre of the toggle; each option is centred on it and
+   then thrown outwards by GSAP. */
+.chat-options {
+  position: absolute;
+  /* the arc pivots on the centre of the toggle, whatever size it is */
+  top: calc(var(--toggle-size) / 2);
+  left: calc(var(--toggle-size) / 2);
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 2;
+}
+
+.chat-option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--option-size);
+  height: var(--option-size);
+  margin: calc(var(--option-size) / -2);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow:
+    0 2px 6px rgba(16, 20, 24, 0.1),
+    0 10px 24px rgba(16, 20, 24, 0.14);
+  transition: color 0.18s ease, background-color 0.18s ease;
+  /* hidden until opened — GSAP takes over from here */
+  opacity: 0;
+  transform: scale(0.4);
+  pointer-events: none;
+}
+
+.chat-menu.is-open .chat-option {
+  pointer-events: auto;
+}
+
+.chat-option svg {
+  width: 21px;
+  height: 21px;
+  fill: currentColor;
+  display: block;
+}
+
+.chat-option--whatsapp:hover {
+  background: #25d366;
+  color: #fff;
+}
+
+.chat-option--telegram:hover {
+  background: #29a9eb;
+  color: #fff;
+}
+
+.chat-option--phone:hover {
+  background: var(--black);
+  color: #fff;
+}
+
+/* Catches clicks outside the menu; invisible but present while open. */
+.chat-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .chat-menu {
+    /* 85 rather than 74: below that the buttons crowd each other on the arc */
+    --radial-r: 85px;
+    --option-size: 42px;
+  }
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(50, 56, 58, 0.055);
+}
+
+.menu-icon {
+  width: var(--menu-icon-size);
+  height: var(--menu-icon-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+.nav-link:focus-visible,
+.menu-toggle:focus-visible,
+.chat-toggle:focus-visible,
+.chat-option:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ---------- Menu drawer ---------- */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(20, 24, 26, 0.28);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.drawer-backdrop[hidden] {
+  display: none;
+}
+
+.drawer {
+  position: fixed;
+  /* Fallback only — main.js measures the real bar and overrides this. The bar
+     wraps to two rows below 960px, so --header-height alone under-measures it. */
+  top: calc(var(--header-height) + var(--header-offset) * 2);
+  right: var(--header-offset);
+  bottom: var(--header-offset);
+  width: min(400px, calc(100vw - var(--header-offset) * 2));
+  z-index: 90;
+  display: grid;
+  /* 3/5, 1/5, 1/5 */
+  grid-template-rows: 3fr 1fr 1fr;
+  gap: 12px;
+  visibility: hidden;
+}
+
+.drawer.is-open {
+  visibility: visible;
+}
+
+.drawer-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 26px 24px;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.drawer-card--glass {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(50, 56, 58, 0.09);
+  box-shadow:
+    0 2px 4px rgba(16, 20, 24, 0.05),
+    0 18px 44px rgba(16, 20, 24, 0.12);
+  color: var(--ink);
+}
+
+.drawer-card--neon {
+  background: var(--neon);
+  color: var(--ink);
+  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.14);
+  transition: filter 0.2s ease;
+}
+
+.drawer-card--neon:hover {
+  filter: brightness(1.05);
+}
+
+.drawer-card--black {
+  background: var(--black);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.18);
+}
+
+.drawer-eyebrow {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.drawer-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drawer-nav a {
+  display: block;
+  padding: 6px 0;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  line-height: 1.12;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+}
+
+.drawer-nav a:hover {
+  opacity: 0.55;
+}
+
+.drawer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.drawer-cta svg {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.drawer-contact {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 500;
+}
+
+.drawer-place {
+  margin: 4px 0 0;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* ---------- Page ---------- */
+
+.page {
+  min-height: 100vh;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* A full viewport, deliberately vh rather than svh: the hero fills the screen
+     even once mobile browser chrome retracts. The cost is that the bottom edge
+     sits under that chrome on first paint, before it hides. */
+  height: 100vh;
+  min-height: 460px;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 0;
+}
+
+/* A milky veil over the footage: keeps the charcoal type legible whatever the
+   video is doing, and holds the light identity the rest of the site uses.
+   Heavier at the top so the dark nav stays readable through the glass bar. */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* A pool of extra white behind the copy. The linear veil alone leaves the
+       background at ~42% white, which the heavy Anton headline survives but the
+       smaller body text does not — over a dark frame it lands near 2.6:1. This
+       lifts the area the text actually occupies to roughly 7:1, and fades out
+       well before the edges so the footage still reads. */
+    radial-gradient(
+      ellipse 72% 58% at 50% 54%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.28) 45%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.44) 220px,
+      rgba(255, 255, 255, 0.42) 100%
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 940px;
+  /* offsets the floating header so the block optically centres below it */
+  padding: calc(var(--header-height) + var(--header-offset) * 2) 24px 0;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  /* flex rather than inline-block so an icon can sit beside the label without
+     baseline guesswork; with text alone it still hugs its content the same */
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 22px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid rgba(50, 56, 58, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.82);
+}
+
+.hero-title {
+  margin: 0;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.5rem, 7.2vw, 5.75rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Smaller and a touch heavier than the nav's leaf: it sits against 12px type
+   here rather than 15px, so the stroke has to hold up at 14px. */
+.hero-eyebrow .leaf-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--live);
+}
+
+/* Explicit line breaks — the wrap point is a design decision, not something
+   left to the browser (and it must not move while the text is scrambling). */
+.hero-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Sits in the eyebrow pill ahead of the label. Fixed size rather than em: the
+   pill's own type is a fixed 12px, so there is nothing to scale against. The
+   artwork is a circular crop, so height and width are equal. */
+.hero-flag {
+  height: 20px;
+  width: 20px;
+  flex: none;
+  display: block;
+  box-shadow: 0 1px 2px rgba(16, 20, 24, 0.2);
+  border-radius: 50%;
+}
+
+/* Fixed-width cell so a scrambled glyph occupies exactly the space its final
+   character will. Without this the line width shifts frame to frame. */
+.scramble-cell {
+  display: inline-block;
+  text-align: center;
+}
+
+/* Weightier and darker than body copy elsewhere: this one sits over moving
+   footage rather than a flat page. */
+.hero-desc {
+  max-width: 620px;
+  margin: 22px auto 0;
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* ---------- Marquee ---------- */
+
+.marquee {
+  overflow: hidden;
+  background: var(--black);
+  color: #fff;
+  padding: 20px 0;
+}
+
+.marquee-track {
+  display: flex;
+  /* max-content so the -50% shift lands exactly one group along */
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  /* doubles as the gap before the next item, including across the seam */
+  padding-right: 44px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ai-star {
+  width: 0.62em;
+  height: 0.62em;
+  flex: none;
+  fill: currentColor;
+  display: block;
+}
+
+/* The shift is exactly one group. main.js sets it once it knows how many copies
+   were needed to cover the viewport; -50% is the two-copy fallback. */
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(var(--marquee-shift, -50%));
+  }
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ---------- Stats ---------- */
+
+.stats {
+  padding: clamp(56px, 8vw, 104px) 24px;
+}
+
+/* Sections that carry the grid backdrop. */
+.stats,
+.statement,
+.cta,
+.about-hero,
+.feature,
+.hosting {
+  position: relative;
+  --grid-cell: clamp(38px, 4.4vw, 62px);
+  /* a variable so a dark section can invert the lines without a second rule */
+  --grid-line: rgba(50, 56, 58, 0.085);
+}
+
+/* Grid backdrop. Two 1px gradients make the lines; the mask fades them out
+   toward all four edges so the pattern has no hard boundary. */
+.stats::before,
+.statement::before,
+.cta::before,
+.about-hero::before,
+.feature::before,
+.hosting::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+  -webkit-mask-image: radial-gradient(
+    ellipse 66% 66% at 50% 50%,
+    #000 18%,
+    rgba(0, 0, 0, 0.55) 52%,
+    rgba(0, 0, 0, 0.12) 78%,
+    transparent 94%
+  );
+  mask-image: radial-gradient(
+    ellipse 66% 66% at 50% 50%,
+    #000 18%,
+    rgba(0, 0, 0, 0.55) 52%,
+    rgba(0, 0, 0, 0.12) 78%,
+    transparent 94%
+  );
+}
+
+
+.stats-grid {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.stat-card {
+  padding: 34px 24px 30px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(50, 56, 58, 0.09);
+  box-shadow:
+    0 1px 2px rgba(16, 20, 24, 0.04),
+    0 10px 28px rgba(16, 20, 24, 0.06);
+  text-align: center;
+}
+
+.stat-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin: 0 0 10px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.75rem, 5.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+/* main.js reserves the settled width here so the digits can't jitter the
+   layout as they count (Anton's "1" is much narrower than its other digits). */
+.stat-number {
+  display: inline-block;
+  /* centred so any reserved slack splits evenly instead of shunting the suffix */
+  text-align: center;
+}
+
+.stat-suffix {
+  color: rgba(50, 56, 58, 0.45);
+}
+
+.stat-unit {
+  margin-left: 0.14em;
+  font-size: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  line-height: 1.45;
+  text-transform: uppercase;
+  color: rgba(50, 56, 58, 0.6);
+}
+
+@media (max-width: 860px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .stat-card {
+    padding: 26px 14px 22px;
+  }
+
+  .stat-label {
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ---------- Section furniture ---------- */
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(50, 56, 58, 0.5);
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  flex: none;
+  background: currentColor;
+}
+
+/* Over a centred block the leading rule reads as a stray dash, so it goes. */
+.section-eyebrow--center {
+  justify-content: center;
+}
+
+.section-eyebrow--center::before {
+  display: none;
+}
+
+/* Star, then rule, then label. The base rule is a ::before, which can only ever
+   come first, so this variant hides it and draws the rule as its own element
+   after the star. */
+.section-eyebrow--star::before {
+  display: none;
+}
+
+.section-eyebrow .ai-star {
+  width: 13px;
+  height: 13px;
+}
+
+.eyebrow-rule {
+  width: 30px;
+  height: 1px;
+  flex: none;
+  background: currentColor;
+}
+
+.section-title {
+  margin: 0 0 22px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.section-text {
+  max-width: 56ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.1vw, 1.0625rem);
+  line-height: 1.75;
+  color: rgba(50, 56, 58, 0.72);
+  text-wrap: pretty;
+}
+
+/* Inline document link — a neon rule under the text that sweeps up into a
+   full marker highlight on hover. */
+.doc-link {
+  position: relative;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  /* No underline or highlight — the weight and the download icon carry it,
+     and the tooltip confirms on hover. Fading with `opacity` would take the
+     tooltip down with it, since opacity applies to pseudo-elements too. */
+  transition: color 0.22s ease;
+}
+
+.doc-link:hover,
+.doc-link:focus-visible {
+  color: rgba(50, 56, 58, 0.6);
+}
+
+.doc-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.doc-link-icon {
+  width: 0.95em;
+  height: 0.95em;
+  margin-left: 0.35em;
+  vertical-align: -0.14em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.65;
+}
+
+.doc-link:hover .doc-link-icon,
+.doc-link:focus-visible .doc-link-icon {
+  opacity: 1;
+}
+
+/* tooltip */
+.doc-link::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  z-index: 5;
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: var(--black);
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(16, 20, 24, 0.18);
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.doc-link:hover::after,
+.doc-link:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc-link,
+  .doc-link::after {
+    transition: none;
+  }
+}
+
+/* ---------- About hero ---------- */
+
+/* Clears the floating header — including the row it wraps onto below 960px —
+   then adds its own breathing room on top. */
+.about-hero {
+  padding: calc(
+      var(--header-height) + var(--header-nav-row) + var(--header-offset) * 2 +
+        clamp(36px, 5vw, 76px)
+    )
+    24px clamp(48px, 7vw, 96px);
+}
+
+.about-hero-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  /* the copy carries the weight here, so it takes the wider column */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+/* Larger than a section heading — it is the page's h1, not a section's. */
+.about-title {
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  margin-bottom: 24px;
+}
+
+.about-figure {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.about-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* single column before either half gets too narrow to read */
+@media (max-width: 860px) {
+  .about-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+/* ---------- Core values (bento) ---------- */
+
+.values {
+  padding: clamp(48px, 7vw, 96px) 24px clamp(56px, 8vw, 104px);
+}
+
+.values-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.values-title {
+  margin-bottom: 20px;
+}
+
+.values-grid {
+  display: grid;
+  /* Four tracks so a tile can take one or two of them; the lead value and the
+     closing statement take two each, which fills both rows exactly. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(210px, auto);
+  gap: clamp(12px, 1.4vw, 18px);
+  margin: clamp(32px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.value-card {
+  display: flex;
+  flex-direction: column;
+  /* icon at the top, copy pinned to the bottom, air between */
+  justify-content: space-between;
+  gap: clamp(28px, 4vw, 48px);
+  padding: clamp(22px, 2.6vw, 30px);
+  border-radius: 16px;
+  background: rgba(50, 56, 58, 0.04);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.value-card--wide,
+.value-card--statement {
+  grid-column: span 2;
+}
+
+/* Hover lifts the tile clear of the grid — flat grey to white-on-shadow, with
+   the icon inverting to match. Gated on a real pointer, because :hover sticks
+   after a tap on touch and would leave one tile stranded in the lit state. */
+@media (hover: hover) {
+  .value-card:hover,
+  .benefit-card:hover,
+  .feature-tile:hover,
+  .hosting-card:hover,
+  .impact-card:hover {
+    background: #fff;
+    box-shadow:
+      0 1px 2px rgba(16, 20, 24, 0.04),
+      0 16px 40px rgba(16, 20, 24, 0.11);
+    transform: translateY(-3px);
+  }
+
+  .value-card:hover .icon-chip,
+  .benefit-card:hover .icon-chip,
+  .feature-tile:hover .icon-chip,
+  .impact-card:hover .icon-chip {
+    background: var(--black);
+    border-color: var(--black);
+    color: #fff;
+  }
+
+  /* the dark tiles darken instead of turning white, and keep their own chip */
+  .value-card--statement:hover,
+  .feature-tile--tall:hover,
+  .impact-card--accent:hover {
+    background: var(--black-hover);
+    box-shadow: 0 18px 44px rgba(16, 20, 24, 0.22);
+  }
+
+  .feature-tile--tall:hover .icon-chip,
+  .impact-card--accent:hover .icon-chip {
+    background: var(--neon);
+    border-color: transparent;
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .value-card,
+  .benefit-card,
+  .feature-tile,
+  .hosting-card,
+  .impact-card,
+  .icon-chip {
+    transition: none;
+  }
+
+  .value-card:hover,
+  .benefit-card:hover,
+  .feature-tile:hover,
+  .hosting-card:hover,
+  .impact-card:hover {
+    transform: none;
+  }
+}
+
+/* Shared by the core values and the benefits grid. */
+.icon-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(50, 56, 58, 0.08);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(16, 20, 24, 0.04);
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.icon-chip svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.value-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.value-text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+/* The closing tile — the same black card the drawer uses, so the section ends
+   on the brand rather than on another grey box. */
+.value-card--statement {
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  text-align: center;
+}
+
+.value-card--statement:hover {
+  background: var(--black-hover);
+}
+
+.value-statement {
+  margin: 0;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1.24;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.value-accent {
+  color: var(--neon);
+}
+
+/* Stands in for the colon. vertical-align lifts it off the baseline to the
+   optical middle of Anton's caps. */
+.value-rule {
+  display: inline-block;
+  width: clamp(28px, 3.4vw, 54px);
+  height: 2px;
+  margin: 0 0.12em;
+  vertical-align: 0.41em;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* Two across: the wide tiles fill a row on their own. */
+@media (max-width: 980px) {
+  .values-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(190px, auto);
+  }
+}
+
+@media (max-width: 620px) {
+  .values-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .value-card--wide,
+  .value-card--statement {
+    grid-column: span 1;
+  }
+
+  .value-card {
+    gap: 26px;
+  }
+
+  .value-card--statement {
+    padding: 34px 22px;
+  }
+}
+
+/* ---------- Team ---------- */
+
+.team {
+  padding: clamp(48px, 7vw, 96px) 24px clamp(56px, 8vw, 104px);
+}
+
+.team-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.team-title {
+  margin-bottom: 20px;
+}
+
+.team-intro {
+  /* wider than the default 56ch — it reads as one line of intro, not a column */
+  max-width: 72ch;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  margin: clamp(32px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Both portraits are supplied square, so the frame is too — no cropping
+   surprises, and the two cards line up whatever the copy does. */
+.team-photo {
+  margin: 0 0 clamp(18px, 2.2vw, 28px);
+  aspect-ratio: 1;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.team-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .team-card:hover .team-photo img {
+    transform: scale(1.045);
+  }
+}
+
+.team-name {
+  margin: 0 0 12px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.375rem, 2.1vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.team-role {
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* A marker-pen highlight rather than coloured text: neon is far too light to
+   read as type on white, but carries fine as a fill behind the ink. clone keeps
+   the padding on both fragments if the role wraps. */
+.team-role span {
+  display: inline;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: var(--neon);
+  color: var(--ink);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.team-bio {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.7;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+.team-bio strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-photo img {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+}
+
+/* ---------- Technology ---------- */
+
+.tech {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(460px, 52vw, 620px);
+  padding: clamp(64px, 8vw, 104px) 24px;
+  background: var(--black);
+  color: #fff;
+  /* chips sit close to the edges, and the float carries them a little further */
+  overflow: hidden;
+}
+
+.tech-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  text-align: center;
+}
+
+.tech-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tech-title {
+  margin: 0 0 20px;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.tech-text {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: clamp(1rem, 1.1vw, 1.0625rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.62);
+  text-wrap: pretty;
+}
+
+.tech-orbit {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+/* --x/--y place the chip's centre; --dur and a negative --delay give each one
+   its own point in the drift so they never bob in unison. */
+.tech-chip {
+  /* --s scales each chip off one shared base, so the size variety survives a
+     resize instead of being baked into fixed pixels. */
+  --size: calc(var(--s, 1) * clamp(56px, 5.8vw, 76px));
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  margin: 0;
+  border-radius: calc(var(--size) * 0.29);
+  background: #fff;
+  color: var(--ink);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    0 18px 40px rgba(0, 0, 0, 0.35);
+  /* the translate centres the chip on its coordinates; the float rides on top
+     of it, which is why the keyframes repeat it */
+  transform: translate(-50%, -50%);
+  animation: tech-float var(--dur, 8s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* Simple Icons ships one-colour marks, which suits the site's palette — a row
+   of full-colour brand logos would fight the neon. */
+.tech-logo {
+  display: block;
+  /* a fraction of the chip, so a bigger chip carries a bigger mark rather than
+     a small one adrift in white space */
+  width: calc(var(--size, 76px) * 0.44);
+  height: auto;
+}
+
+@keyframes tech-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-chip {
+    animation: none;
+  }
+}
+
+/* The technology band pins to the viewport and the section after it — the CTA —
+   scrolls up and covers it. Only above the breakpoint below, where the band is
+   a fixed-height scatter; once it becomes a stacked wrap its height is content
+   driven and pinning it would crop the chips on a short screen.
+
+   `.tech + .cta` rather than a class on the CTA itself: it scopes the treatment
+   to the page where the two are actually adjacent, leaving the home page's CTA
+   untouched. */
+@media (min-width: 1041px) {
+  .tech {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+  }
+
+  .tech + .cta {
+    position: relative;
+    /* lifts the CTA over the pinned band; without this they paint in DOM order
+       and the sticky section would show through */
+    z-index: 1;
+    /* reads as a panel sliding over rather than an abutting section */
+    border-radius: 34px 34px 0 0;
+    /* At least as tall as the band it covers. Sticky releases when its
+       containing block runs out of room, so a shorter CTA lets the band drift
+       upward before the cover completes. */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .tech + .cta .cta-inner {
+    width: 100%;
+  }
+}
+
+/* No room to scatter chips around the copy here, so they line up under it.
+   The threshold is set by the copy, not the chips: it is capped at 640px, so
+   below roughly this width it dominates the section and the chips at 17% and
+   83% start landing on the text. */
+@media (max-width: 1040px) {
+  .tech {
+    flex-direction: column;
+    gap: clamp(36px, 6vw, 56px);
+    min-height: 0;
+  }
+
+  .tech-orbit {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 460px;
+  }
+
+  .tech-chip {
+    position: static;
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ---------- Features (bento) ---------- */
+
+.features {
+  padding: clamp(48px, 7vw, 96px) 24px clamp(56px, 8vw, 104px);
+}
+
+.features-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.features-title {
+  margin-bottom: 20px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(215px, auto);
+  gap: clamp(12px, 1.4vw, 18px);
+  margin: clamp(32px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-tile {
+  display: flex;
+  flex-direction: column;
+  /* chip at the top, copy pinned to the bottom, air between */
+  justify-content: space-between;
+  gap: clamp(24px, 3.5vw, 44px);
+  padding: clamp(22px, 2.6vw, 30px);
+  border-radius: 16px;
+  background: rgba(50, 56, 58, 0.04);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.feature-tile--wide {
+  grid-column: span 2;
+}
+
+/* Runs the full height of the block beside the single cells. Auto-placement
+   does the rest: the tiles after it flow around the column it occupies. */
+.feature-tile--tall {
+  grid-row: span 2;
+  background: var(--black);
+  color: #fff;
+}
+
+/* the one accent in the grid — neon on black, the pairing the drawer uses */
+.feature-tile--tall .icon-chip {
+  background: var(--neon);
+  border-color: transparent;
+  color: var(--ink);
+}
+
+.feature-tile--tall .feature-tile-title {
+  color: #fff;
+}
+
+.feature-tile--tall .feature-tile-text {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.feature-tile-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.feature-tile-text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+@media (max-width: 1040px) {
+  .features-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(195px, auto);
+  }
+
+  /* two tracks leave no column for a tile to run down beside */
+  .feature-tile--tall {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .features-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .feature-tile--wide {
+    grid-column: span 1;
+  }
+
+  .feature-tile {
+    gap: 26px;
+  }
+}
+
+/* ---------- Map ---------- */
+
+/* ---------- Contact split ---------- */
+
+.contact-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 100vh;
+}
+
+/* Source order is form-then-map so the form leads when they stack; here the
+   grid puts the map back on the left. */
+.contact-panel {
+  grid-area: 1 / 2;
+  display: flex;
+  align-items: center;
+  padding: calc(
+      var(--header-height) + var(--header-nav-row) + var(--header-offset) * 2 +
+        clamp(28px, 4vw, 56px)
+    )
+    clamp(24px, 4vw, 64px) clamp(48px, 6vw, 80px);
+}
+
+.contact-split .map {
+  grid-area: 1 / 1;
+  height: 100%;
+}
+
+.contact-panel-inner {
+  width: 100%;
+  max-width: 560px;
+}
+
+.contact-title {
+  font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+  margin-bottom: 18px;
+}
+
+.contact-intro {
+  margin-bottom: clamp(28px, 3.5vw, 40px);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+}
+
+.field--full,
+.contact-submit {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(50, 56, 58, 0.5);
+}
+
+.field-note {
+  letter-spacing: 0.08em;
+  text-transform: none;
+  opacity: 0.7;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(50, 56, 58, 0.16);
+  background: #fff;
+  color: var(--ink);
+  /* form controls do not inherit type by default */
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(50, 56, 58, 0.12);
+}
+
+/* the shared button is built for a link, so the button element needs resetting */
+.contact-submit {
+  justify-self: start;
+  border: 0;
+  cursor: pointer;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .contact-split {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  /* back to source order: form first, map beneath it */
+  .contact-panel {
+    grid-area: auto;
+  }
+
+  .contact-split .map {
+    grid-area: auto;
+    height: 60vh;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.map {
+  height: 100vh;
+  width: 100%;
+  /* the land tone the tiles carry, so the panel never flashes a different
+     colour while they load and the gaps past the edge of the data don't show */
+  background: #f4f1ea;
+  /* Leaflet stacks its panes at 400 and its controls as high as 1000, which
+     would paint straight over the floating header and the drawer. Positioning
+     the map with a z-index of its own makes it a stacking context, so all of
+     that is compared against this one value instead of the site's chrome. */
+  position: relative;
+  z-index: 0;
+}
+
+.leaflet-container {
+  background: #f4f1ea;
+  /* Leaflet ships its own stack; keep the map's few labels on the site's */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* The credit is a licence requirement, not a design element — small, quiet,
+   and out of the way, but still legible and still linked. */
+.leaflet-control-attribution {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.78);
+  color: rgba(50, 56, 58, 0.5);
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+.leaflet-control-attribution a {
+  color: rgba(50, 56, 58, 0.72);
+}
+
+/* Leaflet's own chrome, brought onto the site's palette. */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background: #fff;
+  color: var(--ink);
+  border-bottom-color: rgba(50, 56, 58, 0.12);
+}
+
+.leaflet-bar a:hover {
+  background: rgba(50, 56, 58, 0.06);
+}
+
+.leaflet-bar {
+  border: 1px solid rgba(50, 56, 58, 0.1);
+  box-shadow: 0 2px 10px rgba(16, 20, 24, 0.12);
+}
+
+/* The location pin — the availability dot's twin, so the site's one green
+   reads the same wherever it appears. */
+.map-pin span {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--live);
+  /* a white collar so the dot separates from the map beneath it, whatever
+     colour it lands on */
+  box-shadow:
+    0 0 0 3px #fff,
+    0 1px 4px rgba(16, 20, 24, 0.35);
+}
+
+.map-pin span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--live);
+  animation: map-pin-pulse 2.2s ease-out infinite;
+}
+
+@keyframes map-pin-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pin span::after {
+    animation: none;
+  }
+}
+
+/* ---------- Internet impact (bento) ---------- */
+
+.impact {
+  padding: clamp(48px, 7vw, 96px) 24px clamp(56px, 8vw, 104px);
+}
+
+.impact-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.impact-heading {
+  margin-bottom: 0;
+}
+
+.impact-grid {
+  display: grid;
+  /* Four wide tiles and four single cells fill a 4x3 grid exactly, so no row
+     is left with a hole in it. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(240px, auto);
+  gap: clamp(12px, 1.4vw, 18px);
+  margin: clamp(32px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.impact-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(20px, 2.6vw, 32px);
+  padding: clamp(22px, 2.6vw, 30px);
+  border-radius: 16px;
+  background: rgba(50, 56, 58, 0.04);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.impact-card--wide {
+  grid-column: span 2;
+}
+
+/* The closing card — what the reader can actually act on — carries the brand
+   pairing so the run of statistics resolves somewhere. */
+.impact-card--accent {
+  background: var(--black);
+}
+
+.impact-card--accent .icon-chip {
+  background: var(--neon);
+  border-color: transparent;
+  color: var(--ink);
+}
+
+.impact-card--accent .impact-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.impact-card--accent .impact-title {
+  color: #fff;
+}
+
+.impact-card--accent .impact-text {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.impact-label {
+  margin: 0 0 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: rgba(50, 56, 58, 0.45);
+}
+
+/* Smaller than the other card titles: these run to a full sentence, and a
+   single cell is only ~276px wide. */
+.impact-title {
+  margin: 0 0 10px;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.impact-text {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(0.875rem, 0.95vw, 0.9375rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+@media (max-width: 1040px) {
+  .impact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(215px, auto);
+  }
+
+  /* Every card takes one cell here. On two tracks a wide tile eats a whole row
+     and pushes the single after it onto the next one, leaving a hole beside it;
+     eight equal cells make a clean 2x4 and keep the cards in reading order,
+     which dense packing would not. */
+  .impact-card--wide {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .impact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .impact-card--wide {
+    grid-column: span 1;
+  }
+
+  .impact-card {
+    gap: 24px;
+  }
+}
+
+/* ---------- Green hosting ---------- */
+
+.hosting {
+  padding: clamp(56px, 8vw, 104px) 24px;
+}
+
+.hosting-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.hosting-title {
+  margin-bottom: 20px;
+}
+
+.hosting-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  margin: clamp(32px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Solid rather than the 4% tint the other card sets use: this section carries
+   the grid backdrop, and a near-transparent fill lets the lines run straight
+   through the card so it stops reading as one. Same treatment as .stat-card,
+   which sits over the same grid on the home page. */
+.hosting-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(22px, 3vw, 34px);
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(50, 56, 58, 0.09);
+  box-shadow:
+    0 1px 2px rgba(16, 20, 24, 0.04),
+    0 10px 28px rgba(16, 20, 24, 0.06);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* A fixed slot, so both marks occupy the same band and the copy beneath them
+   starts on the same line whatever shape each logo is. */
+.hosting-logo {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  color: var(--ink);
+}
+
+.hosting-logo img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+/* A wide mark sized on its own terms. Cloudflare's cloud paints across a square
+   box but fills only 45% of its height, so at a shared 30px it carried 14px of
+   ink against GreenGeeks' 30px and read as half the size. 46px evens out the
+   ink area of the two. */
+.hosting-logo--wide img {
+  height: 46px;
+}
+
+.hosting-name {
+  margin: 0 0 10px;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.hosting-text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+@media (max-width: 760px) {
+  .hosting-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Benefits ---------- */
+
+.benefits {
+  padding: clamp(56px, 8vw, 104px) 24px;
+}
+
+.benefits-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 5vw, 72px);
+  /* centred against the grid — the copy is short, and top-aligning it leaves a
+     lopsided hole under it */
+  align-items: center;
+}
+
+.benefits-title {
+  margin-bottom: 20px;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Same card language as the core values: chip at the top, label pinned to the
+   bottom. The hover lift is shared with .value-card, see below. */
+.benefit-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(26px, 3.5vw, 42px);
+  min-height: clamp(170px, 17vw, 200px);
+  padding: clamp(20px, 2.4vw, 28px);
+  border-radius: 16px;
+  background: rgba(50, 56, 58, 0.04);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.benefit-title {
+  margin: 0;
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+@media (max-width: 980px) {
+  .benefits-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+}
+
+@media (max-width: 560px) {
+  .benefits-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .benefit-card {
+    min-height: 0;
+    gap: 22px;
+  }
+}
+
+/* ---------- Feature split ---------- */
+
+/* Same two-column shape as the About hero, on black. The grid backdrop comes
+   from the shared rule; only the line colour is flipped. */
+.feature {
+  --grid-line: rgba(255, 255, 255, 0.07);
+  padding: clamp(56px, 8vw, 104px) 24px;
+  background: var(--black);
+  color: #fff;
+  overflow: hidden;
+}
+
+.feature-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  /* the mockup carries the wider column — it is the point of the section */
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.feature .section-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.feature-title {
+  margin-bottom: 22px;
+  font-size: clamp(1.9rem, 3.6vw, 3rem);
+  color: #fff;
+}
+
+.feature-text {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.feature-text strong {
+  font-weight: 600;
+  color: #fff;
+}
+
+.feature-figure {
+  margin: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  /* the artwork carries its own light panel, so the frame matches it rather
+     than the section */
+  background: #e9e9e9;
+}
+
+.feature-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Cancels the section's gutter so the strip runs to both edges, and drops the
+   band's own bottom padding — the section already supplies it. */
+.feature-gallery {
+  position: relative;
+  z-index: 1;
+  margin: clamp(44px, 6vw, 80px) -24px 0;
+  padding: 0;
+}
+
+/* the light hairline the cards carry disappears on black */
+.feature-gallery .gallery-item img {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 860px) {
+  .feature-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+/* ---------- Client logos ---------- */
+
+/* The stats block above carries its own generous bottom padding, so this only
+   needs enough of a top gap to read as a separate band. */
+.clients {
+  padding: clamp(8px, 2vw, 28px) 24px clamp(48px, 6vw, 88px);
+}
+
+.clients-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* .section-text is left-aligned and capped at 56ch; centre it under the
+   eyebrow and let it run a little wider. */
+.clients-text {
+  max-width: 62ch;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  margin: clamp(30px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clients-grid li {
+  display: flex;
+  justify-content: center;
+}
+
+/* All four are supplied on the same 744x199 canvas, so one width sizes them
+   consistently without having to balance them individually. */
+.clients-grid img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  /* Held back so the logos read as a quiet endorsement rather than competing
+     with the page's own colour; each one comes up on hover. */
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+/* All four share a canvas and an ink width, but this one's artwork is only 94px
+   tall against ~113px for the rest, so at a common width it reads as smaller.
+   Scaled up to bring its cap height in line; matching it exactly would take
+   1.2 and leave the mark noticeably wider than its neighbours.
+
+   A transform rather than a wider max-width: on a phone the column is narrower
+   than the cap, so max-width never binds and the correction would vanish
+   exactly where the logos are smallest. */
+.clients-grid .clients-logo--flat {
+  transform: scale(1.15);
+}
+
+.clients-grid li:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+/* No hover on touch, so nothing would ever bring them up. */
+@media (hover: none) {
+  .clients-grid img {
+    filter: none;
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 700px) {
+  .clients-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
+  }
+}
+
+/* ---------- Leadership ---------- */
+
+.leadership {
+  padding: clamp(48px, 7vw, 96px) 24px;
+}
+
+.leadership-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  /* proportional rather than a fixed 420px column — at tablet widths a fixed
+     image left the copy narrower than the photo, which read as lopsided */
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.portrait-figure {
+  margin: 0;
+  width: min(420px, 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.portrait-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* single column before the two get too narrow to read */
+@media (max-width: 860px) {
+  .leadership-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+/* ---------- Statement ---------- */
+
+.statement {
+  padding: clamp(64px, 10vw, 140px) 24px;
+  /* Characters swing toward the viewer on the drum, and perspective throws the
+     outermost ones past the line box — enough to give the page a horizontal
+     scrollbar. clip contains that without creating a scroll container the way
+     overflow: hidden would. */
+  overflow-x: clip;
+}
+
+/* ---------- Approach ---------- */
+
+.approach {
+  padding: clamp(56px, 8vw, 104px) 24px clamp(64px, 9vw, 120px);
+}
+
+.approach-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+/* The intro is much shorter than the step list, so it holds position while the
+   steps scroll past rather than leaving a tall empty column. */
+.approach-intro {
+  position: sticky;
+  top: calc(var(--header-height) + var(--header-offset) * 2 + 24px);
+}
+
+.approach-intro .section-title {
+  margin-bottom: 20px;
+}
+
+/* ---------- Approach progress ---------- */
+
+.approach-progress {
+  max-width: 320px;
+  margin-top: clamp(26px, 3.2vw, 40px);
+}
+
+.approach-progress-count {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.45);
+  /* the step number changes width between "1" and "6" in Inter's proportional
+     figures, which would jog the slash — tabular figures hold it still */
+  font-variant-numeric: tabular-nums;
+}
+
+.approach-progress-count [data-step] {
+  color: var(--ink);
+}
+
+.approach-progress-track {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(50, 56, 58, 0.12);
+}
+
+.approach-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-radius: inherit;
+  background: var(--ink);
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approach-progress-fill {
+    transition: none;
+  }
+}
+
+.approach-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* the marker is drawn below rather than by the list itself, so the numbering
+     still follows the source order if the steps are ever rearranged */
+  counter-reset: step;
+}
+
+.approach-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: clamp(16px, 2vw, 26px);
+  padding: clamp(20px, 2.4vw, 28px);
+  border-radius: 14px;
+  background: rgba(50, 56, 58, 0.04);
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* main.js lights whichever card is crossing the middle of the viewport, so the
+   steps read one at a time while the intro stays pinned beside them. */
+.approach-card.is-active {
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(16, 20, 24, 0.04),
+    0 14px 36px rgba(16, 20, 24, 0.1);
+}
+
+.approach-card::before {
+  content: counter(step);
+  counter-increment: step;
+  /* one column of its own, running the full height of the card */
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.17);
+  /* Anton's "1" is a third narrower than its other digits, which would leave
+     step 1's title 8.5px left of the rest. 1ch is the advance of "0" — exactly
+     the width every other digit has — so the column holds still. */
+  min-width: 1ch;
+  /* sits the numeral's cap on the title's cap line */
+  margin-top: 0.015em;
+  transition: color 0.35s ease;
+}
+
+.approach-card.is-active::before {
+  color: rgba(50, 56, 58, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approach-card,
+  .approach-card::before {
+    transition: none;
+  }
+}
+
+.approach-card-title {
+  grid-column: 2;
+  margin: 0 0 10px;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.approach-card-text {
+  grid-column: 2;
+  margin: 0;
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+@media (max-width: 860px) {
+  .approach-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  /* nothing to stick to once the columns stack */
+  .approach-intro {
+    position: static;
+  }
+}
+
+/* ---------- Services ---------- */
+
+/* No side padding here — the rules run edge to edge. The header and each row's
+   contents carry the page gutter themselves. */
+.services {
+  padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 120px);
+}
+
+/* max-width has to carry the gutter as well, or box-sizing eats it out of the
+   1160 column and the text lands 24px inside every other section's edge */
+.services-head {
+  max-width: calc(1160px + 48px);
+  margin: 0 auto clamp(36px, 5vw, 64px);
+  padding: 0 24px;
+}
+
+.services-head .section-title {
+  margin-bottom: 0;
+}
+
+.service-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(50, 56, 58, 0.14);
+}
+
+.service-list li {
+  border-bottom: 1px solid rgba(50, 56, 58, 0.14);
+}
+
+/* Cursor-tracking preview. Fixed and centred on its own origin so GSAP only
+   ever has to write x/y. */
+.service-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(190px, 19vw, 280px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 70;
+  opacity: 0;
+  visibility: hidden;
+  background: var(--black);
+  box-shadow: 0 26px 60px rgba(16, 20, 24, 0.28);
+  will-change: transform;
+}
+
+.service-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+/* full-bleed hit area and hover tint */
+.service-row {
+  display: block;
+  padding: clamp(26px, 3.4vw, 40px) 0;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background-color 0.3s ease;
+}
+
+/* contents re-constrained to the page column */
+.service-row-inner {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) minmax(0, 24rem) 3rem;
+  align-items: center;
+  gap: clamp(16px, 3vw, 48px);
+  max-width: calc(1160px + 48px);
+  margin: 0 auto;
+  padding: 0 24px;
+  /* shifted rather than padded, so the full-width tint stays put */
+  transition: transform 0.3s ease;
+}
+
+.service-row:hover,
+.service-row:focus-visible {
+  background: rgba(50, 56, 58, 0.03);
+}
+
+.service-row:hover .service-row-inner,
+.service-row:focus-visible .service-row-inner {
+  transform: translateX(20px);
+}
+
+.service-row:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.service-index {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(50, 56, 58, 0.35);
+  transition: color 0.3s ease;
+  align-self: start;
+  padding-top: 0.55em;
+}
+
+.service-row:hover .service-index {
+  color: var(--ink);
+}
+
+.service-name {
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.6rem, 3.6vw, 3rem);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.service-desc {
+  font-size: clamp(0.9rem, 1vw, 0.975rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
+}
+
+.service-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.service-row:hover .service-arrow,
+.service-row:focus-visible .service-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.service-arrow svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 860px) {
+  .service-row-inner {
+    /* index and title share the top row, the description sits under them */
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2rem;
+    gap: 10px 14px;
+  }
+
+  .service-desc {
+    grid-column: 2 / -1;
+  }
+
+  .service-row:hover .service-row-inner,
+  .service-row:focus-visible .service-row-inner {
+    transform: translateX(10px);
+  }
+
+  /* no hover on touch, so the arrow would never appear */
+  .service-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.statement-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.statement-title {
+  margin: 0;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  /* nowrap, so the ceiling is set by the line still fitting the column */
+  font-size: clamp(2rem, 13vw, 11rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+}
+
+/* Each tube holds several stacked copies of the same line. They sit on top of
+   one another and tumble in sequence, so the text rolls round a drum. */
+.tube {
+  position: relative;
+  display: block;
+  /* tall enough to hold a character at the top of its arc — at 1.06em the
+     line rode out of the box and the copies read as separate rows */
+  height: 1.3em;
+}
+
+.tube-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* hides each character once it has rotated past edge-on */
+.tube-line .char {
+  backface-visibility: hidden;
+}
+
+/* "Building Sarawak's" is 310px at the 40px floor — wider than a 320px screen
+   can hold, so the smallest phones need a smaller floor to keep two lines. */
+@media (max-width: 370px) {
+  .hero-title {
+    font-size: 2.05rem;
+  }
+}
+
+/* Below this the links crowd the logo, so the bar wraps: logo + actions on the
+   top row, the nav on its own row underneath. Same DOM, no duplicate markup.
+   Raised from 860 when the header grew — at 880 the logo and the first link
+   were 2px apart. */
+@media (max-width: 960px) {
+  /* the bar is two rows from here down, so the top row gets shorter to stop
+     the whole header becoming top-heavy */
+  :root {
+    --header-height: 72px;
+    --toggle-size: 42px;
+    /* measured: the wrapped bar runs 129px against a 72px top row */
+    --header-nav-row: 57px;
+  }
+
+  .logo-mark {
+    height: 36px;
+  }
+
+  .header-bar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0 20px;
+  }
+
+  .logo,
+  .header-actions {
+    min-height: var(--header-height);
+  }
+
+  .header-actions {
+    margin-left: auto;
+  }
+
+  .header-divider {
+    display: none;
+  }
+
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+    /* without this the flex item won't shrink past its content and the row
+       breaks out of the bar instead of scrolling */
+    min-width: 0;
+    margin-left: 0;
+    border-top: 1px solid rgba(50, 56, 58, 0.09);
+  }
+
+  /* tablet has room to spare — keep the links grouped, not stretched apart */
+  .nav-list {
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 0 8px;
+    /* narrower phones scroll rather than squash */
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --header-height: 60px;
+    --header-offset: 12px;
+    --toggle-size: 40px;
+    /* measured: 106px bar against a 60px top row */
+    --header-nav-row: 46px;
+  }
+
+  .site-header {
+    padding: 0 12px;
+  }
+
+  .header-bar {
+    padding: 0 18px;
+    border-radius: 15px;
+  }
+
+  .logo-mark {
+    height: 28px;
+  }
+
+  /* The full label cannot fit beside the lockup and the two icon buttons on a
+     phone — it would wrap the bar onto a third row — so the badge trades down
+     to its short label and tighter metrics rather than disappearing. */
+  .availability {
+    gap: 6px;
+    margin-left: 8px;
+    padding: 6px 9px 6px 8px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .availability-full {
+    display: none;
+  }
+
+  .availability-short {
+    display: inline;
+  }
+
+  /* Home and About are dropped on a phone so the three service pages fit the
+     row without scrolling. Neither is lost: the logo links home, and the drawer
+     still lists every page. They are always first and last in the header. */
+  .nav-list li:first-child,
+  .nav-list li:last-child {
+    display: none;
+  }
+
+  /* on a phone the row is tight, so spread the links edge to edge. The negative
+     inline margin cancels the links' own padding so the first and last labels
+     line up with the logo above them, not their invisible box edges. */
+  .nav-list {
+    justify-content: space-between;
+    gap: 4px;
+    padding: 5px 0 7px;
+    margin-inline: -5px;
+  }
+
+  /* 5px of side padding rather than 7: three links with icons need 334px of the
+     327px row at 7, and the last one would sit under a scroll. */
+  .nav-link {
+    font-size: 12.5px;
+    padding: 8px 5px;
+    gap: 5px;
+  }
+
+  .nav-icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* Narrower than any current phone but the original SE. Even the short label
+   can't share the row here, and a three-row header on a screen this small
+   costs more than the badge is worth. */
+@media (max-width: 345px) {
+  .availability {
+    display: none;
+  }
+}
+
+/* ---------- Looping gallery ---------- */
+
+.gallery {
+  /* full bleed — the strip runs off both edges of the page */
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 72px);
+}
+
+.gallery-track {
+  display: flex;
+  /* max-content so the shift lands exactly one group along */
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.gallery-group {
+  display: flex;
+  align-items: center;
+  gap: var(--gallery-gap, 16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* the gap has to carry across the seam between copies too */
+  padding-right: var(--gallery-gap, 16px);
+}
+
+.gallery-item {
+  margin: 0;
+  flex: none;
+  width: clamp(230px, 30vw, 420px);
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(50, 56, 58, 0.08);
+  box-shadow:
+    0 2px 6px rgba(16, 20, 24, 0.05),
+    0 18px 44px rgba(16, 20, 24, 0.13);
+}
+
+.gallery:hover .gallery-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-track {
+    animation: none;
+  }
+}
+
+/* ---------- Call to action ---------- */
+
+/* The neon band. It closes the white run of sections and hands over to the
+   black footer — the same neon/black pairing the drawer cards use. */
+.cta {
+  padding: clamp(72px, 10vw, 132px) 24px;
+  background: var(--neon);
+  /* the grid backdrop is masked to a soft edge, so nothing should bleed, but
+     this also contains the button's magnetic travel at the section edge */
+  overflow: hidden;
+}
+
+.cta-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* darker than the default eyebrow, which is washed out against the neon */
+.cta .section-eyebrow {
+  color: rgba(50, 56, 58, 0.62);
+}
+
+.cta-title {
+  /* bigger than a standard section heading — this is the last thing on the page */
+  font-size: clamp(2.25rem, 5.6vw, 4.5rem);
+  line-height: 1.0;
+  margin-bottom: 24px;
+}
+
+.cta-text {
+  /* .section-text is left-aligned and capped at 56ch; centre it here */
+  margin: 0 auto;
+  max-width: 52ch;
+  color: rgba(50, 56, 58, 0.78);
+}
+
+.cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 34px);
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 12px 12px 30px;
+  border-radius: 999px;
+  background: var(--black);
+  color: #fff;
+  text-decoration: none;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.0625rem, 1.7vw, 1.3rem);
+  letter-spacing: 0.045em;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.18);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  /* main.js writes x/y here for the magnetic pull */
+  will-change: transform;
+}
+
+.cta-button:hover {
+  background: var(--black-hover);
+  box-shadow: 0 18px 44px rgba(16, 20, 24, 0.24);
+}
+
+.cta-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.cta-button-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  transition: background-color 0.2s ease;
+}
+
+.cta-button:hover .cta-button-arrow {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.cta-button-arrow svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s ease;
+}
+
+.cta-button:hover .cta-button-arrow svg {
+  transform: translateX(3px);
+}
+
+/* the quiet option next to the button — an underline that grows on hover */
+.cta-alt {
+  position: relative;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cta-alt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+
+.cta-alt:hover::after,
+.cta-alt:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.cta-alt:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-button-arrow svg,
+  .cta-alt::after {
+    transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .cta-actions {
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .cta-button {
+    /* full-width tap target once the row stacks */
+    width: 100%;
+    max-width: 340px;
+    justify-content: space-between;
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  background: var(--black);
+  color: #fff;
+  padding: clamp(56px, 7vw, 88px) 24px clamp(24px, 3vw, 34px);
+}
+
+.footer-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  /* the brand column takes the slack; the three link columns stay even */
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The lockup is drawn in near-black for the light header; on the dark footer it
+   is flipped to solid white. The artwork is monochrome, so nothing is lost. */
+.footer-logo .logo-mark {
+  filter: brightness(0) invert(1);
+}
+
+.footer-logo:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+.footer-tagline {
+  max-width: 34ch;
+  margin: 20px 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.58);
+  text-wrap: pretty;
+}
+
+.footer-heading {
+  margin: 0 0 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.footer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-list a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.footer-list a:hover {
+  color: var(--neon);
+}
+
+.footer-list a:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.footer-list--contact span {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-list--contact li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Dimmer than the text beside it — these mark the kind of detail, they are not
+   the detail itself. */
+.footer-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-base {
+  max-width: 1160px;
+  margin: clamp(44px, 6vw, 72px) auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.footer-social a:hover {
+  background: var(--neon);
+  color: var(--ink);
+}
+
+.footer-social a:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  display: block;
+}
+
+.footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.footer-top:hover {
+  color: var(--neon);
+}
+
+.footer-top:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.footer-top svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.22s ease;
+}
+
+.footer-top:hover svg {
+  transform: translateY(-3px);
+}
+
+/* ---------- Footer wordmark ---------- */
+
+.footer-wordmark {
+  max-width: 1160px;
+  margin: clamp(36px, 5vw, 72px) auto 0;
+  /* The line is measured at a probe size before it is fitted, so it is briefly
+     far wider than the column — this keeps that out of the page's scroll width.
+     It also crops the air Anton leaves above the caps, see line-height below. */
+  overflow: hidden;
+  /* no strut, so the box is exactly as tall as the line it holds */
+  line-height: 0;
+}
+
+.footer-wordmark-text {
+  /* inline-block so it shrinks to the text and can be measured; top-aligned so
+     no descender gap is left under it */
+  display: inline-block;
+  vertical-align: top;
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  /* Fallback for no-JS. 0.1999 is the measured ratio of fitted size to column
+     width for this string in Anton — remeasure it if the wording changes. The
+     column is the footer's, capped at its max-width; main.js replaces this
+     with a measured fit. */
+  font-size: calc(min(100vw - 48px, 1160px) * 0.1999);
+  /* Anton leaves a wide band of air above its caps. 0.9 is the tightest crop
+     that still clears the cap height (measured: ink runs 0.888em), so the line
+     sits flush in its box without shaving the tops off. */
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.94);
+  user-select: none;
+}
+
+/* Only smooth-scroll for people who haven't asked otherwise — the single
+   in-page anchor is the footer's back-to-top link. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (max-width: 860px) {
+  .footer-inner {
+    /* brand across the top, the three link columns in a row beneath it */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px 24px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

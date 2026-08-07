@@ -1,0 +1,8 @@
+# Local tool permissions — machine-specific, and it carries local paths.
+# .claude/launch.json is committed: it describes how to run the dev server.
+.claude/settings.local.json
+
+# OS cruft
+Thumbs.db
+.DS_Store
+desktop.ini
