@@ -25,6 +25,17 @@
   box-sizing: border-box;
 }
 
+/* Every image is a <picture> carrying an AVIF source with the WebP as fallback.
+   display: contents takes the wrapper out of the box tree entirely, so the <img>
+   stays the flex or grid item its container expects and every rule written
+   against `img` keeps applying. Without this the wrapper becomes the item, the
+   img's width:100% resolves against a shrink-to-fit inline box, and the logo
+   strip and gallery collapse. The element carries no semantics, so removing its
+   box costs nothing. */
+picture {
+  display: contents;
+}
+
 html,
 body {
   margin: 0;
