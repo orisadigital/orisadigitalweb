@@ -1,0 +1,26 @@
+# Wrangler serves this whole directory as the site's static assets — the project
+# is configured with assets.directory = "." — so anything in the repo root that
+# is not meant to be public has to be excluded here by name. Same syntax as
+# .gitignore.
+
+# The repository itself. Without this the entire history is uploaded and served:
+# the pack file alone is 87.5 MiB, which is over the 25 MiB per-asset ceiling and
+# fails the build, but the real cost is that /.git/ becomes fetchable and the
+# full source and commit history can be cloned straight off the live site.
+.git
+.gitignore
+.gitattributes
+
+# Local tooling. .claude holds the dev-server config and machine-specific paths.
+.claude
+node_modules
+package.json
+package-lock.json
+
+# Wrangler's own scratch and the config it regenerates on every build.
+.wrangler
+wrangler.jsonc
+wrangler.toml
+
+# _headers is deliberately NOT listed: Cloudflare reads it at deploy time to set
+# the cache rules, so it has to be part of the upload.
