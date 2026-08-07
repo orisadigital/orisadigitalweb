@@ -183,13 +183,21 @@
             Telegram, or by phone.
           </p>
 
-          <!-- No server behind this page, so submitting hands the message to
-               the visitor's own mail client, pre-filled (see main.js). That is
-               reliable only where a mail app is configured — to have messages
-               arrive without depending on that, point `action` at a form
-               endpoint (Formspree, Web3Forms, or the host's own handler), add
-               `method="post"`, and the script below will stand aside. -->
-          <form class="contact-form" data-mailto="hello@orisadigital.com">
+          <!-- main.js posts this in the background and shows the result in
+               .form-status, so the visitor never leaves the page.
+
+               FormSubmit's /ajax/ endpoint is the one that answers with JSON;
+               the plain address would redirect to their own thank-you page,
+               which is exactly what posting in the background avoids.
+
+               It stays dormant until the first submission triggers an
+               activation email to the address below — click that link once and
+               messages start arriving. -->
+          <form class="contact-form"
+                data-endpoint="https://formsubmit.co/ajax/hello@orisadigital.com"
+                data-mailto="hello@orisadigital.com">
+            <!-- what the notification lands in your inbox as -->
+            <input type="hidden" name="_subject" value="New project enquiry — orisadigital.com">
             <div class="field">
               <label for="name">Name</label>
               <input id="name" name="name" type="text" autocomplete="name" required>
@@ -226,6 +234,10 @@
                 <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </span>
             </button>
+
+            <!-- role=status announces the result to a screen reader without
+                 stealing focus; it stays empty until there is something to say. -->
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>

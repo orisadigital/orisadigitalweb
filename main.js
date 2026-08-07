@@ -883,49 +883,105 @@
   if (el) el.textContent = String(new Date().getFullYear());
 })();
 
-/* Contact form — the page is static, so there is no server to post to. The
-   submit composes the message and hands it to the visitor's mail client with
-   every field already filled in.
+/* Contact form — posts in the background and reports back in place, so the
+   visitor stays on the page and always sees what happened.
 
-   This defers to a real endpoint the moment one exists: give the form an
-   `action` and this listener stands aside, letting the browser post normally. */
+   With no data-endpoint set it falls back to handing the message to the
+   visitor's mail client. That fallback is silent when no mail app is
+   configured, which is exactly why it says so on screen rather than appearing
+   to do nothing. */
 (() => {
   "use strict";
 
   const form = document.querySelector(".contact-form");
   if (!form) return;
 
-  const to = form.dataset.mailto;
-  if (!to || form.getAttribute("action")) return;
+  const status = form.querySelector(".form-status");
+  const button = form.querySelector('[type="submit"]');
+  const mailto = (form.dataset.mailto || "").trim();
+  // read per submit, not once at load, so the attribute stays the single
+  // source of truth even if something sets it later
+  const getEndpoint = () => (form.dataset.endpoint || "").trim();
+
+  const say = (state, text) => {
+    if (!status) return;
+    status.dataset.state = state;
+    status.textContent = text;
+  };
 
   const value = (name) => {
     const field = form.elements[name];
     return field ? field.value.trim() : "";
   };
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
+  const needLabel = () => {
     const select = form.elements.service;
-    const need = select ? select.options[select.selectedIndex].text : "";
+    return select ? select.options[select.selectedIndex].text : "";
+  };
 
-    // Falsy entries drop out, so an omitted phone leaves no empty line behind.
+  /* No endpoint yet: compose the message and hand it over, then say so — the
+     browser gives no signal either way, so silence would read as a dead
+     button. */
+  function handOffToMailClient() {
+    // falsy entries drop out, so an omitted phone leaves no empty line behind
     const body = [
       `Name: ${value("name")}`,
       `Email: ${value("email")}`,
       value("phone") && `Phone: ${value("phone")}`,
-      `Needs: ${need}`,
+      `Needs: ${needLabel()}`,
       "",
       value("message"),
     ]
       .filter(Boolean)
       .join("\n");
 
-    const subject = `Project enquiry — ${need}`;
-
     window.location.href =
-      `mailto:${to}?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(body)}`;
+      `mailto:${mailto}?subject=${encodeURIComponent(
+        `Project enquiry — ${needLabel()}`
+      )}&body=${encodeURIComponent(body)}`;
+
+    say(
+      "info",
+      `Your email app should now be opening with the message ready to send. ` +
+        `If nothing happened, write to ${mailto} directly.`
+    );
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const endpoint = getEndpoint();
+    if (!endpoint) {
+      handOffToMailClient();
+      return;
+    }
+
+    button.disabled = true;
+    say("sending", "Sending…");
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      form.reset();
+      say(
+        "sent",
+        "Thanks — your message is on its way. We'll reply within one working day."
+      );
+    } catch (error) {
+      say(
+        "error",
+        `That didn't go through. Please email ${mailto} directly, or reach us ` +
+          `on WhatsApp using the button in the header.`
+      );
+    } finally {
+      button.disabled = false;
+    }
   });
 })();
 
