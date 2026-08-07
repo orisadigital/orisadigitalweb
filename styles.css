@@ -1321,9 +1321,25 @@ body {
   text-wrap: balance;
 }
 
+.calc-option-text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(50, 56, 58, 0.62);
+  text-wrap: pretty;
+}
+
 .calc-option-price {
   font-size: 0.8rem;
   color: rgba(50, 56, 58, 0.6);
+}
+
+/* Only where a description sits between the name and the price: three muted
+   lines running together would bury the number, and here the number is the
+   cost of adding the thing rather than a starting point for the whole job. */
+.calc-option--multi .calc-option-price {
+  margin-top: 2px;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 /* Holds its space unselected, so ticking an option moves nothing beside it. */
