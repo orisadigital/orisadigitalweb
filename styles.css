@@ -3263,17 +3263,20 @@ body {
   column-gap: clamp(16px, 2vw, 26px);
   padding: clamp(20px, 2.4vw, 28px);
   border-radius: 14px;
-  background: rgba(50, 56, 58, 0.04);
-  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+  background-color: rgba(50, 56, 58, 0.04);
+  transition:
+    background-color 0.45s ease,
+    box-shadow 0.35s ease;
 }
 
 /* main.js lights whichever card is crossing the middle of the viewport, so the
-   steps read one at a time while the intro stays pinned beside them. */
+   steps read one at a time while the intro stays pinned beside them. The panel
+   fades to black under the copy, which fades with it. */
 .approach-card.is-active {
-  background: #fff;
+  background-color: var(--black);
   box-shadow:
-    0 1px 2px rgba(16, 20, 24, 0.04),
-    0 14px 36px rgba(16, 20, 24, 0.1);
+    0 2px 4px rgba(16, 20, 24, 0.1),
+    0 18px 40px rgba(16, 20, 24, 0.18);
 }
 
 .approach-card::before {
@@ -3295,13 +3298,30 @@ body {
   transition: color 0.35s ease;
 }
 
+/* Neon only on the lit card, where it has the black behind it to carry it. */
 .approach-card.is-active::before {
-  color: rgba(50, 56, 58, 0.55);
+  color: var(--neon);
+}
+
+/* The copy inverts with the panel it is sitting on. */
+.approach-card-title,
+.approach-card-text {
+  transition: color 0.35s ease;
+}
+
+.approach-card.is-active .approach-card-title {
+  color: #fff;
+}
+
+.approach-card.is-active .approach-card-text {
+  color: rgba(255, 255, 255, 0.68);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .approach-card,
-  .approach-card::before {
+  .approach-card::before,
+  .approach-card-title,
+  .approach-card-text {
     transition: none;
   }
 }
