@@ -1828,12 +1828,8 @@ body {
   box-shadow: 0 0 0 3px rgba(50, 56, 58, 0.12);
 }
 
-/* the shared button is built for a link, so the button element needs resetting */
 .contact-submit {
   justify-self: start;
-  border: 0;
-  cursor: pointer;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
 }
 
 

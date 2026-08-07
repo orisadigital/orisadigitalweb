@@ -218,12 +218,18 @@
               <textarea id="message" name="message" rows="5" required></textarea>
             </div>
 
-            <button class="cta-button contact-submit" type="submit">
+            <!-- A link, not a submit button, and for the same reason the header
+                 button is one: WhatsApp only offers to open the installed app
+                 when the browser can see a person clicking a link to it. Script
+                 opening a window is what lands on the QR page instead. main.js
+                 keeps the href in step with the fields as they are filled. -->
+            <a class="cta-button contact-submit" href="https://wa.me/60139975304"
+               target="_blank" rel="noopener noreferrer">
               <span class="cta-button-label">Send on WhatsApp</span>
               <span class="cta-button-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </span>
-            </button>
+            </a>
 
             <!-- role=status announces the hand-off without stealing focus; it
                  stays empty until there is something to say. -->

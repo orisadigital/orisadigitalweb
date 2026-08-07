@@ -885,16 +885,23 @@
 
 /* Contact form — hands the enquiry to WhatsApp.
 
-   There is no server behind this page, so instead of posting anywhere the
-   submit composes the message and opens WhatsApp with it already written. The
-   visitor sends it from their own WhatsApp, which puts the enquiry in the same
-   thread as the header's WhatsApp button and gives both sides a conversation
+   There is no server behind this page, so nothing is posted anywhere. The send
+   button is a plain link to WhatsApp and this keeps its href written with
+   whatever is in the fields, so pressing it is an ordinary click on an ordinary
+   link — the same thing the header button is, which is what lets the browser
+   offer to open the installed app rather than falling through to a QR code.
+
+   The visitor sends the message from their own WhatsApp, which puts the enquiry
+   in the same thread as the header button and gives both sides a conversation
    rather than a one-way form. */
 (() => {
   "use strict";
 
   const form = document.querySelector(".contact-form");
   if (!form) return;
+
+  const button = form.querySelector(".contact-submit");
+  if (!button) return;
 
   // WhatsApp wants digits only: country code first, no plus, no spaces
   const number = (form.dataset.whatsapp || "").replace(/\D/g, "");
@@ -916,9 +923,7 @@
     return field ? field.value.trim() : "";
   };
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
+  const compose = () => {
     /* The label, not the value: "Mobile App" reads better in a chat than
        "mobile-app". The placeholder carries no value, which is what keeps
        "Looking for: Choose one" out of an enquiry nobody filled that part of. */
@@ -926,37 +931,49 @@
     const chosen = select && select.value && select.options[select.selectedIndex];
     const need = chosen ? chosen.text : "";
 
-    // falsy entries drop out, so an omitted phone leaves no empty line behind
+    /* Falsy entries drop out, so an omitted phone leaves no empty line behind —
+       and since this runs on every keystroke, a half-filled form produces a
+       half-written message rather than a row of empty labels. */
     const details = [
-      `Name: ${value("name")}`,
-      `Email: ${value("email")}`,
+      value("name") && `Name: ${value("name")}`,
+      value("email") && `Email: ${value("email")}`,
       value("phone") && `Phone: ${value("phone")}`,
       need && `Looking for: ${need}`,
     ].filter(Boolean);
 
     // joined in blocks so the greeting, the details and the brief stay apart
-    const text = [
+    return [
       "Hi Orisa Digital — enquiry from your website.",
       details.join("\n"),
       value("message"),
     ]
       .filter(Boolean)
       .join("\n\n");
+  };
 
-    const url = link(text);
+  const rewrite = () => {
+    button.href = link(compose());
+  };
 
-    /* Clicking a real anchor rather than calling window.open: a blocker can
-       return a stub window object instead of null, which reads as success and
-       leaves the visitor staring at a form that did nothing. An anchor click
-       inside a user gesture is not blocked, so there is no failure to detect. */
-    const opener = document.createElement("a");
-    opener.href = url;
-    opener.target = "_blank";
-    opener.rel = "noopener noreferrer";
-    document.body.append(opener);
-    opener.click();
-    opener.remove();
+  /* Kept current as they type rather than written on the way out, so the href
+     is already right at the moment of the click and nothing has to run in
+     between. The markup ships a bare number as the href, so the link still
+     reaches the same conversation if this never runs at all. */
+  form.addEventListener("input", rewrite);
+  form.addEventListener("change", rewrite);
+  rewrite();
 
+  button.addEventListener("click", (event) => {
+    /* Without a submit button the browser no longer checks required fields, so
+       ask it to, and stay put if anything is missing. */
+    if (!form.reportValidity()) {
+      event.preventDefault();
+      return;
+    }
+
+    rewrite();
+
+    // the click itself does the navigating — everything below is just reporting
     if (status) {
       status.dataset.state = "info";
       status.textContent = "";
@@ -968,12 +985,19 @@
 
       // nothing on screen confirms an app handoff, so leave a way back in
       const retry = document.createElement("a");
-      retry.href = url;
+      retry.href = button.href;
       retry.target = "_blank";
       retry.rel = "noopener noreferrer";
       retry.textContent = "Not opening? Tap here.";
       status.append(retry);
     }
+  });
+
+  /* Enter inside a field submitted the form back when a submit button existed.
+     Nothing hears that now, so route it to the link. */
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    button.click();
   });
 })();
 
