@@ -1372,33 +1372,10 @@ body {
 
 .calc-include {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-/* These are stated facts, not choices, so the mark is quieter than the one on
-   a selected option — filled would read as something the visitor had done. */
-.calc-include-tick {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  /* The 22px disc is taller than the name's line box, so aligning their tops
-     leaves it sitting low. Measured: 2px lifts the two centres onto each other. */
-  margin-top: -2px;
-  border-radius: 50%;
-  background: rgba(50, 56, 58, 0.07);
-}
-
-.calc-include-tick svg {
-  width: 12px;
-  height: 12px;
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  /* the chip is taller than the name but shorter than the pair, so centring it
+     against the whole body reads straighter than pinning it to the first line */
+  align-items: center;
+  gap: 14px;
 }
 
 .calc-include-body {
@@ -1676,6 +1653,21 @@ body {
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* For a list rather than a card: the full-size chip would set the row height
+   and leave the six of them looking like six cards stacked up. */
+.icon-chip--sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+}
+
+.icon-chip--sm svg {
+  width: 18px;
+  height: 18px;
+  /* thickened a touch, since the same 1.5 reads thinner at the smaller size */
+  stroke-width: 1.6;
 }
 
 .value-title {
