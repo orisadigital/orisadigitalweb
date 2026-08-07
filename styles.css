@@ -724,8 +724,11 @@ body {
 
 .marquee {
   overflow: hidden;
-  background: var(--black);
-  color: #fff;
+  /* The band is neon rather than black, so the type inverts with it — white on
+     this ground is barely 1.2:1, where the ink is past 12:1. The star inherits
+     currentColor, so it follows without a rule of its own. */
+  background: var(--neon);
+  color: var(--ink);
   padding: 20px 0;
 }
 
