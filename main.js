@@ -966,7 +966,19 @@
         body: new FormData(form),
       });
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      /* The status code is not the answer on its own. FormSubmit replies 200
+         with {"success":"false"} when the form is unactivated or rejected, so
+         trusting response.ok alone would clear the form and thank the visitor
+         for a message that was never sent. Read the body when there is one and
+         let it overrule. */
+      const payload = await response.json().catch(() => null);
+      const declined = payload && String(payload.success) === "false";
+
+      if (!response.ok || declined) {
+        throw new Error(
+          (payload && payload.message) || `HTTP ${response.status}`
+        );
+      }
 
       form.reset();
       say(
@@ -974,6 +986,8 @@
         "Thanks — your message is on its way. We'll reply within one working day."
       );
     } catch (error) {
+      // the visitor gets a way through; the operator gets the actual reason
+      console.warn("Contact form submission failed:", error.message);
       say(
         "error",
         `That didn't go through. Please email ${mailto} directly, or reach us ` +
