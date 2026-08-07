@@ -1197,6 +1197,12 @@ body {
 
 /* ---------- Calculator steps ---------- */
 
+/* Stated rather than left to the browser's default, so a later display rule on
+   .calc-step cannot quietly bring a hidden step back. */
+.calc-step[hidden] {
+  display: none;
+}
+
 .calc-step + .calc-step {
   margin-top: clamp(32px, 4vw, 48px);
   padding-top: clamp(32px, 4vw, 48px);

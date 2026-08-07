@@ -1134,6 +1134,38 @@
   paint();
 })();
 
+/* Calculator steps that belong to one project type.
+
+   What a package includes differs by what is being built, so a step carrying
+   data-for lists the types it applies to and stays out of the way for the rest.
+   Nothing is chosen when the page loads, so those steps start hidden and appear
+   once the answer above them makes them relevant.
+
+   The hidden attribute rather than a class: it takes the step out of the
+   accessibility tree as well as off the screen, which a display rule alone
+   would not. */
+(() => {
+  "use strict";
+
+  const steps = [...document.querySelectorAll(".calc-step[data-for]")];
+  if (!steps.length) return;
+
+  const types = [...document.querySelectorAll('input[name="project-type"]')];
+  if (!types.length) return;
+
+  const sync = () => {
+    const chosen = types.find((type) => type.checked);
+    const value = chosen ? chosen.value : "";
+
+    steps.forEach((step) => {
+      step.hidden = !step.dataset.for.split(/\s+/).includes(value);
+    });
+  };
+
+  types.forEach((type) => type.addEventListener("change", sync));
+  sync();
+})();
+
 /* Contact map — Leaflet on a dark basemap, centred on Kuching. */
 (() => {
   "use strict";
