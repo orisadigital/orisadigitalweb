@@ -189,7 +189,65 @@
     <section class="calculator" aria-label="Website budget calculator">
       <div class="calculator-inner">
         <div class="calculator-panel calculator-questions">
-          <!-- Questions go here. -->
+          <div class="calc-step">
+            <p class="calc-step-eyebrow">
+              <span class="calc-step-index">01</span>
+              Project Type
+            </p>
+
+            <!-- fieldset/legend rather than a heading and a div: the question is
+                 what labels the group, and a screen reader repeats it before
+                 each option so "One Page Website" is never heard alone. -->
+            <fieldset class="calc-fieldset">
+              <legend class="calc-question">What are you building?</legend>
+
+              <div class="calc-options">
+                <label class="calc-option">
+                  <input type="radio" name="project-type" value="one-page" data-price="2500">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">One Page Website</span>
+                    <span class="calc-option-price">from RM2,500</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option">
+                  <input type="radio" name="project-type" value="sme" data-price="5000">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">SME Website</span>
+                    <span class="calc-option-price">from RM5,000</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option">
+                  <input type="radio" name="project-type" value="ecommerce" data-price="10000">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">E-Commerce</span>
+                    <span class="calc-option-price">from RM10,000</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option">
+                  <input type="radio" name="project-type" value="news-portal" data-price="15000">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">News Portal</span>
+                    <span class="calc-option-price">from RM15,000</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
         </div>
 
         <!-- Holds position while the questions scroll past, so the figure it

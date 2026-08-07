@@ -1177,11 +1177,6 @@ body {
     0 10px 28px rgba(16, 20, 24, 0.06);
 }
 
-/* TODO: scaffolding — drop once the questions fill the column themselves. */
-.calculator-questions {
-  min-height: 150vh;
-}
-
 .calculator-estimate {
   position: sticky;
   /* the header floats, so clear its full height plus the gap it sits in */
@@ -1197,6 +1192,171 @@ body {
   /* nothing to stick to once the columns stack */
   .calculator-estimate {
     position: static;
+  }
+}
+
+/* ---------- Calculator steps ---------- */
+
+.calc-step + .calc-step {
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid rgba(50, 56, 58, 0.09);
+}
+
+.calc-step-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(50, 56, 58, 0.55);
+}
+
+.calc-step-index {
+  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  /* the numerals are the one place the display face earns its keep here */
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+/* a fieldset carries a border and padding of its own by default */
+.calc-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.calc-question {
+  /* a legend is not a flow box, so it takes width from its own text */
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 18px;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.calc-options {
+  clear: both;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.calc-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(50, 56, 58, 0.14);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Off screen rather than display:none, which would take it out of the tab order
+   and stop the arrow keys moving between the options. */
+.calc-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.calc-option:hover {
+  border-color: rgba(50, 56, 58, 0.34);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(16, 20, 24, 0.07);
+}
+
+.calc-option:has(input:checked) {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+/* the ring the hidden control cannot draw for itself */
+.calc-option:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.calc-option-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.calc-option-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.calc-option-price {
+  font-size: 0.8rem;
+  color: rgba(50, 56, 58, 0.6);
+}
+
+/* Holds its space unselected, so ticking an option moves nothing beside it. */
+.calc-option-tick {
+  flex: none;
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(50, 56, 58, 0.22);
+  background: #fff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.calc-option-tick svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.calc-option:has(input:checked) .calc-option-tick {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.calc-option:has(input:checked) .calc-option-tick svg {
+  opacity: 1;
+}
+
+/* one column before the name and the price start fighting for the same line */
+@media (max-width: 520px) {
+  .calc-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calc-option,
+  .calc-option-tick,
+  .calc-option-tick svg {
+    transition: none;
+  }
+
+  .calc-option:hover {
+    transform: none;
   }
 }
 
