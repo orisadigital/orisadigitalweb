@@ -1,0 +1,19 @@
+# Line endings, settled once.
+#
+# Without this, core.autocrlf on Windows checks text files out as CRLF while
+# some were committed with LF, so a file could end up holding both. index.html
+# did — which quietly broke a line-anchored edit that matched every other page.
+# Storing and checking out LF everywhere means what is on disk matches what is
+# in the repository, on every machine.
+* text=auto eol=lf
+
+# The media, marked so nothing ever inspects or rewrites the bytes. text=auto
+# detects binary on its own, but a false positive on one of these would corrupt
+# the file, and being explicit costs nothing.
+*.avif  binary
+*.webp  binary
+*.jpeg  binary
+*.jpg   binary
+*.png   binary
+*.mp4   binary
+*.pdf   binary
