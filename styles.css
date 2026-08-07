@@ -3910,39 +3910,9 @@ body {
   user-select: none;
 }
 
-/* Desktop drops it out of the centre and onto the section's bottom edge, then
-   overhangs it by a tenth of its own height. The section's overflow: hidden
-   makes the cut, and the CTA below is opaque neon starting on that same line,
-   so it reads as the word running under "Let's Talk". Zeroing margin-bottom is
-   what re-anchors the auto margins from centred to bottom. */
-@media (min-width: 601px) {
-  .gallery-wordmark {
-    margin-top: auto;
-    margin-bottom: 0;
-    transform: translateY(10%);
-  }
-
-  /* Bottom-anchored and overhanging by 10%, the word's centre line sits 0.4 of
-     its own height above the section's bottom edge. Pulling the bottom padding
-     back to that figure, less half the strip, lands the marquee on that line.
-
-     Both quantities are re-derived from the clamps that produce them rather
-     than written as numbers, so this stays true if the type or the cards are
-     resized. max() catches the narrow end, where the word is barely taller than
-     the strip and no padding can align them — there it simply goes to zero. */
-  .gallery {
-    --wordmark-box: calc(0.72 * clamp(3rem, 26.5vw, 40rem));
-    --strip-height: calc(0.4875 * clamp(230px, 30vw, 420px));
-    padding-bottom: max(
-      0px,
-      calc(0.4 * var(--wordmark-box) - var(--strip-height) / 2)
-    );
-  }
-}
-
 /* On a phone "Our Work" has to shrink to fit the width, which throws away the
    scale that makes it work. Dropping "Our" buys back the room: "Work" alone is
-   2.087em against 3.698em, so at 47vw it fills the same 98% of the screen with
+   3.068em against 5.299em, so at 32vw it fills the same 98% of the screen with
    letters nearly twice the size. */
 @media (max-width: 600px) {
   .gallery-wordmark-our {
