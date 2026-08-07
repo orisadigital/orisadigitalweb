@@ -1254,6 +1254,14 @@ body {
   padding: 0;
 }
 
+/* Reads as an aside to the question rather than part of it, but stays inside
+   the legend so a screen reader still hears the step is optional. */
+.calc-question-note {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(50, 56, 58, 0.55);
+}
+
 .calc-options {
   clear: both;
   display: grid;
@@ -1351,6 +1359,12 @@ body {
 
 .calc-option:has(input:checked) .calc-option-tick svg {
   opacity: 1;
+}
+
+/* Squared off, because these stack rather than replace one another. The shape
+   is the only thing saying so before anything has been clicked. */
+.calc-option--multi .calc-option-tick {
+  border-radius: 7px;
 }
 
 /* one column before the name and the price start fighting for the same line */

@@ -372,6 +372,101 @@
               <span class="calc-slider-total">Included in base price</span>
             </p>
           </div>
+
+          <div class="calc-step">
+            <p class="calc-step-eyebrow">
+              <span class="calc-step-index">04</span>
+              Add-ons
+            </p>
+
+            <!-- Checkboxes, not radios: these stack rather than replace one
+                 another, and the square marks say so before anything is
+                 clicked. Only the blog has a settled price; the rest open into
+                 options that decide theirs.
+                 TODO: those options, and a price for email subscription. -->
+            <fieldset class="calc-fieldset">
+              <legend class="calc-question">Select add-ons <span class="calc-question-note">optional</span></legend>
+
+              <div class="calc-options">
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="blog" data-price="3000">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Blog Section</span>
+                    <span class="calc-option-price">+RM3,000</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="custom-post-type" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Custom Post Type</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="mega-menu" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Mega Menu</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="multi-language" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Multi Language</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="pop-up-call" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Pop Up Call</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="advanced-forms" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Advanced Forms</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option calc-option--multi">
+                  <input type="checkbox" name="addons" value="email-subscription" data-priced-by="options">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">Email Subscription</span>
+                    <span class="calc-option-price">Priced by options</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
         </div>
 
         <!-- Holds position while the questions scroll past, so the figure it
