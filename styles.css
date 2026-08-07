@@ -2937,6 +2937,88 @@ body {
   padding: clamp(8px, 2vw, 28px) 24px clamp(48px, 6vw, 88px);
 }
 
+/* ---- Homepage: the logos run as a strip ---- */
+
+/* The strip is clipped here rather than at the section edge, so it runs to the
+   same 1160px as .stats-grid above it instead of bleeding to the window. The
+   modifier keeps that off about.html, where the wrapper holds a static grid
+   that should never be clipped. main.js also measures this box to decide how
+   many copies of the group it needs. */
+.clients-inner--strip {
+  overflow: hidden;
+  /* Both ends fade out instead of logos being cut in half at the clip. The
+     stops are a length rather than a bare percentage so the fade stays a
+     readable width on a phone, where 9% of the box is under 30px. */
+  --clients-fade: clamp(32px, 9%, 110px);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--clients-fade),
+    #000 calc(100% - var(--clients-fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--clients-fade),
+    #000 calc(100% - var(--clients-fade)),
+    transparent 100%
+  );
+}
+
+/* Same machinery as the services and gallery strips — main.js finds this by
+   data-loop, clones the group until it covers the viewport, and writes the
+   duration from the group width so the speed holds however many copies. */
+.clients-track {
+  display: flex;
+  /* max-content so the shift lands exactly one group along */
+  width: max-content;
+  margin-top: clamp(30px, 4.5vw, 56px);
+  animation: marquee-scroll 32s linear infinite;
+}
+
+/* Rows after the first sit closer together than the gap under the stats. */
+.clients-track + .clients-track {
+  margin-top: clamp(18px, 2.6vw, 34px);
+}
+
+/* Runs left to right. animation-direction rather than a second keyframe set:
+   main.js writes --marquee-shift per track from the number of copies it made,
+   and playing that same animation backwards keeps the seam exact. */
+.clients-track--reverse {
+  animation-direction: reverse;
+}
+
+.clients-group {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clients-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 200px;
+  /* Doubles as the gap before the next logo, including across the seam. Margin
+     rather than padding because box-sizing is border-box here — padding would
+     come out of the 200px and shrink every logo by the size of the gap. */
+  margin-right: clamp(40px, 6vw, 76px);
+}
+
+.clients:hover .clients-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients-track {
+    animation: none;
+  }
+}
+
 .clients-inner {
   max-width: 1160px;
   margin: 0 auto;
@@ -2965,17 +3047,14 @@ body {
   justify-content: center;
 }
 
-/* All four are supplied on the same 744x199 canvas, so one width sizes them
-   consistently without having to balance them individually. */
-.clients-grid img {
+/* The four originals are supplied on the same 744x199 canvas, so one width
+   sizes those consistently without having to balance them individually. The
+   two modifiers below carry the ones that do not share it. */
+.clients-grid img,
+.clients-item img {
   width: 100%;
   max-width: 200px;
   height: auto;
-  /* Held back so the logos read as a quiet endorsement rather than competing
-     with the page's own colour; each one comes up on hover. */
-  filter: grayscale(1);
-  opacity: 0.5;
-  transition: filter 0.25s ease, opacity 0.25s ease;
 }
 
 /* All four share a canvas and an ink width, but this one's artwork is only 94px
@@ -2986,21 +3065,51 @@ body {
    A transform rather than a wider max-width: on a phone the column is narrower
    than the cap, so max-width never binds and the correction would vanish
    exactly where the logos are smallest. */
-.clients-grid .clients-logo--flat {
+.clients-grid .clients-logo--flat,
+.clients-item .clients-logo--flat {
   transform: scale(1.15);
 }
 
-.clients-grid li:hover img {
-  filter: none;
-  opacity: 1;
+/* For logos that are not on the shared canvas. Those are cropped tight to their
+   ink, so the 200px above sizes their bounding box rather than the mark, and
+   they come out towering over their neighbours.
+
+   Capped by height instead, which needs no per-file constant — any tight logo
+   dropped in gets the same treatment. 46px is what matches the ink area the
+   originals show (~182x31); their marks are long and low, so matching their
+   ink height alone would leave a chunkier logo looking undersized. */
+.clients-item .clients-logo--tight {
+  width: auto;
+  max-width: none;
+  max-height: var(--logo-h, 46px);
 }
 
-/* No hover on touch, so nothing would ever bring them up. */
-@media (hover: none) {
-  .clients-grid img {
-    filter: none;
-    opacity: 0.85;
-  }
+/* The default above assumes the file is cropped to its ink. This one is not —
+   about a third of its canvas is padding, so the shared cap sizes the mark
+   itself 40% small. --logo-h is the escape hatch for that: raise it until the
+   ink matches, and leave it alone for anything cropped tight. */
+.clients-item .clients-logo--rose {
+  --logo-h: 60px;
+}
+
+/* Square badges rather than wide lockups. Matching their ink area to the wide
+   marks would want ~75-93px and they would tower over the row — a badge reads
+   by its height, not its area. This sits between the two: the same ~50px of ink
+   height the tallest lockups show, which is about a 48px mark. */
+.clients-item .clients-logo--badge {
+  --logo-h: 50px;
+}
+
+/* As --badge, but this file carries ~16% padding inside its canvas. */
+.clients-item .clients-logo--safar {
+  --logo-h: 60px;
+}
+
+/* Cropped tight like the lockups, but a much chunkier mark — at the default cap
+   its ink comes out a quarter short of theirs. This matches it, and lands on
+   the same height as the badges it shares a row with. */
+.clients-item .clients-logo--tvs {
+  --logo-h: 53px;
 }
 
 @media (max-width: 700px) {

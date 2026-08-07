@@ -275,26 +275,85 @@
       </ul>
     </section>
 
+    <!-- main.js clones the group until the strip covers the viewport, the same
+         way the services and gallery strips work. about.html still lays the
+         same logos out as a static grid. -->
     <section class="clients" aria-label="Trusted by">
-      <div class="clients-inner">
-        <ul class="clients-grid">
-          <li>
-            <img src="image/Suara-Sarawak.webp" width="744" height="199"
-                 loading="lazy" decoding="async" alt="Suara Sarawak">
-          </li>
-          <li>
-            <img src="image/Sarawak-Tribune.webp" width="744" height="199"
-                 loading="lazy" decoding="async" alt="Sarawak Tribune">
-          </li>
-          <li>
-            <img class="clients-logo--flat" src="image/Utusan-Sarawak.webp" width="744" height="199"
-                 loading="lazy" decoding="async" alt="Utusan Sarawak">
-          </li>
-          <li>
-            <img src="image/Wija-Pharma.webp" width="744" height="199"
-                 loading="lazy" decoding="async" alt="Wija Pharma">
-          </li>
-        </ul>
+      <div class="clients-inner clients-inner--strip">
+        <div class="clients-track" data-loop="30">
+          <ul class="clients-group">
+            <li class="clients-item">
+              <img src="image/Suara-Sarawak.webp" width="744" height="199"
+                   loading="lazy" decoding="async" alt="Suara Sarawak">
+            </li>
+            <li class="clients-item">
+              <img src="image/Sarawak-Tribune.webp" width="744" height="199"
+                   loading="lazy" decoding="async" alt="Sarawak Tribune">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--flat" src="image/Utusan-Sarawak.webp" width="744" height="199"
+                   loading="lazy" decoding="async" alt="Utusan Sarawak">
+            </li>
+            <li class="clients-item">
+              <img src="image/Wija-Pharma.webp" width="744" height="199"
+                   loading="lazy" decoding="async" alt="Wija Pharma">
+            </li>
+          </ul>
+        </div>
+
+        <!-- Second row, running the other way. Add further logos to this group. -->
+        <div class="clients-track clients-track--reverse" data-loop="30">
+          <ul class="clients-group">
+            <li class="clients-item">
+              <img class="clients-logo--tight" src="image/morsidi.png" width="222" height="81"
+                   loading="lazy" decoding="async" alt="Morsidi Group of Companies">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight" src="image/um.png" width="638" height="210"
+                   loading="lazy" decoding="async" alt="Universiti Malaya">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight" src="image/yale.png" width="540" height="151"
+                   loading="lazy" decoding="async" alt="Yale University">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--rose" src="image/rose.png"
+                   width="2038" height="772"
+                   loading="lazy" decoding="async" alt="ROSE Foundation">
+            </li>
+          </ul>
+        </div>
+
+        <!-- Third row, back the same way as the first. -->
+        <div class="clients-track" data-loop="30">
+          <ul class="clients-group">
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--badge" src="image/green.png"
+                   width="1024" height="1024"
+                   loading="lazy" decoding="async" alt="Peacock">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--badge" src="image/intercargo.png"
+                   width="160" height="191"
+                   loading="lazy" decoding="async" alt="Intercargo">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--safar" src="image/safar.jpg"
+                   width="454" height="459"
+                   loading="lazy" decoding="async" alt="Safar Al-Ghazali Travel &amp; Tours">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--badge" src="image/metro.jpg"
+                   width="1280" height="853"
+                   loading="lazy" decoding="async" alt="Sarawak Metro">
+            </li>
+            <li class="clients-item">
+              <img class="clients-logo--tight clients-logo--tvs" src="image/tvs.png"
+                   width="330" height="163"
+                   loading="lazy" decoding="async" alt="TVS">
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
