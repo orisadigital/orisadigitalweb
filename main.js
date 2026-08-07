@@ -909,14 +909,26 @@
 
   const status = form.querySelector(".form-status");
 
-  /* The same wa.me link the header and footer buttons use. It hands off to
-     whichever WhatsApp the visitor actually has — the app on a phone, the
-     installed desktop app through the browser's protocol prompt, and WhatsApp
-     Web for anyone with neither. Addressing web.whatsapp.com directly instead
-     would force everyone down the last of those, which is a QR code to scan
-     for the people who already had WhatsApp open in front of them. */
-  const link = (text) =>
+  /* Two addresses for the same conversation, because no single one reaches
+     every WhatsApp.
+
+     On a phone wa.me opens the app with the message written. On a desktop it
+     cannot: it lands on a splash page whose "Open app" button points at
+     web.whatsapp.com, so an installed desktop app is never offered the message
+     and anyone not already paired gets a QR code instead. The whatsapp://
+     protocol is the only address the desktop app answers to directly.
+
+     Which leaves desktop visitors without the app, for whom the protocol does
+     nothing at all — so the status line hands them the web address the moment
+     they click, rather than leaving them waiting on a window that is not
+     coming. */
+  const onPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+  const webUrl = (text) =>
     `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+
+  const appUrl = (text) =>
+    `whatsapp://send?phone=${number}&text=${encodeURIComponent(text)}`;
 
   const value = (name) => {
     const field = form.elements[name];
@@ -952,13 +964,24 @@
   };
 
   const rewrite = () => {
-    button.href = link(compose());
+    const text = compose();
+
+    if (onPhone) {
+      button.href = webUrl(text);
+      return;
+    }
+
+    /* A protocol link hands off to the app without navigating, so a new tab
+       would only be opened to sit there empty. */
+    button.href = appUrl(text);
+    button.removeAttribute("target");
+    button.removeAttribute("rel");
   };
 
   /* Kept current as they type rather than written on the way out, so the href
      is already right at the moment of the click and nothing has to run in
-     between. The markup ships a bare number as the href, so the link still
-     reaches the same conversation if this never runs at all. */
+     between. The markup ships a bare wa.me number as the href, so the link
+     still reaches the same conversation if this never runs at all. */
   form.addEventListener("input", rewrite);
   form.addEventListener("change", rewrite);
   rewrite();
@@ -983,12 +1006,15 @@
         "WhatsApp is opening with your message ready. Press send there and it reaches us. "
       );
 
-      // nothing on screen confirms an app handoff, so leave a way back in
+      /* Always the web address, never the protocol one the button may have just
+         tried: this line exists for the people that protocol did nothing for. */
       const retry = document.createElement("a");
-      retry.href = button.href;
+      retry.href = webUrl(compose());
       retry.target = "_blank";
       retry.rel = "noopener noreferrer";
-      retry.textContent = "Not opening? Tap here.";
+      retry.textContent = onPhone
+        ? "Not opening? Tap here."
+        : "No WhatsApp app? Open WhatsApp Web instead.";
       status.append(retry);
     }
   });
