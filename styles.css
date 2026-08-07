@@ -626,7 +626,11 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 940px;
+  /* The title lines are nowrap, so this ceiling — not the font-size — is what
+     really caps the type. Sized off the longest line on any page that uses this
+     hero ("Digital That Powers", 1023px at the 8rem cap) with room to spare in
+     case Anton fails to load and a wider fallback takes over. */
+  max-width: 1120px;
   /* offsets the floating header so the block optically centres below it */
   padding: calc(var(--header-height) + var(--header-offset) * 2) 24px 0;
   text-align: center;
@@ -656,7 +660,7 @@ body {
 .hero-title {
   margin: 0;
   font-family: "Anton", "Arial Narrow", Impact, sans-serif;
-  font-size: clamp(2.5rem, 7.2vw, 5.75rem);
+  font-size: clamp(2.5rem, 9.5vw, 8rem);
   font-weight: 400;
   line-height: 0.98;
   letter-spacing: 0.005em;
