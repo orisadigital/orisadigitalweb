@@ -1836,12 +1836,6 @@ body {
   font-family: "Anton", "Arial Narrow", Impact, sans-serif;
 }
 
-/* The arrow slot carries the WhatsApp mark here, which is a filled glyph
-   rather than the stroked arrow the shared button expects. */
-.contact-submit .cta-button-arrow svg {
-  fill: currentColor;
-  stroke: none;
-}
 
 /* Empty until the form has something to report, so it takes up no room and
    reads nothing out until then. */
