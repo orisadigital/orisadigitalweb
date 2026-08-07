@@ -1070,13 +1070,16 @@
 
     const extra = Math.max(0, value - included);
 
+    /* Nothing to add reads better as the reason than as RM0 — the figure is
+       zero because the base price already covers these, not because the pages
+       are free. */
     if (sum) {
       sum.textContent = extra
         ? `+${extra} ${extra === 1 ? "page" : "pages"} × ${money(unit)}`
-        : `${value} ${value === 1 ? "page" : "pages"} included`;
+        : `${value} ${value === 1 ? "page" : "pages"}`;
     }
     if (total) {
-      total.textContent = money(extra * unit);
+      total.textContent = extra ? money(extra * unit) : "Included in base price";
     }
   };
 
