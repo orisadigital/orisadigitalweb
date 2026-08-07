@@ -1163,12 +1163,38 @@
   const types = [...document.querySelectorAll('input[name="project-type"]')];
   if (!types.length) return;
 
+  /* A step that no longer applies has to forget what was said to it. Left
+     alone, a blog ticked under one package stays ticked behind the scenes and
+     turns up on the next one's price — a charge for something the visitor was
+     never shown, let alone asked for. Restoring rather than blanking, so a
+     count with a sensible starting figure returns to it.
+
+     Each reset announces itself, so whatever draws the control redraws it and
+     nothing here needs to know how. */
+  const clear = (step) => {
+    step.querySelectorAll("input").forEach((input) => {
+      if (input.type === "checkbox" || input.type === "radio") {
+        if (!input.checked) return;
+        input.checked = false;
+      } else {
+        if (input.value === input.defaultValue) return;
+        input.value = input.defaultValue;
+      }
+
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  };
+
   const sync = () => {
     const chosen = types.find((type) => type.checked);
     const value = chosen ? chosen.value : "";
 
     steps.forEach((step) => {
-      step.hidden = !step.dataset.for.split(/\s+/).includes(value);
+      const applies = step.dataset.for.split(/\s+/).includes(value);
+
+      if (!applies) clear(step);
+      step.hidden = !applies;
     });
   };
 
