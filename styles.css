@@ -3711,34 +3711,33 @@ body {
 .gallery {
   /* position: relative comes from the grid-backdrop rule this section is listed
      in; the wordmark below is positioned against it. */
-  /* full bleed — the strip runs off both edges of the page. It also does the
-     tucking for .gallery-wordmark: the word overhangs the bottom edge and this
-     is what cuts it off, exactly where the CTA takes over. */
+  /* full bleed — the strip runs off both edges of the page */
   overflow: hidden;
-  /* The top figure carries more than the strip needs: the wordmark is anchored
-     to the bottom edge and grows with the viewport, so this is the headroom
-     that keeps its ascenders from being clipped on wide screens. */
-  padding: clamp(40px, 8vw, 190px) 0 clamp(40px, 6vw, 72px);
+  /* More than the strip needs, and deliberately equal top and bottom. The
+     wordmark is centred on the section and keeps scaling after the cards hit
+     their 420px cap, so the section has to stay taller than the word; matching
+     the two figures is also what puts the strip on the word's centre line
+     rather than a little below it. */
+  padding: clamp(40px, 8vw, 190px) 0;
 }
 
 /* The word sitting behind the strip. Grey enough to read as texture rather than
    a heading — it is set well below the 4.5:1 the real copy holds to, which is
    the point, and why it is aria-hidden rather than a real heading.
 
-   translateY drops the foot of it past the section's bottom edge, where
-   overflow: hidden clips it. The CTA below is opaque neon and starts on that
-   same line, so the cut reads as the word running underneath "Let's Talk".
-   line-height is pulled to 0.72 first, so the box hugs Anton's caps — against
-   a default line box the same percentage would only eat empty space under the
-   baseline and nothing would appear to tuck at all. */
+   Centred on the strip here, which is what a phone gets — the word is close to
+   the height of the whole section there, so there is no room to drop it without
+   losing the top of the letters. Desktop overrides this below.
+
+   line-height is pulled to 0.72 so the box hugs Anton's caps — on a default
+   line box the empty space under the baseline would throw the optical centre
+   well above the real one. */
 .gallery-wordmark {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 0;
-  margin: 0;
-  transform: translateY(8%);
+  height: 0.72em;
+  margin: auto;
   font-family: "Anton", "Arial Narrow", Impact, sans-serif;
   /* Sized to run the full width of the viewport rather than to a type scale:
      "Our Work" in Anton measures 3.697em with the tracking below, so ~26.5vw
@@ -3758,6 +3757,58 @@ body {
   color: #d4d6d7;
   pointer-events: none;
   user-select: none;
+}
+
+/* Desktop drops it out of the centre and onto the section's bottom edge, then
+   overhangs it by a tenth of its own height. The section's overflow: hidden
+   makes the cut, and the CTA below is opaque neon starting on that same line,
+   so it reads as the word running under "Let's Talk". Zeroing margin-bottom is
+   what re-anchors the auto margins from centred to bottom. */
+@media (min-width: 601px) {
+  .gallery-wordmark {
+    margin-top: auto;
+    margin-bottom: 0;
+    transform: translateY(10%);
+  }
+
+  /* Bottom-anchored and overhanging by 10%, the word's centre line sits 0.4 of
+     its own height above the section's bottom edge. Pulling the bottom padding
+     back to that figure, less half the strip, lands the marquee on that line.
+
+     Both quantities are re-derived from the clamps that produce them rather
+     than written as numbers, so this stays true if the type or the cards are
+     resized. max() catches the narrow end, where the word is barely taller than
+     the strip and no padding can align them — there it simply goes to zero. */
+  .gallery {
+    --wordmark-box: calc(0.72 * clamp(3rem, 26.5vw, 40rem));
+    --strip-height: calc(0.4875 * clamp(230px, 30vw, 420px));
+    padding-bottom: max(
+      0px,
+      calc(0.4 * var(--wordmark-box) - var(--strip-height) / 2)
+    );
+  }
+}
+
+/* On a phone "Our Work" has to shrink to fit the width, which throws away the
+   scale that makes it work. Dropping "Our" buys back the room: "Work" alone is
+   2.087em against 3.698em, so at 47vw it fills the same 98% of the screen with
+   letters nearly twice the size. */
+@media (max-width: 600px) {
+  .gallery-wordmark-our {
+    display: none;
+  }
+
+  .gallery-wordmark {
+    font-size: 47vw;
+  }
+
+  /* The strip's own height stops growing here — the cards hit their 230px floor
+     — while the word keeps scaling with the viewport, so at the top of this
+     range it ran out of section to sit in. The line box is a flat 0.72 x 47vw,
+     so this is what keeps the section taller than the word at 600px. */
+  .gallery {
+    padding: max(40px, 11.5vw) 0;
+  }
 }
 
 .gallery-track {

@@ -596,7 +596,9 @@
     <section class="gallery" aria-label="Recent work">
       <!-- Decorative only: the section is already named "Recent work", so this
            would just be the same words twice to a screen reader. -->
-      <p class="gallery-wordmark" aria-hidden="true">Our Work</p>
+      <!-- The space rides inside the span so dropping "Our" on phones does not
+           leave the line starting on one. -->
+      <p class="gallery-wordmark" aria-hidden="true"><span class="gallery-wordmark-our">Our </span>Work</p>
 
       <div class="gallery-track" data-loop="60">
         <ul class="gallery-group">
