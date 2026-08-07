@@ -910,9 +910,11 @@
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // the label, not the value: "Mobile App" reads better in a chat than "mobile-app"
+    /* The label, not the value: "Mobile App" reads better in a chat than
+       "mobile-app". The placeholder carries no value, which is what keeps
+       "Looking for: Choose one" out of an enquiry nobody filled that part of. */
     const select = form.elements.service;
-    const chosen = select && select.options[select.selectedIndex];
+    const chosen = select && select.value && select.options[select.selectedIndex];
     const need = chosen ? chosen.text : "";
 
     // falsy entries drop out, so an omitted phone leaves no empty line behind
