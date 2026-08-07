@@ -3639,7 +3639,11 @@ body {
   text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
-  color: rgba(50, 56, 58, 0.07);
+  /* Opaque on purpose, not --ink at a low alpha: the grid backdrop sits behind
+     this and a translucent fill let the lines read straight through the
+     letterforms. This is roughly --ink at 21% over the white page, but mixed
+     down to a flat value so the glyphs cover what is behind them. */
+  color: #d4d6d7;
   pointer-events: none;
   user-select: none;
 }
