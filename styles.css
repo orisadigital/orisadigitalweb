@@ -1841,6 +1841,17 @@ body {
   cursor: progress;
 }
 
+/* Off screen rather than display:none — a field that is never rendered is
+   trivial for a bot to spot and skip, which defeats the point of the trap. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Empty until the form has something to report, so it takes up no room and
    reads nothing out until then. */
 .form-status {
