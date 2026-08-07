@@ -793,6 +793,7 @@ body {
 /* Sections that carry the grid backdrop. */
 .stats,
 .statement,
+.gallery,
 .cta,
 .about-hero,
 .page-hero,
@@ -808,6 +809,7 @@ body {
    toward all four edges so the pattern has no hard boundary. */
 .stats::before,
 .statement::before,
+.gallery::before,
 .cta::before,
 .about-hero::before,
 .page-hero::before,
@@ -3595,7 +3597,8 @@ body {
 /* ---------- Looping gallery ---------- */
 
 .gallery {
-  position: relative;
+  /* position: relative comes from the grid-backdrop rule this section is listed
+     in; the wordmark below is positioned against it. */
   /* full bleed — the strip runs off both edges of the page. It also does the
      tucking for .gallery-wordmark: the word overhangs the bottom edge and this
      is what cuts it off, exactly where the CTA takes over. */
