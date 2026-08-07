@@ -671,6 +671,32 @@ body {
   color: var(--ink);
 }
 
+/* Gradient fill for the headline. Modifier rather than the base class: only the
+   homepage carries it, and the section pages keep the flat ink above.
+
+   The stops run purple -> violet -> blue. They sit deeper than the same ramp
+   would on a dark ground: the hero veil is white over the video, and stops
+   bright enough to sing against black wash out completely against it. As set
+   they hold 7.1:1, 6.4:1 and 5.1:1 against white where the flat ink held 12:1,
+   so the headline stays well past the 3:1 large text is held to.
+
+   Guarded, because the colour has to go transparent for the clip to show. On a
+   browser without background-clip that would leave transparent text on a
+   transparent background — an invisible headline — so the ink above stays the
+   fallback rather than being overwritten. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-title--gradient {
+    /* angled rather than flat so the ramp keeps moving across both lines */
+    background-image: linear-gradient(100deg, #7e22ce 0%, #5b45e0 46%, #2563eb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Safari paints the fill colour ahead of `color` here; without this the
+       headline stays flat ink and the gradient never shows. */
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 /* Smaller and a touch heavier than the nav's leaf: it sits against 12px type
    here rather than 15px, so the stroke has to hold up at 14px. */
 .hero-eyebrow .leaf-icon {
