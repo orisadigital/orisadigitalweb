@@ -1063,11 +1063,6 @@
   // a zero-width range would divide by zero below, and has nothing to draw anyway
   if (!(max > min)) return;
 
-  const unit = Number(slider.dataset.unitPrice) || 0;
-  // what the base price already covers, so only the ones beyond it are charged
-  const included = Number(slider.dataset.included) || 0;
-  const noun = slider.dataset.unit || "item";
-
   /* Scoped to the field, not the document: with more than one slider on the
      page, a document-wide lookup would point every one of them at the first
      slider's readout. */
@@ -1075,9 +1070,17 @@
   const sum = field.querySelector(".calc-slider-sum");
   const total = field.querySelector(".calc-slider-total");
 
-  const count = (n) => `${n} ${n === 1 ? noun : `${noun}s`}`;
-
   const paint = () => {
+    /* Read each time rather than once at setup: a rate can be switched under a
+       slider — the same count of forms costs one thing at one tier and another
+       at the next — and a figure captured at startup would keep quoting the
+       rate that happened to be selected when the page loaded. */
+    const unit = Number(slider.dataset.unitPrice) || 0;
+    // what the base price already covers, so only the ones beyond it are charged
+    const included = Number(slider.dataset.included) || 0;
+    const noun = slider.dataset.unit || "item";
+    const count = (n) => `${n} ${n === 1 ? noun : `${noun}s`}`;
+
     const value = Number(input.value);
     slider.style.setProperty("--pct", (value - min) / (max - min));
     readout.textContent = input.value;
@@ -1157,6 +1160,42 @@
 
   paint();
   }
+})();
+
+/* Rate pickers — a choice that changes what a count costs.
+
+   Some add-ons come at more than one tier, where the count means the same thing
+   but the price does not. The chosen option carries the rate, this copies it
+   onto the slider it names, and the slider redraws itself off its own markup as
+   it would after any other change. The tier and the count stay separate
+   questions that way, rather than one control trying to be both. */
+(() => {
+  "use strict";
+
+  const groups = [...document.querySelectorAll("[data-rate-target]")];
+  if (!groups.length) return;
+
+  groups.forEach((group) => {
+    const slider = document.querySelector(group.dataset.rateTarget);
+    if (!slider) return;
+
+    const input = slider.querySelector(".calc-slider-input");
+    if (!input) return;
+
+    const apply = () => {
+      const chosen = group.querySelector("input:checked");
+      if (!chosen) return;
+
+      slider.dataset.unitPrice = chosen.dataset.unitPrice || "0";
+      if (chosen.dataset.unit) slider.dataset.unit = chosen.dataset.unit;
+
+      // the slider owns its own drawing, so ask it to rather than reach inside
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+
+    group.addEventListener("change", apply);
+    apply();
+  });
 })();
 
 /* Language cost — the one figure on the page that two answers decide.
