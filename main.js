@@ -1054,6 +1054,9 @@
   if (!(max > min)) return;
 
   const unit = Number(slider.dataset.unitPrice) || 0;
+  // what the base price already covers, so only the pages beyond it are charged
+  const included = Number(slider.dataset.included) || 0;
+
   const sum = document.querySelector(".calc-slider-sum");
   const total = document.querySelector(".calc-slider-total");
 
@@ -1065,11 +1068,15 @@
     slider.style.setProperty("--pct", (value - min) / (max - min));
     readout.textContent = input.value;
 
+    const extra = Math.max(0, value - included);
+
     if (sum) {
-      sum.textContent = `${value} ${value === 1 ? "page" : "pages"} × ${money(unit)}`;
+      sum.textContent = extra
+        ? `+${extra} ${extra === 1 ? "page" : "pages"} × ${money(unit)}`
+        : `${value} ${value === 1 ? "page" : "pages"} included`;
     }
     if (total) {
-      total.textContent = money(value * unit);
+      total.textContent = money(extra * unit);
     }
   };
 
