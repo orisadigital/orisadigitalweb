@@ -4100,6 +4100,14 @@ body {
   .nav-list::-webkit-scrollbar {
     display: none;
   }
+
+  /* Below this width the header carries two menus: this row, which has wrapped
+     under the bar and scrolls sideways, and the drawer behind the hamburger.
+     The pricing link is in the drawer, so dropping it here costs nothing and
+     takes one item off a row that is already running off the screen. */
+  .nav-item--wide-only {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
