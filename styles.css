@@ -1428,6 +1428,28 @@ body {
   text-wrap: pretty;
 }
 
+/* ---------- Calculator sub-field ---------- */
+
+/* Opens under the option that asks for it, tinted rather than bordered so it
+   reads as belonging to the card above rather than starting a new question. */
+.calc-subfield {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(50, 56, 58, 0.045);
+}
+
+.calc-subfield[hidden] {
+  display: none;
+}
+
+.calc-subfield-label {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 /* ---------- Calculator slider ---------- */
 
 .calc-slider {

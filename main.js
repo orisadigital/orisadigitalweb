@@ -1027,7 +1027,7 @@
   });
 })();
 
-/* Page-count slider — draws the face over a native range input.
+/* Counting sliders — a drawn face over a native range input.
 
    The input stays the control: it holds the value, answers the arrow keys and
    is what a screen reader announces. What it does not do is handle the drag.
@@ -1037,13 +1037,23 @@
    instead, which is the one the eye is following.
 
    Both routes funnel through setting the input's value and letting it fire its
-   own input event, so a drag and a keypress leave by the same door. */
+   own input event, so a drag and a keypress leave by the same door.
+
+   Everything that differs between one slider and the next — the unit price,
+   what the base price already covers, what one of them is called — is read off
+   the element, so a new count is markup rather than code. */
 (() => {
   "use strict";
 
-  const slider = document.querySelector(".calc-slider");
-  if (!slider) return;
+  const sliders = [...document.querySelectorAll(".calc-slider")];
+  if (!sliders.length) return;
 
+  // grouped the way the prices are written everywhere else on the page
+  const money = (amount) => `RM${amount.toLocaleString("en-US")}`;
+
+  sliders.forEach((slider) => setup(slider, money));
+
+  function setup(slider, money) {
   const input = slider.querySelector(".calc-slider-input");
   const readout = slider.querySelector(".calc-slider-value");
   if (!input || !readout) return;
@@ -1054,14 +1064,18 @@
   if (!(max > min)) return;
 
   const unit = Number(slider.dataset.unitPrice) || 0;
-  // what the base price already covers, so only the pages beyond it are charged
+  // what the base price already covers, so only the ones beyond it are charged
   const included = Number(slider.dataset.included) || 0;
+  const noun = slider.dataset.unit || "item";
 
-  const sum = document.querySelector(".calc-slider-sum");
-  const total = document.querySelector(".calc-slider-total");
+  /* Scoped to the field, not the document: with more than one slider on the
+     page, a document-wide lookup would point every one of them at the first
+     slider's readout. */
+  const field = slider.closest(".calc-slider-field") || slider.parentElement;
+  const sum = field.querySelector(".calc-slider-sum");
+  const total = field.querySelector(".calc-slider-total");
 
-  // grouped the way the prices are written everywhere else on the page
-  const money = (amount) => `RM${amount.toLocaleString("en-US")}`;
+  const count = (n) => `${n} ${n === 1 ? noun : `${noun}s`}`;
 
   const paint = () => {
     const value = Number(input.value);
@@ -1071,12 +1085,12 @@
     const extra = Math.max(0, value - included);
 
     /* Nothing to add reads better as the reason than as RM0 — the figure is
-       zero because the base price already covers these, not because the pages
-       are free. */
+       zero because the base price already covers these, not because they are
+       free. A slider that includes none never reaches this branch. */
     if (sum) {
       sum.textContent = extra
-        ? `+${extra} ${extra === 1 ? "page" : "pages"} × ${money(unit)}`
-        : `${value} ${value === 1 ? "page" : "pages"}`;
+        ? `+${count(extra)} × ${money(unit)}`
+        : count(value);
     }
     if (total) {
       total.textContent = extra ? money(extra * unit) : "Included in base price";
@@ -1142,28 +1156,32 @@
   slider.addEventListener("pointercancel", release);
 
   paint();
+  }
 })();
 
-/* Calculator steps that belong to one project type.
+/* Calculator parts that only apply to some answers.
 
-   What a package includes differs by what is being built, so a step carrying
-   data-for lists the types it applies to and stays out of the way for the rest.
-   Nothing is chosen when the page loads, so those steps start hidden and appear
-   once the answer above them makes them relevant.
+   Two kinds, resolved together because they chain: a step carrying data-for
+   lists the project types it belongs to, and a sub-field carrying
+   data-for-addon names the add-on that opens it. Turning off the step turns off
+   the add-on inside it, which has to turn off the sub-field under that — so
+   they are worked out in order, in one pass, rather than by two modules racing
+   to notice each other.
 
-   The hidden attribute rather than a class: it takes the step out of the
+   The hidden attribute rather than a class: it takes the part out of the
    accessibility tree as well as off the screen, which a display rule alone
    would not. */
 (() => {
   "use strict";
 
-  const steps = [...document.querySelectorAll(".calc-step[data-for]")];
-  if (!steps.length) return;
+  const panel = document.querySelector(".calculator-questions");
+  if (!panel) return;
 
-  const types = [...document.querySelectorAll('input[name="project-type"]')];
-  if (!types.length) return;
+  const steps = [...panel.querySelectorAll(".calc-step[data-for]")];
+  const subfields = [...panel.querySelectorAll("[data-for-addon]")];
+  if (!steps.length && !subfields.length) return;
 
-  /* A step that no longer applies has to forget what was said to it. Left
+  /* A part that no longer applies has to forget what was said to it. Left
      alone, a blog ticked under one package stays ticked behind the scenes and
      turns up on the next one's price — a charge for something the visitor was
      never shown, let alone asked for. Restoring rather than blanking, so a
@@ -1171,8 +1189,8 @@
 
      Each reset announces itself, so whatever draws the control redraws it and
      nothing here needs to know how. */
-  const clear = (step) => {
-    step.querySelectorAll("input").forEach((input) => {
+  const clear = (host) => {
+    host.querySelectorAll("input").forEach((input) => {
       if (input.type === "checkbox" || input.type === "radio") {
         if (!input.checked) return;
         input.checked = false;
@@ -1186,19 +1204,42 @@
     });
   };
 
-  const sync = () => {
-    const chosen = types.find((type) => type.checked);
-    const value = chosen ? chosen.value : "";
-
-    steps.forEach((step) => {
-      const applies = step.dataset.for.split(/\s+/).includes(value);
-
-      if (!applies) clear(step);
-      step.hidden = !applies;
-    });
+  const show = (host, applies) => {
+    if (!applies) clear(host);
+    host.hidden = !applies;
   };
 
-  types.forEach((type) => type.addEventListener("change", sync));
+  /* The resets above fire change events of their own, which arrive back here
+     while this is still running. The order below already accounts for them, so
+     a second pass would only undo its own work. */
+  let running = false;
+
+  const sync = () => {
+    if (running) return;
+    running = true;
+
+    const chosen = [...panel.querySelectorAll('input[name="project-type"]')].find(
+      (type) => type.checked
+    );
+    const type = chosen ? chosen.value : "";
+
+    steps.forEach((step) => show(step, step.dataset.for.split(/\s+/).includes(type)));
+
+    subfields.forEach((subfield) => {
+      const addon = panel.querySelector(
+        `input[name="addons"][value="${subfield.dataset.forAddon}"]`
+      );
+      const step = addon && addon.closest(".calc-step");
+
+      // ticked, and on a step still standing — a hidden tick counts for nothing
+      show(subfield, Boolean(addon && addon.checked && (!step || !step.hidden)));
+    });
+
+    running = false;
+  };
+
+  // one listener for both, since either kind of answer can change what shows
+  panel.addEventListener("change", sync);
   sync();
 })();
 

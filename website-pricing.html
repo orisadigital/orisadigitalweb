@@ -356,21 +356,23 @@
             <!-- data-included is what the base price already covers, and is not
                  the same fact as the minimum even though both are five today:
                  one is what you get, the other is what the control allows. -->
-            <div class="calc-slider" data-unit-price="1500" data-included="5">
-              <input class="calc-slider-input" type="range" id="pages" name="pages"
-                     min="5" max="50" step="1" value="5"
-                     aria-labelledby="pages-heading" aria-describedby="pages-rate">
+            <div class="calc-slider-field">
+              <div class="calc-slider" data-unit-price="1500" data-included="5" data-unit="page">
+                <input class="calc-slider-input" type="range" id="pages" name="pages"
+                       min="5" max="50" step="1" value="5"
+                       aria-labelledby="pages-heading" aria-describedby="pages-rate">
 
-              <div class="calc-slider-rail">
-                <span class="calc-slider-fill"></span>
+                <div class="calc-slider-rail">
+                  <span class="calc-slider-fill"></span>
+                </div>
+                <span class="calc-slider-thumb"><span class="calc-slider-value">5</span></span>
               </div>
-              <span class="calc-slider-thumb"><span class="calc-slider-value">5</span></span>
-            </div>
 
-            <p class="calc-slider-rate" id="pages-rate">
-              <span class="calc-slider-sum">5 pages</span>
-              <span class="calc-slider-total">Included in base price</span>
-            </p>
+              <p class="calc-slider-rate" id="pages-rate">
+                <span class="calc-slider-sum">5 pages</span>
+                <span class="calc-slider-total">Included in base price</span>
+              </p>
+            </div>
           </div>
 
           <div class="calc-step" data-for="sme">
@@ -401,11 +403,13 @@
                 </label>
 
                 <label class="calc-option calc-option--multi">
-                  <input type="checkbox" name="addons" value="custom-post-type" data-priced-by="options">
+                  <!-- no data-price: the count below decides it, so the number
+                       lives in one place rather than two that can disagree -->
+                  <input type="checkbox" name="addons" value="custom-post-type">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Custom Post Type</span>
                     <span class="calc-option-text">A section for products or projects.</span>
-                    <span class="calc-option-price">Priced by options</span>
+                    <span class="calc-option-price">+RM3,000</span>
                   </span>
                   <span class="calc-option-tick" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
@@ -471,6 +475,30 @@
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
                   </span>
                 </label>
+              </div>
+
+              <!-- Outside the label it belongs to, deliberately: nested inside,
+                   every drag of this slider would also toggle the checkbox. -->
+              <div class="calc-subfield" data-for-addon="custom-post-type" hidden>
+                <p class="calc-subfield-label" id="cpt-label">How many custom post types?</p>
+
+                <div class="calc-slider-field">
+                  <div class="calc-slider" data-unit-price="3000" data-included="0" data-unit="type">
+                    <input class="calc-slider-input" type="range" id="cpt-count" name="cpt-count"
+                           min="1" max="5" step="1" value="1"
+                           aria-labelledby="cpt-label" aria-describedby="cpt-rate">
+
+                    <div class="calc-slider-rail">
+                      <span class="calc-slider-fill"></span>
+                    </div>
+                    <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
+                  </div>
+
+                  <p class="calc-slider-rate" id="cpt-rate">
+                    <span class="calc-slider-sum">+1 type &times; RM3,000</span>
+                    <span class="calc-slider-total">RM3,000</span>
+                  </p>
+                </div>
               </div>
             </fieldset>
           </div>
