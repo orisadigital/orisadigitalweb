@@ -323,6 +323,39 @@
               </li>
             </ul>
           </div>
+
+          <div class="calc-step">
+            <p class="calc-step-eyebrow">
+              <span class="calc-step-index">03</span>
+              Pages
+            </p>
+            <h2 class="calc-heading" id="pages-heading">Number of pages</h2>
+
+            <!-- A real range input does the dragging, the keyboard and the
+                 announcing; the face on top only draws. The arrows have to live
+                 inside the thumb, which a native thumb cannot contain, so the
+                 rail is transparent to the pointer everywhere except them. -->
+            <div class="calc-slider" data-unit-price="1500">
+              <input class="calc-slider-input" type="range" id="pages" name="pages"
+                     min="1" max="20" step="1" value="5"
+                     aria-labelledby="pages-heading" aria-describedby="pages-rate">
+
+              <div class="calc-slider-rail">
+                <span class="calc-slider-fill"></span>
+                <span class="calc-slider-thumb">
+                  <button class="calc-slider-step" type="button" data-step="-1" aria-label="One page fewer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>
+                  </button>
+                  <span class="calc-slider-value">5</span>
+                  <button class="calc-slider-step" type="button" data-step="1" aria-label="One page more">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <p class="calc-slider-rate" id="pages-rate">RM1,500 per page</p>
+          </div>
         </div>
 
         <!-- Holds position while the questions scroll past, so the figure it

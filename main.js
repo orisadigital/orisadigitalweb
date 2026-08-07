@@ -1027,6 +1027,118 @@
   });
 })();
 
+/* Page-count slider — draws the face over a native range input.
+
+   The input stays the control: it holds the value, answers the arrow keys and
+   is what a screen reader announces. What it does not do is handle the drag.
+   Its thumb is sized by the browser, and the drawn thumb has to be wide enough
+   to hold two arrows and a number, so a drag mapped to the native width would
+   slide out from under the pointer. The pointer is measured against the drawn
+   thumb here instead, which is the one the eye is following.
+
+   Everything funnels through setting the input's value and letting it fire its
+   own input event, so a drag, an arrow click and a keypress leave by one door. */
+(() => {
+  "use strict";
+
+  const slider = document.querySelector(".calc-slider");
+  if (!slider) return;
+
+  const input = slider.querySelector(".calc-slider-input");
+  const readout = slider.querySelector(".calc-slider-value");
+  if (!input || !readout) return;
+
+  const min = Number(input.min);
+  const max = Number(input.max);
+  // a zero-width range would divide by zero below, and has nothing to draw anyway
+  if (!(max > min)) return;
+
+  const steps = [...slider.querySelectorAll(".calc-slider-step")];
+
+  const paint = () => {
+    const value = Number(input.value);
+    slider.style.setProperty("--pct", (value - min) / (max - min));
+    readout.textContent = input.value;
+
+    // an arrow with nowhere left to go says so rather than swallowing the click
+    steps.forEach((step) => {
+      const next = value + Number(step.dataset.step);
+      step.disabled = next < min || next > max;
+    });
+  };
+
+  input.addEventListener("input", paint);
+
+  // bubbles, so anything listening for the slider hears every route alike
+  const commit = (next) => {
+    const clamped = Math.min(max, Math.max(min, next));
+    if (clamped === Number(input.value)) return;
+
+    input.value = clamped;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  };
+
+  steps.forEach((step) => {
+    step.addEventListener("click", () => {
+      commit(Number(input.value) + Number(step.dataset.step));
+    });
+  });
+
+  /* The thumb's travel is the rail less its own width, and its centre is what
+     reads as the current value — so the pointer is measured to that centre. */
+  const rail = slider.querySelector(".calc-slider-rail");
+  const thumb = slider.querySelector(".calc-slider-thumb");
+
+  const valueAt = (clientX) => {
+    const box = rail.getBoundingClientRect();
+    const travel = box.width - thumb.offsetWidth;
+    if (travel <= 0) return min;
+
+    const offset = clientX - box.left - thumb.offsetWidth / 2;
+    const ratio = Math.min(1, Math.max(0, offset / travel));
+    return Math.round(min + ratio * (max - min));
+  };
+
+  let dragging = false;
+
+  slider.addEventListener("pointerdown", (event) => {
+    // the arrows are their own controls; a click on one is not the start of a drag
+    if (event.target.closest(".calc-slider-step")) return;
+
+    dragging = true;
+
+    /* Capture, so a drag that wanders off the slider still tracks and still
+       ends rather than sticking down. It refuses pointers it does not consider
+       active, which is not a reason to abandon the drag — the flag above is
+       what actually governs it. */
+    try {
+      slider.setPointerCapture(event.pointerId);
+    } catch (error) {
+      /* no capture, so the drag ends at the edge instead of following */
+    }
+
+    input.focus({ preventScroll: true });
+    commit(valueAt(event.clientX));
+  });
+
+  slider.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    commit(valueAt(event.clientX));
+  });
+
+  const release = (event) => {
+    dragging = false;
+    if (slider.hasPointerCapture(event.pointerId)) {
+      slider.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  slider.addEventListener("pointerup", release);
+  slider.addEventListener("pointercancel", release);
+
+  paint();
+})();
+
 /* Contact map — Leaflet on a dark basemap, centred on Kuching. */
 (() => {
   "use strict";
