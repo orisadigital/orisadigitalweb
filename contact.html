@@ -186,15 +186,16 @@
           <!-- main.js posts this in the background and shows the result in
                .form-status, so the visitor never leaves the page.
 
-               FormSubmit's /ajax/ endpoint is the one that answers with JSON;
-               the plain address would redirect to their own thank-you page,
-               which is exactly what posting in the background avoids.
+               /api/contact is our own Pages Function (functions/api/contact.js),
+               so the message never passes through a third party and the mail
+               goes out from our own domain. It answers with the same
+               {success, message} shape a hosted form service would.
 
-               It stays dormant until the first submission triggers an
-               activation email to the address below — click that link once and
-               messages start arriving. -->
+               Note it only exists on a Cloudflare deploy — `npx serve` has no
+               Functions runtime, so submitting from that dev server will show
+               the error panel. Use `npx wrangler pages dev .` to test locally. -->
           <form class="contact-form"
-                data-endpoint="https://formsubmit.co/ajax/hello@orisadigital.com"
+                data-endpoint="/api/contact"
                 data-mailto="hello@orisadigital.com">
             <!-- what the notification lands in your inbox as -->
             <input type="hidden" name="_subject" value="New project enquiry — orisadigital.com">
