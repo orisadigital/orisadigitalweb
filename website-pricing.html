@@ -403,9 +403,7 @@
                 </label>
 
                 <label class="calc-option calc-option--multi">
-                  <!-- no data-price: the count below decides it, so the number
-                       lives in one place rather than two that can disagree -->
-                  <input type="checkbox" name="addons" value="custom-post-type">
+                  <input type="checkbox" name="addons" value="custom-post-type" data-price="3000">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Custom Post Type</span>
                     <span class="calc-option-text">A section for products or projects.</span>
@@ -481,31 +479,10 @@
                 </label>
               </div>
 
-              <!-- Outside the label it belongs to, deliberately: nested inside,
-                   every drag of this slider would also toggle the checkbox. -->
-              <div class="calc-subfield" data-for-addon="custom-post-type" hidden>
-                <p class="calc-subfield-label" id="cpt-label">How many custom post types?</p>
-
-                <div class="calc-slider-field">
-                  <div class="calc-slider" data-unit-price="3000" data-included="0" data-unit="type">
-                    <input class="calc-slider-input" type="range" id="cpt-count" name="cpt-count"
-                           min="1" max="5" step="1" value="1"
-                           aria-labelledby="cpt-label" aria-describedby="cpt-rate">
-
-                    <div class="calc-slider-rail">
-                      <span class="calc-slider-fill"></span>
-                    </div>
-                    <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
-                  </div>
-
-                  <p class="calc-slider-rate" id="cpt-rate">
-                    <span class="calc-slider-sum">+1 type &times; RM3,000</span>
-                    <span class="calc-slider-total">RM3,000</span>
-                  </p>
-                </div>
-              </div>
-
-              <!-- TODO: five is a guess at the ceiling; confirm it. -->
+              <!-- Outside the labels they belong to, deliberately: nested
+                   inside, every drag of a slider would also toggle its own
+                   checkbox off.
+                   TODO: five is a guess at the ceiling; confirm it. -->
               <div class="calc-subfield" data-for-addon="mega-menu" hidden>
                 <p class="calc-subfield-label" id="mega-menu-label">How many mega menus?</p>
 
