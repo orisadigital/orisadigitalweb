@@ -1450,9 +1450,18 @@ body {
   color: var(--ink);
 }
 
-/* a second question inside the same panel needs air above it, not just below */
-.calc-subfield-label--second {
-  margin-top: 22px;
+/* Already inside a tinted panel, so it takes no fill of its own — a second tint
+   on the first would read as a third level of nesting that is not there. */
+.calc-subfield--nested {
+  margin-top: 20px;
+  padding: 0;
+  background: none;
+}
+
+.calc-subfield--nested .calc-subfield-label {
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: rgba(50, 56, 58, 0.78);
 }
 
 /* ---------- Calculator chips ---------- */

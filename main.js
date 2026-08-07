@@ -1162,42 +1162,6 @@
   }
 })();
 
-/* Rate pickers — a choice that changes what a count costs.
-
-   Some add-ons come at more than one tier, where the count means the same thing
-   but the price does not. The chosen option carries the rate, this copies it
-   onto the slider it names, and the slider redraws itself off its own markup as
-   it would after any other change. The tier and the count stay separate
-   questions that way, rather than one control trying to be both. */
-(() => {
-  "use strict";
-
-  const groups = [...document.querySelectorAll("[data-rate-target]")];
-  if (!groups.length) return;
-
-  groups.forEach((group) => {
-    const slider = document.querySelector(group.dataset.rateTarget);
-    if (!slider) return;
-
-    const input = slider.querySelector(".calc-slider-input");
-    if (!input) return;
-
-    const apply = () => {
-      const chosen = group.querySelector("input:checked");
-      if (!chosen) return;
-
-      slider.dataset.unitPrice = chosen.dataset.unitPrice || "0";
-      if (chosen.dataset.unit) slider.dataset.unit = chosen.dataset.unit;
-
-      // the slider owns its own drawing, so ask it to rather than reach inside
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    };
-
-    group.addEventListener("change", apply);
-    apply();
-  });
-})();
-
 /* Language cost — the one figure on the page that two answers decide.
 
    A site has one main language whatever it costs, so that one comes with the
@@ -1260,12 +1224,16 @@
 
 /* Calculator parts that only apply to some answers.
 
-   Two kinds, resolved together because they chain: a step carrying data-for
-   lists the project types it belongs to, and a sub-field carrying
-   data-for-addon names the add-on that opens it. Turning off the step turns off
-   the add-on inside it, which has to turn off the sub-field under that — so
-   they are worked out in order, in one pass, rather than by two modules racing
-   to notice each other.
+   Two kinds. A step carrying data-for lists the project types it belongs to.
+   Anything carrying data-when names a single control — by selector — and shows
+   only while that control is ticked.
+
+   They are resolved together, in one pass, in document order, because they
+   nest: a form tier opens a count, the add-on above it opens the tier, and the
+   step above that opens the add-on. Document order puts every parent before its
+   children, so by the time a part is judged, anything it sits inside has
+   already been settled and can simply be looked at. Separate modules would race
+   to notice each other and leave a count showing under a question nobody asked.
 
    The hidden attribute rather than a class: it takes the part out of the
    accessibility tree as well as off the screen, which a display rule alone
@@ -1276,9 +1244,9 @@
   const panel = document.querySelector(".calculator-questions");
   if (!panel) return;
 
-  const steps = [...panel.querySelectorAll(".calc-step[data-for]")];
-  const subfields = [...panel.querySelectorAll("[data-for-addon]")];
-  if (!steps.length && !subfields.length) return;
+  // one list, in document order — parents ahead of the parts they contain
+  const hosts = [...panel.querySelectorAll(".calc-step[data-for], [data-when]")];
+  if (!hosts.length) return;
 
   /* A part that no longer applies has to forget what was said to it. Left
      alone, a blog ticked under one package stays ticked behind the scenes and
@@ -1323,16 +1291,21 @@
     );
     const type = chosen ? chosen.value : "";
 
-    steps.forEach((step) => show(step, step.dataset.for.split(/\s+/).includes(type)));
+    hosts.forEach((host) => {
+      let applies;
 
-    subfields.forEach((subfield) => {
-      const addon = panel.querySelector(
-        `input[name="addons"][value="${subfield.dataset.forAddon}"]`
-      );
-      const step = addon && addon.closest(".calc-step");
+      if (host.dataset.for !== undefined) {
+        applies = host.dataset.for.split(/\s+/).includes(type);
+      } else {
+        const trigger = panel.querySelector(host.dataset.when);
+        applies = Boolean(trigger && trigger.checked);
+      }
 
-      // ticked, and on a step still standing — a hidden tick counts for nothing
-      show(subfield, Boolean(addon && addon.checked && (!step || !step.hidden)));
+      /* A tick inside something already hidden counts for nothing — the
+         question that would have justified it was never put. */
+      if (applies && host.parentElement.closest("[hidden]")) applies = false;
+
+      show(host, applies);
     });
 
     running = false;

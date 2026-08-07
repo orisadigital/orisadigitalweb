@@ -416,7 +416,7 @@
 
                 <label class="calc-option calc-option--multi">
                   <!-- no data-price: the count below decides it -->
-                  <input type="checkbox" name="addons" value="mega-menu">
+                  <input type="checkbox" id="addon-mega" name="addons" value="mega-menu">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Mega Menu</span>
                     <span class="calc-option-text">A wide dropdown for big menus.</span>
@@ -430,7 +430,7 @@
                 <label class="calc-option calc-option--multi">
                   <!-- no data-price: the languages below decide it, and the
                        page count decides that -->
-                  <input type="checkbox" name="addons" value="multi-language">
+                  <input type="checkbox" id="addon-lang" name="addons" value="multi-language">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Multi Language</span>
                     <span class="calc-option-text">Your site in more than one language.</span>
@@ -443,7 +443,7 @@
 
                 <label class="calc-option calc-option--multi">
                   <!-- no data-price: the count below decides it -->
-                  <input type="checkbox" name="addons" value="pop-up-call">
+                  <input type="checkbox" id="addon-popup" name="addons" value="pop-up-call">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Pop Up Call</span>
                     <span class="calc-option-text">A call button that follows visitors.</span>
@@ -456,7 +456,7 @@
 
                 <label class="calc-option calc-option--multi">
                   <!-- no data-price: the tier and count below decide it -->
-                  <input type="checkbox" name="addons" value="advanced-forms">
+                  <input type="checkbox" id="addon-forms" name="addons" value="advanced-forms">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Advanced Forms</span>
                     <span class="calc-option-text">Multi-step forms with uploads.</span>
@@ -484,7 +484,7 @@
                    inside, every drag of a slider would also toggle its own
                    checkbox off.
                    TODO: five is a guess at the ceiling; confirm it. -->
-              <div class="calc-subfield" data-for-addon="mega-menu" hidden>
+              <div class="calc-subfield" data-when="#addon-mega" hidden>
                 <p class="calc-subfield-label" id="mega-menu-label">How many mega menus?</p>
 
                 <div class="calc-slider-field">
@@ -508,7 +508,7 @@
 
               <!-- Priced off the page count as well as the languages, so this
                    one is worked out rather than counted. -->
-              <div class="calc-subfield" data-for-addon="multi-language" hidden>
+              <div class="calc-subfield" data-when="#addon-lang" hidden>
                 <p class="calc-subfield-label" id="lang-label">Which languages?</p>
 
                 <div class="calc-language" data-language-price="300">
@@ -540,7 +540,7 @@
                 </div>
               </div>
 
-              <div class="calc-subfield" data-for-addon="pop-up-call" hidden>
+              <div class="calc-subfield" data-when="#addon-popup" hidden>
                 <p class="calc-subfield-label" id="popup-label">How many pop up calls?</p>
 
                 <div class="calc-slider-field">
@@ -562,49 +562,90 @@
                 </div>
               </div>
 
-              <!-- Two questions, not one: which kind of form, and how many.
-                   The tier carries the rate and hands it to the count. -->
-              <div class="calc-subfield" data-for-addon="advanced-forms" hidden>
-                <p class="calc-subfield-label" id="forms-tier-label">How complex are they?</p>
+              <!-- The tiers stack rather than replace one another, so each one
+                   carries its own count at its own rate. -->
+              <div class="calc-subfield" data-when="#addon-forms" hidden>
+                <p class="calc-subfield-label" id="forms-tier-label">Which forms do you need?</p>
 
-                <div class="calc-chips" role="radiogroup" aria-labelledby="forms-tier-label"
-                     data-rate-target="#forms-slider">
+                <div class="calc-chips" role="group" aria-labelledby="forms-tier-label">
                   <label class="calc-chip">
-                    <input type="radio" name="forms-tier" value="basic"
-                           data-unit-price="500" data-unit="basic form" checked>
+                    <input type="checkbox" id="forms-basic" name="forms-tier" value="basic">
                     <span>Basic &middot; RM500</span>
                   </label>
                   <label class="calc-chip">
-                    <input type="radio" name="forms-tier" value="advance"
-                           data-unit-price="1500" data-unit="advance form">
+                    <input type="checkbox" id="forms-advance" name="forms-tier" value="advance">
                     <span>Advance &middot; RM1,500</span>
                   </label>
                   <label class="calc-chip">
-                    <input type="radio" name="forms-tier" value="complex"
-                           data-unit-price="3000" data-unit="complex form">
+                    <input type="checkbox" id="forms-complex" name="forms-tier" value="complex">
                     <span>Complex &middot; RM3,000</span>
                   </label>
                 </div>
 
-                <p class="calc-subfield-label calc-subfield-label--second" id="forms-label">How many forms?</p>
+                <div class="calc-subfield calc-subfield--nested" data-when="#forms-basic" hidden>
+                  <p class="calc-subfield-label" id="basic-label">How many basic forms?</p>
 
-                <div class="calc-slider-field">
-                  <div class="calc-slider" id="forms-slider" data-unit-price="500"
-                       data-included="0" data-unit="basic form">
-                    <input class="calc-slider-input" type="range" id="forms-count" name="forms-count"
-                           min="1" max="5" step="1" value="1"
-                           aria-labelledby="forms-label" aria-describedby="forms-rate">
+                  <div class="calc-slider-field">
+                    <div class="calc-slider" data-unit-price="500" data-included="0" data-unit="basic form">
+                      <input class="calc-slider-input" type="range" id="basic-count" name="basic-count"
+                             min="1" max="5" step="1" value="1"
+                             aria-labelledby="basic-label" aria-describedby="basic-rate">
 
-                    <div class="calc-slider-rail">
-                      <span class="calc-slider-fill"></span>
+                      <div class="calc-slider-rail">
+                        <span class="calc-slider-fill"></span>
+                      </div>
+                      <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
                     </div>
-                    <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
-                  </div>
 
-                  <p class="calc-slider-rate" id="forms-rate">
-                    <span class="calc-slider-sum">+1 basic form &times; RM500</span>
-                    <span class="calc-slider-total">RM500</span>
-                  </p>
+                    <p class="calc-slider-rate" id="basic-rate">
+                      <span class="calc-slider-sum">+1 basic form &times; RM500</span>
+                      <span class="calc-slider-total">RM500</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="calc-subfield calc-subfield--nested" data-when="#forms-advance" hidden>
+                  <p class="calc-subfield-label" id="advance-label">How many advance forms?</p>
+
+                  <div class="calc-slider-field">
+                    <div class="calc-slider" data-unit-price="1500" data-included="0" data-unit="advance form">
+                      <input class="calc-slider-input" type="range" id="advance-count" name="advance-count"
+                             min="1" max="5" step="1" value="1"
+                             aria-labelledby="advance-label" aria-describedby="advance-rate">
+
+                      <div class="calc-slider-rail">
+                        <span class="calc-slider-fill"></span>
+                      </div>
+                      <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
+                    </div>
+
+                    <p class="calc-slider-rate" id="advance-rate">
+                      <span class="calc-slider-sum">+1 advance form &times; RM1,500</span>
+                      <span class="calc-slider-total">RM1,500</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="calc-subfield calc-subfield--nested" data-when="#forms-complex" hidden>
+                  <p class="calc-subfield-label" id="complex-label">How many complex forms?</p>
+
+                  <div class="calc-slider-field">
+                    <div class="calc-slider" data-unit-price="3000" data-included="0" data-unit="complex form">
+                      <input class="calc-slider-input" type="range" id="complex-count" name="complex-count"
+                             min="1" max="5" step="1" value="1"
+                             aria-labelledby="complex-label" aria-describedby="complex-rate">
+
+                      <div class="calc-slider-rail">
+                        <span class="calc-slider-fill"></span>
+                      </div>
+                      <span class="calc-slider-thumb"><span class="calc-slider-value">1</span></span>
+                    </div>
+
+                    <p class="calc-slider-rate" id="complex-rate">
+                      <span class="calc-slider-sum">+1 complex form &times; RM3,000</span>
+                      <span class="calc-slider-total">RM3,000</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </fieldset>
