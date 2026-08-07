@@ -1159,6 +1159,66 @@
   }
 })();
 
+/* Language cost — the one figure on the page that two answers decide.
+
+   A site has one main language whatever it costs, so that one comes with the
+   base price and only the languages after it are charged. Each of those is
+   priced per page, which means this has to watch the page count as well as its
+   own chips: translating twelve pages is not the same job as translating five,
+   and a total that ignored the slider above would go stale the moment it
+   moved. */
+(() => {
+  "use strict";
+
+  const field = document.querySelector(".calc-language");
+  if (!field) return;
+
+  const chips = [...field.querySelectorAll('input[name="languages"]')];
+  const sum = field.querySelector(".calc-slider-sum");
+  const total = field.querySelector(".calc-slider-total");
+  if (!chips.length || !sum || !total) return;
+
+  const pages = document.querySelector("#pages");
+  const unit = Number(field.dataset.languagePrice) || 0;
+
+  const money = (amount) => `RM${amount.toLocaleString("en-US")}`;
+  const count = (n, noun) => `${n} ${n === 1 ? noun : `${noun}s`}`;
+
+  const paint = () => {
+    const chosen = chips.filter((chip) => chip.checked).length;
+    // the first is the main one, and it is already paid for
+    const extra = Math.max(0, chosen - 1);
+    const pageCount = pages ? Number(pages.value) : 0;
+
+    /* Every site has a language, so none chosen is an unanswered question
+       rather than a free one — calling it included would price a site that
+       cannot exist. */
+    if (!chosen) {
+      sum.textContent = "Choose a language";
+      total.textContent = "—";
+      return;
+    }
+
+    if (!extra) {
+      sum.textContent = `${count(chosen, "language")}, the main one`;
+      total.textContent = "Included in base price";
+      return;
+    }
+
+    sum.textContent = `+${count(extra, "language")} × ${money(unit)} × ${count(
+      pageCount,
+      "page"
+    )}`;
+    total.textContent = money(extra * unit * pageCount);
+  };
+
+  field.addEventListener("change", paint);
+  // the page count is the other half of this sum, and it lives outside the field
+  if (pages) pages.addEventListener("input", paint);
+
+  paint();
+})();
+
 /* Calculator parts that only apply to some answers.
 
    Two kinds, resolved together because they chain: a step carrying data-for
@@ -1192,8 +1252,9 @@
   const clear = (host) => {
     host.querySelectorAll("input").forEach((input) => {
       if (input.type === "checkbox" || input.type === "radio") {
-        if (!input.checked) return;
-        input.checked = false;
+        // back to its default, which is not always off — a main language is on
+        if (input.checked === input.defaultChecked) return;
+        input.checked = input.defaultChecked;
       } else {
         if (input.value === input.defaultValue) return;
         input.value = input.defaultValue;

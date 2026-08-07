@@ -430,11 +430,13 @@
                 </label>
 
                 <label class="calc-option calc-option--multi">
-                  <input type="checkbox" name="addons" value="multi-language" data-priced-by="options">
+                  <!-- no data-price: the languages below decide it, and the
+                       page count decides that -->
+                  <input type="checkbox" name="addons" value="multi-language">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Multi Language</span>
                     <span class="calc-option-text">Your site in more than one language.</span>
-                    <span class="calc-option-price">Priced by options</span>
+                    <span class="calc-option-price">+RM150 per page</span>
                   </span>
                   <span class="calc-option-tick" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
@@ -521,6 +523,34 @@
                   <p class="calc-slider-rate" id="mega-menu-rate">
                     <span class="calc-slider-sum">+1 menu &times; RM500</span>
                     <span class="calc-slider-total">RM500</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Priced off the page count as well as the languages, so this
+                   one is worked out rather than counted. -->
+              <div class="calc-subfield" data-for-addon="multi-language" hidden>
+                <p class="calc-subfield-label" id="lang-label">Which languages?</p>
+
+                <div class="calc-language" data-language-price="150">
+                  <div class="calc-chips" role="group" aria-labelledby="lang-label">
+                    <label class="calc-chip">
+                      <input type="checkbox" name="languages" value="english" checked>
+                      <span>English</span>
+                    </label>
+                    <label class="calc-chip">
+                      <input type="checkbox" name="languages" value="malay">
+                      <span>Malay</span>
+                    </label>
+                    <label class="calc-chip">
+                      <input type="checkbox" name="languages" value="chinese">
+                      <span>Chinese</span>
+                    </label>
+                  </div>
+
+                  <p class="calc-slider-rate">
+                    <span class="calc-slider-sum">1 language</span>
+                    <span class="calc-slider-total">Included in base price</span>
                   </p>
                 </div>
               </div>

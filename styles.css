@@ -1450,6 +1450,51 @@ body {
   color: var(--ink);
 }
 
+/* ---------- Calculator chips ---------- */
+
+.calc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Smaller than an option card, because these are answers within an answer and
+   should not compete with the add-on that opened them. */
+.calc-chip {
+  position: relative;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(50, 56, 58, 0.16);
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* off screen rather than gone, so the arrow keys and tabbing still reach it */
+.calc-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.calc-chip:hover {
+  border-color: rgba(50, 56, 58, 0.34);
+}
+
+.calc-chip:has(input:checked) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.calc-chip:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
 /* ---------- Calculator slider ---------- */
 
 .calc-slider {
