@@ -182,30 +182,7 @@
             day. Prefer to talk? The buttons in the header reach us on WhatsApp,
             Telegram, or by phone.
           </p>
-
-          <!-- main.js posts this in the background and shows the result in
-               .form-status, so the visitor never leaves the page.
-
-               /api/contact is our own Pages Function (functions/api/contact.js),
-               so the message never passes through a third party and the mail
-               goes out from our own domain. It answers with the same
-               {success, message} shape a hosted form service would.
-
-               Note it only exists on a Cloudflare deploy — `npx serve` has no
-               Functions runtime, so submitting from that dev server will show
-               the error panel. Use `npx wrangler pages dev .` to test locally. -->
-          <form class="contact-form"
-                data-endpoint="/api/contact"
-                data-mailto="hello@orisadigital.com">
-            <!-- what the notification lands in your inbox as -->
-            <input type="hidden" name="_subject" value="New project enquiry — orisadigital.com">
-
-            <!-- Honeypot. Bots fill every field they find; people never see this
-                 one, so anything arriving with it filled is automated and
-                 FormSubmit drops it. Kept out of the tab order and hidden from
-                 screen readers so it cannot be reached by accident. -->
-            <input class="honeypot" type="text" name="_honey" tabindex="-1"
-                   autocomplete="off" aria-hidden="true">
+          <form class="contact-form">
             <div class="field">
               <label for="name">Name</label>
               <input id="name" name="name" type="text" autocomplete="name" required>
@@ -242,10 +219,6 @@
                 <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </span>
             </button>
-
-            <!-- role=status announces the result to a screen reader without
-                 stealing focus; it stays empty until there is something to say. -->
-            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
