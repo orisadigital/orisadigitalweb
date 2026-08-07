@@ -626,6 +626,96 @@ body {
     );
 }
 
+/* ---------- Hero scroll cue ---------- */
+
+/* Sits on the hero's bottom edge, above the veil. pointer-events are off so it
+   never eats a click meant for the video behind it. */
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 3.5vh, 40px);
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* the eyebrow's type, a step quieter — this is a hint, not a label */
+.hero-scroll-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  /* the tracking is applied to the right of each letter, including the last,
+     which would throw the word off centre without this */
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.55);
+}
+
+/* The rail. It is the full travel, drawn faint; the segment inside is what
+   moves, so only a transform animates and the line itself never resizes. */
+.hero-scroll-line {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: clamp(38px, 6vh, 58px);
+  overflow: hidden;
+  background: rgba(50, 56, 58, 0.16);
+}
+
+.hero-scroll-line::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 45%;
+  background: var(--ink);
+  animation: hero-scroll-run 2.1s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+
+/* Runs clear of the top before it starts and clear of the foot before it
+   repeats, so the segment enters and leaves rather than popping. */
+@keyframes hero-scroll-run {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(222%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-line::after {
+    animation: none;
+  }
+}
+
+/* The hero copy is centred and the headline scales with the width, so on a
+   short laptop the cue runs into the intro. It gives up the label first, which
+   buys back its own height plus the gap under it, and the rail shortens with
+   it — the movement is what reads as "there is more below", not the word. */
+@media (max-height: 780px) {
+  .hero-scroll-label {
+    display: none;
+  }
+
+  .hero-scroll-line {
+    height: 30px;
+  }
+}
+
+/* Below this there is no room for it at all, and a cue overlapping the sentence
+   it sits under is worse than no cue. */
+@media (max-height: 640px) {
+  .hero-scroll {
+    display: none;
+  }
+}
+
 .hero-content {
   position: relative;
   z-index: 1;
