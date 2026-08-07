@@ -1254,6 +1254,12 @@ body {
   padding: 0;
 }
 
+/* Two questions under one step heading need parting, but not a rule: the
+   divider between steps is what says a new step has begun. */
+.calc-fieldset + .calc-fieldset {
+  margin-top: clamp(28px, 3.5vw, 40px);
+}
+
 /* Reads as an aside to the question rather than part of it, but stays inside
    the legend so a screen reader still hears the step is optional. */
 .calc-question-note {
