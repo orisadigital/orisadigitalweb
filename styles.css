@@ -2230,7 +2230,27 @@ body {
 /* ---------- Features (bento) ---------- */
 
 .features {
+  position: relative;
   padding: clamp(48px, 7vw, 96px) 24px clamp(56px, 8vw, 104px);
+}
+
+/* A rule where the benefits block hands over. Both sections are white and their
+   padding runs together, so without it the two read as one long stretch.
+
+   A pseudo-element rather than a border-top on the section: that would run to
+   the window, and this holds the line to the same 1160px the copy sits in. It
+   sits on the section's own top edge, so the padding either side of it is the
+   air the two sections already had. Same weight as the service list dividers. */
+.benefits + .features::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  max-width: 1160px;
+  height: 1px;
+  margin: 0 auto;
+  background: rgba(50, 56, 58, 0.14);
 }
 
 .features-inner {
