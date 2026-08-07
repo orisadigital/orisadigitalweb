@@ -902,18 +902,14 @@
 
   const status = form.querySelector(".form-status");
 
-  /* wa.me only reaches WhatsApp itself on a phone. On a desktop it stops at an
-     api.whatsapp.com splash page offering "Open app", "Continue to WhatsApp
-     Web" and a download banner — the enquiry is written but nothing has opened,
-     which reads as a broken button. web.whatsapp.com/send skips that and lands
-     in the conversation, so each device gets the link that actually arrives. */
-  const onPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  /* The same wa.me link the header and footer buttons use. It hands off to
+     whichever WhatsApp the visitor actually has — the app on a phone, the
+     installed desktop app through the browser's protocol prompt, and WhatsApp
+     Web for anyone with neither. Addressing web.whatsapp.com directly instead
+     would force everyone down the last of those, which is a QR code to scan
+     for the people who already had WhatsApp open in front of them. */
   const link = (text) =>
-    onPhone
-      ? `https://wa.me/${number}?text=${encodeURIComponent(text)}`
-      : `https://web.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(
-          text
-        )}`;
+    `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 
   const value = (name) => {
     const field = form.elements[name];
