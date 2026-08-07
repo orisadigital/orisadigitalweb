@@ -1031,13 +1031,13 @@
 
    The input stays the control: it holds the value, answers the arrow keys and
    is what a screen reader announces. What it does not do is handle the drag.
-   Its thumb is sized by the browser, and the drawn thumb has to be wide enough
-   to hold two arrows and a number, so a drag mapped to the native width would
-   slide out from under the pointer. The pointer is measured against the drawn
-   thumb here instead, which is the one the eye is following.
+   Its thumb is sized by the browser, and the drawn one is a pill wide enough to
+   carry the number, so a drag mapped to the native width would slide out from
+   under the pointer. The pointer is measured against the drawn thumb here
+   instead, which is the one the eye is following.
 
-   Everything funnels through setting the input's value and letting it fire its
-   own input event, so a drag, an arrow click and a keypress leave by one door. */
+   Both routes funnel through setting the input's value and letting it fire its
+   own input event, so a drag and a keypress leave by the same door. */
 (() => {
   "use strict";
 
@@ -1053,18 +1053,24 @@
   // a zero-width range would divide by zero below, and has nothing to draw anyway
   if (!(max > min)) return;
 
-  const steps = [...slider.querySelectorAll(".calc-slider-step")];
+  const unit = Number(slider.dataset.unitPrice) || 0;
+  const sum = document.querySelector(".calc-slider-sum");
+  const total = document.querySelector(".calc-slider-total");
+
+  // grouped the way the prices are written everywhere else on the page
+  const money = (amount) => `RM${amount.toLocaleString("en-US")}`;
 
   const paint = () => {
     const value = Number(input.value);
     slider.style.setProperty("--pct", (value - min) / (max - min));
     readout.textContent = input.value;
 
-    // an arrow with nowhere left to go says so rather than swallowing the click
-    steps.forEach((step) => {
-      const next = value + Number(step.dataset.step);
-      step.disabled = next < min || next > max;
-    });
+    if (sum) {
+      sum.textContent = `${value} ${value === 1 ? "page" : "pages"} × ${money(unit)}`;
+    }
+    if (total) {
+      total.textContent = money(value * unit);
+    }
   };
 
   input.addEventListener("input", paint);
@@ -1078,33 +1084,22 @@
     input.dispatchEvent(new Event("input", { bubbles: true }));
   };
 
-  steps.forEach((step) => {
-    step.addEventListener("click", () => {
-      commit(Number(input.value) + Number(step.dataset.step));
-    });
-  });
-
-  /* The thumb's travel is the rail less its own width, and its centre is what
-     reads as the current value — so the pointer is measured to that centre. */
+  /* The bar is inset by half a thumb at each end, which makes it exactly the
+     path the thumb's centre travels — so a pointer anywhere along it maps
+     straight across, with no half-thumb correction to keep in step. */
   const rail = slider.querySelector(".calc-slider-rail");
-  const thumb = slider.querySelector(".calc-slider-thumb");
 
   const valueAt = (clientX) => {
     const box = rail.getBoundingClientRect();
-    const travel = box.width - thumb.offsetWidth;
-    if (travel <= 0) return min;
+    if (box.width <= 0) return min;
 
-    const offset = clientX - box.left - thumb.offsetWidth / 2;
-    const ratio = Math.min(1, Math.max(0, offset / travel));
+    const ratio = Math.min(1, Math.max(0, (clientX - box.left) / box.width));
     return Math.round(min + ratio * (max - min));
   };
 
   let dragging = false;
 
   slider.addEventListener("pointerdown", (event) => {
-    // the arrows are their own controls; a click on one is not the start of a drag
-    if (event.target.closest(".calc-slider-step")) return;
-
     dragging = true;
 
     /* Capture, so a drag that wanders off the slider still tracks and still

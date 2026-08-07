@@ -1418,16 +1418,16 @@ body {
 /* ---------- Calculator slider ---------- */
 
 .calc-slider {
-  --thumb-w: 92px;
-  --rail-h: 40px;
+  --thumb-w: 58px;
+  --thumb-h: 34px;
+  --bar-h: 8px;
   /* set by main.js: 0 at the minimum, 1 at the maximum */
   --pct: 0;
   position: relative;
-  padding: 6px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(50, 56, 58, 0.14);
+  /* room for the thumb, which stands taller than the bar it rides on */
+  height: var(--thumb-h);
   cursor: grab;
+  /* a drag along the bar is the slider's, not the page's */
   touch-action: none;
 }
 
@@ -1442,7 +1442,7 @@ body {
    cannot disagree. */
 .calc-slider-input {
   position: absolute;
-  inset: 6px;
+  inset: 0;
   width: auto;
   height: auto;
   margin: 0;
@@ -1458,100 +1458,79 @@ body {
   outline-offset: 3px;
 }
 
-/* Drawn on top, so it has to let the drag through to the input beneath —
-   everything here is inert except the two arrows. */
+/* A slim bar centred in the taller box the thumb needs. Inset by half a thumb
+   at each end so the bar spans exactly the travel, and the fill can read to the
+   thumb's centre without overshooting it at either limit. */
 .calc-slider-rail {
-  position: relative;
-  height: var(--rail-h);
+  position: absolute;
+  left: calc(var(--thumb-w) / 2);
+  right: calc(var(--thumb-w) / 2);
+  top: 50%;
+  height: var(--bar-h);
+  transform: translateY(-50%);
   border-radius: 999px;
-  background: rgba(50, 56, 58, 0.07);
+  background: rgba(50, 56, 58, 0.1);
   pointer-events: none;
 }
 
-/* Reaches the middle of the thumb rather than its edge, so the filled length
-   reads as "up to here" at both ends of the travel. */
 .calc-slider-fill {
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: calc(var(--pct) * (100% - var(--thumb-w)) + var(--thumb-w) / 2);
+  width: calc(var(--pct) * 100%);
   border-radius: 999px;
   background: var(--ink);
 }
 
 /* Travels between 0 and the track width less its own, which is exactly what a
-   native thumb does — hence the matching width above. */
+   native thumb does — hence the matching width in main.js. */
 .calc-slider-thumb {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 50%;
   left: calc(var(--pct) * (100% - var(--thumb-w)));
   width: var(--thumb-w);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 4px;
+  height: var(--thumb-h);
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
   border-radius: 999px;
   background: #fff;
+  border: 1px solid rgba(50, 56, 58, 0.12);
   box-shadow:
     0 1px 2px rgba(16, 20, 24, 0.1),
     0 6px 16px rgba(16, 20, 24, 0.14);
+  pointer-events: none;
 }
 
 .calc-slider-value {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--ink);
+  /* so the pill does not twitch as the digits change under a drag */
   font-variant-numeric: tabular-nums;
 }
 
-.calc-slider-step {
-  pointer-events: auto;
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--ink);
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.calc-slider-step:hover:not(:disabled) {
-  background: rgba(50, 56, 58, 0.08);
-}
-
-.calc-slider-step:disabled {
-  opacity: 0.28;
-  cursor: default;
-}
-
-.calc-slider-step svg {
-  width: 15px;
-  height: 15px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 .calc-slider-rate {
-  margin: 12px 0 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 16px 0 0;
   font-size: 0.875rem;
   color: rgba(50, 56, 58, 0.66);
+}
+
+.calc-slider-total {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .calc-option,
   .calc-option-tick,
-  .calc-option-tick svg,
-  .calc-slider-step {
+  .calc-option-tick svg {
     transition: none;
   }
 
