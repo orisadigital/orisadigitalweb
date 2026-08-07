@@ -910,36 +910,48 @@
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    // the label, not the value: "Mobile App" reads better in a chat than "mobile-app"
     const select = form.elements.service;
-    const need = select ? select.options[select.selectedIndex].text : "";
+    const chosen = select && select.options[select.selectedIndex];
+    const need = chosen ? chosen.text : "";
 
     // falsy entries drop out, so an omitted phone leaves no empty line behind
-    const lines = [
-      "Hi Orisa Digital — enquiry from your website.",
-      "",
+    const details = [
       `Name: ${value("name")}`,
       `Email: ${value("email")}`,
       value("phone") && `Phone: ${value("phone")}`,
       need && `Looking for: ${need}`,
-      "",
-      value("message"),
     ].filter(Boolean);
 
-    const url = `https://wa.me/${number}?text=${encodeURIComponent(
-      lines.join("\n")
-    )}`;
+    // joined in blocks so the greeting, the details and the brief stay apart
+    const text = [
+      "Hi Orisa Digital — enquiry from your website.",
+      details.join("\n"),
+      value("message"),
+    ]
+      .filter(Boolean)
+      .join("\n\n");
 
-    /* A new tab keeps the site open behind the conversation. Popup blockers
-       normally allow this because it is a click, but if one intervenes the
-       current tab goes there instead so the enquiry is never simply lost. */
-    const opened = window.open(url, "_blank", "noopener");
-    if (!opened) window.location.href = url;
+    const url = `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+
+    /* Clicking a real anchor rather than calling window.open: a blocker can
+       return a stub window object instead of null, which reads as success and
+       leaves the visitor staring at a form that did nothing. An anchor click
+       inside a user gesture is not blocked, so there is no failure to detect. */
+    const opener = document.createElement("a");
+    opener.href = url;
+    opener.target = "_blank";
+    opener.rel = "noopener noreferrer";
+    document.body.append(opener);
+    opener.click();
+    opener.remove();
 
     if (status) {
       status.dataset.state = "info";
       status.textContent = "";
 
-      status.append("Opening WhatsApp with your message ready to send. ");
+      // the handoff only drafts the message — saying so avoids a silent drop
+      status.append("WhatsApp is opening with your message ready. Press send there and it reaches us. ");
 
       // nothing on screen confirms an app handoff, so leave a way back in
       const link = document.createElement("a");
