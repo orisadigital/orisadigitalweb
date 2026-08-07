@@ -1231,15 +1231,21 @@ body {
   min-width: 0;
 }
 
+.calc-question,
+.calc-heading {
+  margin: 0 0 18px;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+/* A legend is not a flow box — left to itself it shrinks to its own text and
+   sits inside the fieldset's border box. Floating it makes it behave. */
 .calc-question {
-  /* a legend is not a flow box, so it takes width from its own text */
   float: left;
   width: 100%;
   padding: 0;
-  margin-bottom: 18px;
-  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-  font-weight: 600;
-  color: var(--ink);
 }
 
 .calc-options {
@@ -1346,6 +1352,67 @@ body {
   .calc-options {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* ---------- Calculator inclusions ---------- */
+
+.calc-includes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.calc-include {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* These are stated facts, not choices, so the mark is quieter than the one on
+   a selected option — filled would read as something the visitor had done. */
+.calc-include-tick {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  /* The 22px disc is taller than the name's line box, so aligning their tops
+     leaves it sitting low. Measured: 2px lifts the two centres onto each other. */
+  margin-top: -2px;
+  border-radius: 50%;
+  background: rgba(50, 56, 58, 0.07);
+}
+
+.calc-include-tick svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.calc-include-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.calc-include-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.calc-include-text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(50, 56, 58, 0.66);
+  text-wrap: pretty;
 }
 
 @media (prefers-reduced-motion: reduce) {
