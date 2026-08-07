@@ -886,7 +886,7 @@
 /* Contact form — hands the enquiry to WhatsApp.
 
    There is no server behind this page, so instead of posting anywhere the
-   submit composes the message and opens wa.me with it already written. The
+   submit composes the message and opens WhatsApp with it already written. The
    visitor sends it from their own WhatsApp, which puts the enquiry in the same
    thread as the header's WhatsApp button and gives both sides a conversation
    rather than a one-way form. */
@@ -896,11 +896,24 @@
   const form = document.querySelector(".contact-form");
   if (!form) return;
 
-  // wa.me wants digits only: country code first, no plus, no spaces
+  // WhatsApp wants digits only: country code first, no plus, no spaces
   const number = (form.dataset.whatsapp || "").replace(/\D/g, "");
   if (!number) return;
 
   const status = form.querySelector(".form-status");
+
+  /* wa.me only reaches WhatsApp itself on a phone. On a desktop it stops at an
+     api.whatsapp.com splash page offering "Open app", "Continue to WhatsApp
+     Web" and a download banner — the enquiry is written but nothing has opened,
+     which reads as a broken button. web.whatsapp.com/send skips that and lands
+     in the conversation, so each device gets the link that actually arrives. */
+  const onPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  const link = (text) =>
+    onPhone
+      ? `https://wa.me/${number}?text=${encodeURIComponent(text)}`
+      : `https://web.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(
+          text
+        )}`;
 
   const value = (name) => {
     const field = form.elements[name];
@@ -934,7 +947,7 @@
       .filter(Boolean)
       .join("\n\n");
 
-    const url = `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+    const url = link(text);
 
     /* Clicking a real anchor rather than calling window.open: a blocker can
        return a stub window object instead of null, which reads as success and
@@ -953,15 +966,17 @@
       status.textContent = "";
 
       // the handoff only drafts the message — saying so avoids a silent drop
-      status.append("WhatsApp is opening with your message ready. Press send there and it reaches us. ");
+      status.append(
+        "WhatsApp is opening with your message ready. Press send there and it reaches us. "
+      );
 
       // nothing on screen confirms an app handoff, so leave a way back in
-      const link = document.createElement("a");
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = "Not opening? Tap here.";
-      status.append(link);
+      const retry = document.createElement("a");
+      retry.href = url;
+      retry.target = "_blank";
+      retry.rel = "noopener noreferrer";
+      retry.textContent = "Not opening? Tap here.";
+      status.append(retry);
     }
   });
 })();
