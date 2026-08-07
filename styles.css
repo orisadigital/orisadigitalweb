@@ -3318,6 +3318,18 @@ body {
   border: 0;
 }
 
+/* For footage whose subject sits against the left of the frame. The band is
+   close to square on a phone — 360x320 against 16:9 source — so cover throws
+   away 37% of the width, and taken from the centre that lands on the subject:
+   the web design clip lost the start of every line of code, leaving "omponent"
+   and "lue={value}". Anchoring the crop left keeps the reading edge.
+
+   No effect above the phone breakpoint, where the band is wider than 16:9 and
+   the full width is already shown — only the height is being cropped there. */
+.video-band-media--left {
+  object-position: left center;
+}
+
 /* ---------- Approach ---------- */
 
 .approach {
