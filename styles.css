@@ -517,7 +517,8 @@ body {
 .drawer-nav a {
   display: block;
   padding: 6px 0;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   line-height: 1.12;
   letter-spacing: 0.015em;
@@ -536,7 +537,8 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.25rem, 2.6vw, 1.6rem);
   line-height: 1;
   letter-spacing: 0.02em;
@@ -752,9 +754,9 @@ body {
 
 .hero-title {
   margin: 0;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
-  font-size: clamp(2.5rem, 9.5vw, 8rem);
-  font-weight: 400;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(1.4rem, 7vw, 5.25rem);
+  font-weight: 900;
   line-height: 0.98;
   letter-spacing: 0.005em;
   text-transform: uppercase;
@@ -872,7 +874,8 @@ body {
   gap: 20px;
   /* doubles as the gap before the next item, including across the seam */
   padding-right: 44px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.3rem, 2.6vw, 2.1rem);
   line-height: 1.15;
   letter-spacing: 0.025em;
@@ -991,7 +994,8 @@ body {
   align-items: baseline;
   justify-content: center;
   margin: 0 0 10px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(2.75rem, 5.2vw, 4rem);
   line-height: 1;
   letter-spacing: 0.01em;
@@ -1097,9 +1101,9 @@ body {
 
 .section-title {
   margin: 0 0 22px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-size: clamp(1.9rem, 3.4vw, 3rem);
-  font-weight: 400;
+  font-weight: 900;
   line-height: 1.04;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -1350,7 +1354,8 @@ body {
 }
 
 .calc-step-index {
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   /* the numerals are the one place the display face earns its keep here */
   font-size: 0.95rem;
   letter-spacing: 0.02em;
@@ -1979,7 +1984,8 @@ body {
 
 .value-statement {
   margin: 0;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.35rem, 2.4vw, 2rem);
   line-height: 1.24;
   letter-spacing: 0.015em;
@@ -2086,9 +2092,9 @@ body {
 
 .team-name {
   margin: 0 0 12px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-size: clamp(1.375rem, 2.1vw, 1.875rem);
-  font-weight: 400;
+  font-weight: 900;
   line-height: 1.05;
   letter-spacing: 0.015em;
   text-transform: uppercase;
@@ -2172,9 +2178,9 @@ body {
 
 .tech-title {
   margin: 0 0 20px;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-size: clamp(2rem, 4.4vw, 3.5rem);
-  font-weight: 400;
+  font-weight: 900;
   line-height: 1.04;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -3414,7 +3420,8 @@ body {
   /* one column of its own, running the full height of the card */
   grid-column: 1;
   grid-row: 1 / span 2;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(2.25rem, 4vw, 3.25rem);
   line-height: 1;
   color: rgba(50, 56, 58, 0.17);
@@ -3596,7 +3603,8 @@ body {
 }
 
 .service-name {
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.6rem, 3.6vw, 3rem);
   line-height: 1.02;
   letter-spacing: 0.01em;
@@ -3668,10 +3676,10 @@ body {
 
 .statement-title {
   margin: 0;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
   /* nowrap, so the ceiling is set by the line still fitting the column */
-  font-size: clamp(2rem, 13vw, 11rem);
-  font-weight: 400;
+  font-size: clamp(1.2rem, 9.2vw, 8rem);
+  font-weight: 900;
   line-height: 1;
   letter-spacing: -0.012em;
   text-transform: uppercase;
@@ -3703,13 +3711,6 @@ body {
   backface-visibility: hidden;
 }
 
-/* "Building Sarawak's" is 310px at the 40px floor — wider than a 320px screen
-   can hold, so the smallest phones need a smaller floor to keep two lines. */
-@media (max-width: 370px) {
-  .hero-title {
-    font-size: 2.05rem;
-  }
-}
 
 /* Below this the links crowd the logo, so the bar wraps: logo + actions on the
    top row, the nav on its own row underneath. Same DOM, no duplicate markup.
@@ -3874,27 +3875,28 @@ body {
    a heading — it is set well below the 4.5:1 the real copy holds to, which is
    the point, and why it is aria-hidden rather than a real heading.
 
-   Centred on the strip here, which is what a phone gets — the word is close to
-   the height of the whole section there, so there is no room to drop it without
-   losing the top of the letters. Desktop overrides this below.
+   It sits whole inside the section at every width, centred. The section's
+   padding is equal top and bottom, so the strip is centred too and the two
+   share a centre line — the marquee runs through the middle of the letters
+   rather than the word being anchored to an edge.
 
-   line-height is pulled to 0.72 so the box hugs Anton's caps — on a default
-   line box the empty space under the baseline would throw the optical centre
-   well above the real one. */
+   line-height is pulled to 0.75 so the box hugs Inter Tight's caps — on a
+   default line box the empty space under the baseline would throw the optical
+   centre well above the real one. */
 .gallery-wordmark {
   position: absolute;
   inset: 0;
   z-index: 0;
-  height: 0.72em;
+  height: 0.75em;
   margin: auto;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
-  /* Sized to run the full width of the viewport rather than to a type scale:
-     "Our Work" in Anton measures 3.697em with the tracking below, so ~26.5vw
-     lands it just inside the edges. The cap only engages past ~2400px, where
-     the section runs out of height to hold the letters. */
-  font-size: clamp(3rem, 26.5vw, 40rem);
-  font-weight: 400;
-  line-height: 0.72;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  /* Sized to run the full width of the viewport rather than to a type scale.
+     The vw figure is the measured width of the word, so it has to be remeasured
+     if the wording or the face changes. The cap only engages on very wide
+     screens, where the section runs out of height to hold the letters. */
+  font-size: clamp(3rem, 18.4vw, 26rem);
+  font-weight: 900;
+  line-height: 0.75;
   letter-spacing: -0.015em;
   text-transform: uppercase;
   text-align: center;
@@ -3948,12 +3950,12 @@ body {
   }
 
   .gallery-wordmark {
-    font-size: 47vw;
+    font-size: 32vw;
   }
 
   /* The strip's own height stops growing here — the cards hit their 230px floor
      — while the word keeps scaling with the viewport, so at the top of this
-     range it ran out of section to sit in. The line box is a flat 0.72 x 47vw,
+     range it ran out of section to sit in. The line box is a flat 0.75 x 32vw,
      so this is what keeps the section taller than the word at 600px. */
   .gallery {
     padding: max(40px, 11.5vw) 0;
@@ -4066,7 +4068,8 @@ body {
   background: var(--black);
   color: #fff;
   text-decoration: none;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(1.0625rem, 1.7vw, 1.3rem);
   letter-spacing: 0.045em;
   line-height: 1;
@@ -4391,16 +4394,17 @@ body {
      no descender gap is left under it */
   display: inline-block;
   vertical-align: top;
-  font-family: "Anton", "Arial Narrow", Impact, sans-serif;
-  /* Fallback for no-JS. 0.1999 is the measured ratio of fitted size to column
-     width for this string in Anton — remeasure it if the wording changes. The
-     column is the footer's, capped at its max-width; main.js replaces this
-     with a measured fit. */
-  font-size: calc(min(100vw - 48px, 1160px) * 0.1999);
-  /* Anton leaves a wide band of air above its caps. 0.9 is the tightest crop
-     that still clears the cap height (measured: ink runs 0.888em), so the line
-     sits flush in its box without shaving the tops off. */
-  line-height: 0.9;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
+  /* Fallback for no-JS. 0.1416 is the measured ratio of fitted size to column
+     width for this string in Inter Tight Black — remeasure it if the wording or
+     the face changes. The column is the footer's, capped at its max-width;
+     main.js replaces this with a measured fit. */
+  font-size: calc(min(100vw - 48px, 1160px) * 0.1416);
+  /* Inter Tight leaves air above its caps too, though less than Anton did. Its
+     ink runs from 0.065em to 0.805em, so 0.82 is the tightest crop that still
+     clears the cap height and lets the line sit flush in its box. */
+  line-height: 0.82;
   letter-spacing: -0.005em;
   text-transform: uppercase;
   white-space: nowrap;
