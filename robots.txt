@@ -1,0 +1,12 @@
+# Everything here is meant to be found, so nothing is disallowed.
+#
+# header-lab is an internal comparison page and should not be indexed, but it is
+# deliberately NOT blocked here: a crawler has to fetch a page to see the
+# noindex on it, and a Disallow would stop it doing that. Blocking the path
+# would leave the page eligible to appear in results as a bare URL, which is the
+# opposite of what is wanted.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://orisadigital.com/sitemap.xml

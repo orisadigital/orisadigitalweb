@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The seven public pages. Extensionless, to match the canonical on each page and
+  the hrefs in the nav — Cloudflare Pages serves both /about and /about.html, and
+  listing the other form here would hand search engines a second URL for the same
+  content.
+
+  header-lab.html is left out on purpose. It carries a noindex, and it is not
+  disallowed in robots.txt, because a crawler has to be able to fetch a page to
+  read that tag.
+
+  lastmod is the date the page itself last changed. It is only a hint, and one
+  that is ignored if it stops matching what the page actually does, so it wants
+  updating when the content does rather than on every deploy.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://orisadigital.com/</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/web-design</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/mobile-app</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/green-energy</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/about</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/website-pricing</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/contact</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+</urlset>
