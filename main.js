@@ -1191,7 +1191,12 @@
     const chosen = chips.filter((chip) => chip.checked).length;
     // the first is the main one, and it is already paid for
     const extra = Math.max(0, chosen - 1);
-    const pageCount = pages ? Number(pages.value) : 0;
+
+    /* A one-page site has no pages step, so the slider above is not on the page
+       to be read. Reading it regardless quoted the multi-page default it was
+       still sitting at — four pages of translation on a site with one. */
+    const live = pages && !pages.closest("[hidden]");
+    const pageCount = live ? Number(pages.value) : 1;
 
     /* Every site has a language, so none chosen is an unanswered question
        rather than a free one — calling it included would price a site that
@@ -1219,14 +1224,22 @@
   // the page count is the other half of this sum, and it lives outside the field
   if (pages) pages.addEventListener("input", paint);
 
+  /* Changing the product changes the page count without touching either of the
+     two above: the slider is not moved, it is taken off the page. Bound to the
+     section rather than the questions, so the module that does the hiding has
+     already run by the time this reads what is hidden. */
+  const section = field.closest(".calculator");
+  if (section) section.addEventListener("change", paint);
+
   paint();
 })();
 
 /* Calculator parts that only apply to some answers.
 
-   Two kinds. A step carrying data-for lists the project types it belongs to.
-   Anything carrying data-when names a single control — by selector — and shows
-   only while that control is ticked.
+   Two kinds. Anything carrying data-for lists the project types it belongs to —
+   usually a whole step, but a single add-on can be gated the same way when it
+   makes no sense for one of the products. Anything carrying data-when names a
+   control — by selector — and shows only while that control is ticked.
 
    They are resolved together, in one pass, in document order, because they
    nest: a form tier opens a count, the add-on above it opens the tier, and the
@@ -1245,7 +1258,7 @@
   if (!panel) return;
 
   // one list, in document order — parents ahead of the parts they contain
-  const hosts = [...panel.querySelectorAll(".calc-step[data-for], [data-when]")];
+  const hosts = [...panel.querySelectorAll("[data-for], [data-when]")];
   if (!hosts.length) return;
 
   /* A part that no longer applies has to forget what was said to it. Left
@@ -1297,8 +1310,12 @@
       if (host.dataset.for !== undefined) {
         applies = host.dataset.for.split(/\s+/).includes(type);
       } else {
-        const trigger = panel.querySelector(host.dataset.when);
-        applies = Boolean(trigger && trigger.checked);
+        /* Every match, not the first: a part can hang off a whole group rather
+           than one control — the domain length applies to any extension being
+           chosen, not to a particular one. With a single match this is what it
+           always was. */
+        const triggers = [...panel.querySelectorAll(host.dataset.when)];
+        applies = triggers.some((trigger) => trigger.checked);
       }
 
       /* A tick inside something already hidden counts for nothing — the
@@ -1308,12 +1325,545 @@
       show(host, applies);
     });
 
+    /* The step numbers are a running count of what is actually on the page
+       rather than fixed labels. A one-page site has no pages step, and a list
+       that jumped from 03 to 05 would read as a step the visitor had somehow
+       missed. The numbers in the markup are the multi-page order, so they are
+       already right if this never runs. */
+    let shown = 0;
+    panel.querySelectorAll(".calc-step").forEach((step) => {
+      const index = step.querySelector(".calc-step-index");
+      if (!index || step.hidden) return;
+      shown += 1;
+      index.textContent = String(shown).padStart(2, "0");
+    });
+
     running = false;
   };
 
   // one listener for both, since either kind of answer can change what shows
   panel.addEventListener("change", sync);
   sync();
+})();
+
+/* Running estimate — what every answer on the page adds up to.
+
+   Three kinds of charge, all read off the markup so a new question is markup
+   rather than code: a ticked option carrying data-price, a count charging
+   data-unit-price for whatever it holds beyond data-included, and the language
+   field, whose figure needs the page count as well as its own chips.
+
+   Anything inside a hidden part is skipped. The module above resets those
+   inputs when it hides them, so their values are already back to defaults —
+   but a default is not always zero, and a count sitting at its minimum under a
+   question nobody was asked would still price. Reading the hidden state is what
+   keeps an unasked question off the bill.
+
+   Only charges are listed. A count covered by the base price contributes
+   nothing and saying so line by line would bury the figures that do.
+
+   The listener sits on the section rather than the questions panel, so it runs
+   after the one that resolves what is hidden: events reach the inner element
+   first, and reading visibility before that settled would price the answer
+   before last. */
+(() => {
+  "use strict";
+
+  const root = document.querySelector(".calculator");
+  const list = document.querySelector("[data-estimate-lines]");
+  const output = document.querySelector("[data-estimate-total]");
+  if (!root || !list || !output) return;
+
+  const send = document.querySelector("[data-estimate-send]");
+  const download = document.querySelector("[data-estimate-pdf]");
+
+  // what the panel is showing right now, for whatever is asked to write it out
+  let current = { found: [], total: 0 };
+
+  const panel = root.querySelector(".calculator-questions");
+  if (!panel) return;
+
+  /* Whole ringgit everywhere except where the figures genuinely carry sen —
+     domains are priced at .90 and a tax of 8% lands anywhere, so rounding those
+     to the ringgit would make the breakdown fail to add up in front of the
+     reader. */
+  /* How many pages anything priced by the page is charged for.
+
+     A one-page site has no pages step, so there is no slider to read — the
+     product name is the count. Reading the slider regardless would price off a
+     hidden control still holding the multi-page default, and charge for pages
+     nobody was offered.
+
+     data-per-page-less takes off the pages a charge does not apply to: the
+     contact page, which carries a form rather than copy. It only applies where
+     that page exists, so a one-pager is not discounted down to nothing. */
+  const perPage = (input) => {
+    const slider = panel.querySelector("#pages");
+    if (!slider || !live(slider)) return 1;
+    return Math.max(0, Number(slider.value) - (Number(input?.dataset.perPageLess) || 0));
+  };
+
+  const money = (amount) => `RM${Math.round(amount).toLocaleString("en-US")}`;
+  const exact = (amount) =>
+    `RM${amount.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  const plural = (n, noun) => `${n} ${n === 1 ? noun : `${noun}s`}`;
+  const live = (el) => !el.closest("[hidden]");
+
+  /* Direct text only. A name can carry a pill — "Popular" — which belongs to the
+     label a screen reader reads but not to the line on a bill, and textContent
+     would run the two together as "SME WebsitePopular". */
+  const nameOf = (el) =>
+    [...el.childNodes]
+      .filter((node) => node.nodeType === Node.TEXT_NODE)
+      .map((node) => node.textContent)
+      .join("")
+      .trim();
+
+  /* Term-priced blocks: a yearly rate bought for a number of years, with a
+     service charge and, for some, tax. The domain and the hosting are the same
+     shape and differ only in their figures, so those live on the block —
+     data-term-tax, data-term-service — and a third one is markup.
+
+     Tax, where it applies, is on the registration only. The service charge is
+     ours and is not taxed again here.
+
+     Blocks with nothing chosen drop out rather than returning zero, so callers
+     can tell "declined" from "costs nothing". */
+  const terms = () =>
+    [...panel.querySelectorAll("[data-term]")]
+      .map((block) => {
+        if (!live(block)) return null;
+
+        const chosen = [...block.querySelectorAll("input[data-term-price]")].find(
+          (input) => input.checked
+        );
+        if (!chosen) return null;
+
+        const years =
+          Number(
+            [...block.querySelectorAll(`input[name="${block.dataset.termYears}"]`)].find(
+              (year) => year.checked
+            )?.value
+          ) || 1;
+
+        const sub = Number(chosen.dataset.termPrice) * years;
+        const tax = sub * (Number(block.dataset.termTax) || 0);
+        const service = Number(block.dataset.termService) || 0;
+        const name = chosen.closest(".calc-option")?.querySelector(".calc-option-name");
+
+        return {
+          block,
+          label: block.dataset.termLabel || "",
+          name: name ? nameOf(name) : chosen.value,
+          years,
+          sub,
+          tax,
+          service,
+          total: sub + tax + service,
+        };
+      })
+      .filter(Boolean);
+
+  const lines = () => {
+    const found = [];
+
+    // flat prices — one ticked option, one charge
+    panel.querySelectorAll("input[data-price]").forEach((input) => {
+      if (!input.checked || !live(input)) return;
+      const price = Number(input.dataset.price) || 0;
+      if (!price) return;
+
+      const name = input.closest(".calc-option")?.querySelector(".calc-option-name");
+      const label = name ? nameOf(name) : input.value;
+
+      /* Several steps offer an option called "Professional", so on their own
+         those lines stack up identically and the reader cannot tell which
+         service each one is. Steps that need disambiguating name themselves
+         with data-line-label; the add-ons, whose names are already distinct,
+         do not carry one and are left as they are. */
+      const kind = input.closest("[data-line-label]")?.dataset.lineLabel;
+      found.push({ label: kind ? `${label} · ${kind}` : label, price });
+    });
+
+    /* Priced by the page rather than as a flat fee, off the same count as the
+       base price. data-per-page-less takes off the pages the charge does not
+       apply to — the contact page carries a form, not copy. The count is in
+       the label so that subtraction is visible rather than a figure the reader
+       has to reconcile on their own. */
+    panel.querySelectorAll("input[data-per-page]").forEach((input) => {
+      if (!input.checked || !live(input)) return;
+
+      const unit = Number(input.dataset.perPage) || 0;
+      const count = perPage(input);
+      if (!unit || !count) return;
+
+      const name = input.closest(".calc-option")?.querySelector(".calc-option-name");
+      const label = name ? nameOf(name) : input.value;
+      const kind = input.closest("[data-line-label]")?.dataset.lineLabel;
+
+      found.push({
+        label: `${kind ? `${label} · ${kind}` : label} × ${plural(count, "page")}`,
+        price: unit * count,
+      });
+    });
+
+    /* One line each. They carry their own service charge and tax, and what
+       reaches the estimate is the figure the reader was shown at the foot of
+       that step rather than the bare yearly rate. */
+    terms().forEach((term) => {
+      found.push({
+        label: `${term.label} · ${term.name}, ${plural(term.years, "year")}`,
+        price: term.total,
+      });
+    });
+
+    // counts — only what sits beyond what the base price already covers
+    panel.querySelectorAll(".calc-slider").forEach((slider) => {
+      if (!live(slider)) return;
+
+      const input = slider.querySelector(".calc-slider-input");
+      if (!input) return;
+
+      const unit = Number(slider.dataset.unitPrice) || 0;
+      const included = Number(slider.dataset.included) || 0;
+      const extra = Math.max(0, Number(input.value) - included);
+      if (!unit || !extra) return;
+
+      found.push({
+        label: `${included ? "+" : ""}${plural(extra, slider.dataset.unit || "item")}`,
+        price: extra * unit,
+      });
+    });
+
+    // languages — per page, and only the ones after the main one
+    const field = panel.querySelector(".calc-language");
+    if (field && live(field)) {
+      const chosen = [...field.querySelectorAll('input[name="languages"]')].filter(
+        (chip) => chip.checked
+      ).length;
+      const extra = Math.max(0, chosen - 1);
+      const count = perPage();
+      const unit = Number(field.dataset.languagePrice) || 0;
+      const price = extra * unit * count;
+
+      if (price) {
+        found.push({
+          label: `+${plural(extra, "language")} × ${plural(count, "page")}`,
+          price,
+        });
+      }
+    }
+
+    return found;
+  };
+
+  /* The estimate as a message, on the button that sends it.
+
+     Written into the href rather than built on click, so it is an ordinary link
+     — long-pressable, copyable, openable in a new tab — and so the visitor can
+     see where it goes before pressing it. Nothing is sent from here: WhatsApp
+     opens with the message filled in and they press send themselves.
+
+     wa.me carries text and nothing else. It cannot take an attachment, which is
+     why the quote is written out in full here rather than linked to as a file. */
+  const WHATSAPP = "60139975304";
+
+  const quote = (found, total) => {
+    current = { found, total, message: "" };
+
+    /* One line each, price on the same line. No attempt to align the figures
+       into a column: WhatsApp sets messages in a proportional font, so padding
+       with spaces or dots lines nothing up and falls apart on the long labels. */
+    const body = found.length
+      ? found.map((line) => `• ${line.label} — ${money(line.price)}`).join("\n")
+      : "• Nothing selected yet";
+
+    const text =
+      "Hello Orisa Digital, here is my estimate from your pricing page.\n\n" +
+      "*MY ESTIMATE*\n" +
+      body +
+      `\n\n*Estimated total: ${money(total)}*\n\n` +
+      "Please confirm this and send me a proper quote.";
+
+    current.message = text;
+    if (send) send.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  };
+
+  /* The estimate as a file, for anyone who wants a document rather than a chat.
+
+     The library is fetched the first time the button is pressed rather than
+     with the page. Most visitors never ask for a PDF, and 350KB of script to
+     sit unused is the sort of weight that makes a page slow for everybody in
+     order to serve a few. */
+  const PDF_SRC = "https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js";
+  let loading = null;
+
+  const pdfLib = () => {
+    if (loading) return loading;
+
+    loading = new Promise((resolve, reject) => {
+      const tag = document.createElement("script");
+      tag.src = PDF_SRC;
+      tag.onload = () =>
+        window.jspdf ? resolve(window.jspdf) : reject(new Error("jspdf missing"));
+      // a failed load has to clear itself, or every later press waits on a
+      // promise that already settled and nothing ever tries again
+      tag.onerror = () => {
+        loading = null;
+        reject(new Error("jspdf failed to load"));
+      };
+      document.head.appendChild(tag);
+    });
+
+    return loading;
+  };
+
+  /* The logo, as something jsPDF will take. It only reads PNG and JPEG, and the
+     only copies on the site are WebP and AVIF — so it is drawn to a canvas and
+     read back as a PNG, which keeps the transparency. Same origin, so nothing
+     taints the canvas, and no third copy of the artwork has to be kept in step
+     with the other two.
+
+     Done once and remembered: the same file would otherwise be decoded again on
+     every press. */
+  const LOGO_SRC = "image/orisa.webp";
+  let logo = null;
+
+  const logoPng = () => {
+    if (logo) return logo;
+
+    logo = (async () => {
+      /* Fetched and decoded as data rather than loaded as an <img>. An image
+         element's decode() is tied to rendering and can sit unresolved forever
+         in a tab that is not being drawn — which would leave the button saying
+         "Preparing…" and never finish. createImageBitmap has no such tie. */
+      const response = await fetch(LOGO_SRC);
+      if (!response.ok) throw new Error(`logo ${response.status}`);
+
+      const bitmap = await createImageBitmap(await response.blob());
+
+      const canvas = document.createElement("canvas");
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+      canvas.getContext("2d").drawImage(bitmap, 0, 0);
+      bitmap.close();
+
+      return {
+        data: canvas.toDataURL("image/png"),
+        ratio: canvas.width / canvas.height,
+      };
+    })();
+
+    // a failure must not be remembered, or the logo never returns
+    logo.catch(() => {
+      logo = null;
+    });
+
+    return logo;
+  };
+
+  const buildPdf = async () => {
+    const { jsPDF } = await pdfLib();
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+    const LEFT = 20;
+    const RIGHT = 190;
+    let y = 26;
+
+    /* The wordmark if it loads, the name set in type if it does not. A quote
+       with no letterhead is worth more than one that fails to build. */
+    try {
+      // capped, so a logo that never arrives cannot hold the whole document up
+      const mark = await Promise.race([
+        logoPng(),
+        new Promise((_, fail) => setTimeout(() => fail(new Error("logo slow")), 3000)),
+      ]);
+      const w = 34;
+      // the baseline the rest of the header is measured from sits at y
+      doc.addImage(mark.data, "PNG", LEFT, y - w / mark.ratio + 1, w, w / mark.ratio);
+    } catch {
+      doc.setFont("helvetica", "bold").setFontSize(18).setTextColor(50, 56, 58);
+      doc.text("ORISA DIGITAL", LEFT, y);
+    }
+
+    doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(120, 126, 128);
+    doc.text("Website Estimate", RIGHT, y, { align: "right" });
+
+    y += 6;
+    const today = new Date().toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    doc.text(today, RIGHT, y, { align: "right" });
+
+    y += 6;
+    doc.setDrawColor(50, 56, 58).setLineWidth(0.4).line(LEFT, y, RIGHT, y);
+    y += 12;
+
+    doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(50, 56, 58);
+
+    current.found.forEach((line) => {
+      /* Long labels wrap rather than run under the figure on the right. The
+         price sits on the label's first line, so a wrapped line still reads as
+         one item rather than two. */
+      const wrapped = doc.splitTextToSize(line.label, 120);
+      doc.text(wrapped, LEFT, y);
+      doc.text(money(line.price), RIGHT, y, { align: "right" });
+      y += wrapped.length * 5 + 3;
+    });
+
+    y += 4;
+    doc.setDrawColor(214, 216, 217).setLineWidth(0.2).line(LEFT, y, RIGHT, y);
+    y += 10;
+
+    doc.setFont("helvetica", "bold").setFontSize(13);
+    doc.text("Estimated total", LEFT, y);
+    doc.text(money(current.total), RIGHT, y, { align: "right" });
+
+    y += 14;
+    doc.setFont("helvetica", "normal").setFontSize(8.5).setTextColor(120, 126, 128);
+    doc.text(
+      doc.splitTextToSize(
+        "This is an estimate, not a quote. Scope, content and how much of it " +
+          "already exists all move the final figure. Prices in Malaysian Ringgit.",
+        RIGHT - LEFT
+      ),
+      LEFT,
+      y
+    );
+
+    /* On the document itself, because the share sheet cannot be pointed at a
+       particular contact: whoever ends up holding this needs to know where it
+       is meant to go. */
+    y += 10;
+    doc.text("Orisa Digital  ·  WhatsApp +60 13-997 5304  ·  orisadigital.com", LEFT, y);
+
+    return doc;
+  };
+
+  const FILENAME = "orisa-digital-estimate.pdf";
+
+  /* Deliberately NOT routed through navigator.share, which on a phone could
+     hand the PDF straight to WhatsApp as an attachment. A share sheet cannot be
+     pointed at a particular contact: the visitor would choose the recipient,
+     and an estimate sent to the wrong chat — or to nobody, by someone who does
+     not have the number saved — is worse than one that arrives as text at the
+     right number every time. The button below goes to the number, and the PDF
+     is a separate download for whoever wants the document. */
+  const busy = (button, text) => {
+    const label = button.querySelector(".cta-button-label");
+    const said = label ? label.textContent : "";
+    if (label) label.textContent = text;
+    button.setAttribute("aria-busy", "true");
+
+    return (failed) => {
+      button.removeAttribute("aria-busy");
+      if (!label) return;
+      if (!failed) return void (label.textContent = said);
+
+      /* Said out loud rather than swallowed: a button that does nothing when the
+         CDN is blocked looks broken. */
+      label.textContent = failed;
+      setTimeout(() => {
+        label.textContent = said;
+      }, 4000);
+    };
+  };
+
+  if (download) {
+    download.addEventListener("click", async () => {
+      const done = busy(download, "Preparing…");
+      try {
+        (await buildPdf()).save(FILENAME);
+        done();
+      } catch {
+        done("Couldn’t build PDF");
+      }
+    });
+  }
+
+
+  const paint = () => {
+    /* Each term block's own sum, at the foot of its step. Same numbers as the
+       line it contributes to the panel, from the same pass, so the two cannot
+       drift apart. A row whose figure does not apply — tax on the hosting —
+       simply is not in the markup, so writing it is a no-op. */
+    /* The per-page working, under the description of what the step covers. The
+       count comes off the same slider as the estimate line, in the same pass,
+       so the two cannot disagree. */
+    panel.querySelectorAll("input[data-per-page]").forEach((input) => {
+      const breakdown = input
+        .closest(".calc-fieldset")
+        ?.querySelector("[data-per-page-breakdown]");
+      if (!breakdown) return;
+
+      const unit = Number(input.dataset.perPage) || 0;
+      const count = perPage(input);
+
+      const put = (sel, value) => {
+        const node = breakdown.querySelector(sel);
+        if (node) node.textContent = value;
+      };
+      put("[data-per-page-count]", String(count));
+      put("[data-per-page-unit]", exact(unit));
+      put("[data-per-page-total]", exact(unit * count));
+    });
+
+    terms().forEach((term) => {
+      const breakdown = term.block.querySelector("[data-term-breakdown]");
+      if (!breakdown) return;
+
+      const put = (sel, value) => {
+        const node = breakdown.querySelector(sel);
+        if (node) node.textContent = exact(value);
+      };
+      put("[data-term-sub]", term.sub);
+      put("[data-term-tax-amount]", term.tax);
+      put("[data-term-service-amount]", term.service);
+      put("[data-term-total]", term.total);
+    });
+
+    const found = lines();
+    const total = found.reduce((sum, line) => sum + line.price, 0);
+
+    if (!found.length) {
+      list.innerHTML =
+        '<li class="calc-estimate-empty">Answer the questions and the figures appear here.</li>';
+      output.textContent = "—";
+      quote([], 0);
+      return;
+    }
+
+    list.innerHTML = found
+      .map(
+        (line) =>
+          `<li class="calc-estimate-line"><span class="calc-estimate-line-name"></span>` +
+          `<span class="calc-estimate-line-price"></span></li>`
+      )
+      .join("");
+
+    /* Written as text rather than into the template above, so a label taken off
+       the page cannot close a tag and rewrite the panel. Nothing here is user
+       input today, but the labels come from markup and this costs nothing. */
+    list.querySelectorAll(".calc-estimate-line").forEach((node, i) => {
+      node.querySelector(".calc-estimate-line-name").textContent = found[i].label;
+      node.querySelector(".calc-estimate-line-price").textContent = money(found[i].price);
+    });
+
+    // the sum of the lines above, exactly — no rounding, nothing added
+    output.textContent = money(total);
+
+    quote(found, total);
+  };
+
+  // input for the counts, change for everything that is ticked
+  root.addEventListener("input", paint);
+  root.addEventListener("change", paint);
+  paint();
 })();
 
 /* Contact map — Leaflet on a dark basemap, centred on Kuching. */

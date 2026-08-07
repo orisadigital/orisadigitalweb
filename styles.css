@@ -238,6 +238,15 @@ body {
   font-weight: 600;
 }
 
+/* The one coloured item in the bar. All three states are restated because the
+   rules above are equally specific and would otherwise take it back to grey the
+   moment it is hovered or is the current page. */
+.nav-link--green,
+.nav-link--green:hover,
+.nav-link--green.is-current {
+  color: var(--live);
+}
+
 .nav-icon {
   width: 18px;
   height: 18px;
@@ -253,8 +262,10 @@ body {
 /* The stroke is currentColor, so setting colour on the icon alone tints it
    without touching the label beside it. Full opacity: the 0.9 above is there to
    settle the mono icons against the type, and only mutes a coloured one. */
+/* Full strength rather than the 0.9 the other marks sit at, and no colour of
+   its own — it takes the link's, so the leaf and the word are one declaration
+   and cannot drift into two different greens. */
 .nav-icon--leaf {
-  color: var(--live);
   opacity: 1;
 }
 
@@ -541,6 +552,30 @@ body {
 
 .drawer-nav a:hover {
   opacity: 0.55;
+}
+
+/* The one coloured item in the menu. Scoped to the list because .drawer-nav a
+   sets color: inherit and would otherwise outrank a class on its own. */
+.drawer-nav .drawer-link--green {
+  color: var(--live);
+}
+
+/* Sits after the last letter, at the size of the type it follows — em rather
+   than px, so it tracks the clamp() on the link above instead of looking
+   oversized on a small phone and lost on a large one. Takes its colour from the
+   link through currentColor, so the mark and the word cannot end up as two
+   different greens. */
+.drawer-leaf {
+  width: 0.6em;
+  height: 0.6em;
+  margin-left: 0.14em;
+  /* the cap height of the uppercase text, not its baseline */
+  vertical-align: 0.02em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .drawer-cta {
@@ -1103,6 +1138,22 @@ body {
   height: 13px;
 }
 
+/* An outlined mark in the same slot as the solid star. Two points apart from it:
+   a couple of pixels larger, because an outline reads smaller than a filled
+   shape at the same box, and a heavier stroke, because 1.4 disappears at this
+   size. */
+.section-eyebrow .eyebrow-icon {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .eyebrow-rule {
   width: 30px;
   height: 1px;
@@ -1326,6 +1377,215 @@ body {
   top: calc(var(--header-height) + var(--header-offset) * 2 + 24px);
 }
 
+/* ---------- Domain breakdown ---------- */
+
+/* A dl rather than a list of rows: each line is a name and the figure that
+   belongs to it, which is what a description list is for. */
+.calc-breakdown {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(50, 56, 58, 0.04);
+  font-size: 0.85rem;
+}
+
+.calc-breakdown-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 5px 0;
+}
+
+.calc-breakdown-row dt {
+  color: rgba(50, 56, 58, 0.7);
+}
+
+.calc-breakdown-row dd {
+  margin: 0;
+  flex: none;
+  font-weight: 600;
+  color: var(--ink);
+  /* the figures stack, so they line up digit for digit */
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-breakdown-row--total {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(50, 56, 58, 0.12);
+}
+
+.calc-breakdown-row--total dt {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- Running estimate ---------- */
+
+.calc-estimate-eyebrow {
+  margin: 0 0 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.55);
+}
+
+.calc-estimate-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calc-estimate-line {
+  display: flex;
+  align-items: baseline;
+  /* the gap is what stops a long label running into its own figure */
+  gap: 16px;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(50, 56, 58, 0.09);
+  font-size: 0.9rem;
+}
+
+.calc-estimate-line-name {
+  color: rgba(50, 56, 58, 0.78);
+}
+
+.calc-estimate-line-price {
+  flex: none;
+  font-weight: 600;
+  color: var(--ink);
+  /* the figures sit in a column, so they line up digit for digit */
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-estimate-empty {
+  padding: 10px 0 2px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(50, 56, 58, 0.55);
+  text-wrap: pretty;
+}
+
+.calc-estimate-foot {
+  margin-top: 22px;
+}
+
+.calc-estimate-label {
+  margin: 0 0 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(50, 56, 58, 0.55);
+}
+
+.calc-estimate-total {
+  margin: 0 0 14px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  /* the one figure the page exists to produce, so it carries the display face */
+  font-size: clamp(1.6rem, 3.4vw, 2.25rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-estimate-note {
+  margin: 0 0 20px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(50, 56, 58, 0.6);
+  text-wrap: pretty;
+}
+
+.calc-estimate-cta {
+  /* the panel is a column, and the button should own its width in it */
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* The secondary of the two: same shape so they read as a pair, outlined rather
+   than filled so the WhatsApp route stays the one being recommended.
+
+   Written as .cta-button.calc-estimate-pdf rather than on its own, because the
+   base .cta-button rules sit further down this file and a single class would
+   lose to them on order alone. */
+.cta-button.calc-estimate-pdf {
+  justify-content: space-between;
+  width: 100%;
+  /* one less than the filled button all round, so the border it adds does not
+     make this the taller of the pair */
+  padding: 11px 11px 11px 29px;
+  margin-top: 10px;
+  border: 1px solid rgba(50, 56, 58, 0.18);
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+  cursor: pointer;
+}
+
+/* The label and its note stack as one block, so the arrow still sits opposite
+   the pair rather than beside the first line of it. */
+.calc-estimate-pdf-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Resets what .cta-button sets on everything inside it: this is a quiet aside,
+   not more of the same 900-weight uppercase shouting. */
+.calc-estimate-pdf-note {
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-transform: none;
+  color: rgba(50, 56, 58, 0.55);
+}
+
+.cta-button.calc-estimate-pdf:hover {
+  background: rgba(50, 56, 58, 0.05);
+  box-shadow: none;
+}
+
+.calc-estimate-pdf .cta-button-arrow {
+  background: rgba(50, 56, 58, 0.08);
+}
+
+.calc-estimate-pdf:hover .cta-button-arrow {
+  background: rgba(50, 56, 58, 0.14);
+}
+
+/* down, not along — it is a download */
+.calc-estimate-pdf:hover .cta-button-arrow svg {
+  transform: translateY(2px);
+}
+
+.calc-estimate-pdf[aria-busy="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Under the buttons rather than on them: what happens next is worth saying, but
+   not at the size of the thing that does it. */
+.calc-estimate-hint {
+  margin: 12px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(50, 56, 58, 0.5);
+  text-wrap: pretty;
+}
+
 @media (max-width: 860px) {
   .calculator-inner {
     grid-template-columns: minmax(0, 1fr);
@@ -1419,6 +1679,12 @@ body {
   gap: 12px;
 }
 
+/* The display rule below would otherwise bring a hidden option straight back —
+   hidden only sets display: none as a default, and any later rule beats it. */
+.calc-option[hidden] {
+  display: none;
+}
+
 .calc-option {
   position: relative;
   display: flex;
@@ -1469,6 +1735,35 @@ body {
   font-size: 0.95rem;
   color: var(--ink);
   text-wrap: balance;
+}
+
+/* Marks one option out from the rest. It sits inside the name so a screen
+   reader hears it as part of the label — "SME Website, Popular" — and so it
+   can never collide with the tick on the card's right edge. */
+.calc-option-pill {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--neon);
+  color: var(--ink);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* the name above balances across lines, and a pill broken over two of them
+     reads as damage rather than emphasis */
+  white-space: nowrap;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* Neon is how the calculator says "pick this one", so a pill that only states a
+   fact — the platform an option runs on — has to sit quieter or it reads as a
+   recommendation it isn't making. */
+.calc-option-pill--plain {
+  background: rgba(50, 56, 58, 0.08);
+  color: rgba(50, 56, 58, 0.72);
 }
 
 .calc-option-text {
@@ -1548,6 +1843,12 @@ body {
   padding: 0;
   display: grid;
   gap: 18px;
+}
+
+/* Same reason as .calc-option[hidden]: the display rule below outranks what
+   hidden sets on its own, so a gated item would stay on the page. */
+.calc-include[hidden] {
+  display: none;
 }
 
 .calc-include {
