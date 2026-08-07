@@ -791,6 +791,7 @@ body {
 .statement,
 .cta,
 .about-hero,
+.page-hero,
 .feature,
 .hosting {
   position: relative;
@@ -805,6 +806,7 @@ body {
 .statement::before,
 .cta::before,
 .about-hero::before,
+.page-hero::before,
 .feature::before,
 .hosting::before {
   content: "";
@@ -1113,6 +1115,38 @@ body {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
+}
+
+/* ---------- Page header (no figure) ---------- */
+
+/* Clears the fixed header the same way .about-hero does, but centred and on one
+   column: there is nothing beside the copy to balance it against. */
+.page-hero {
+  padding: calc(
+      var(--header-height) + var(--header-nav-row) + var(--header-offset) * 2 +
+        clamp(36px, 5vw, 76px)
+    )
+    24px clamp(48px, 7vw, 96px);
+}
+
+.page-hero-inner {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
+  /* narrower than a full section: centred text gets hard to track much past this */
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* the page's h1, so it carries the same weight as the one on About */
+.page-hero-title {
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  margin-bottom: 24px;
+}
+
+.page-hero-text {
+  margin-inline: auto;
 }
 
 /* ---------- Core values (bento) ---------- */
