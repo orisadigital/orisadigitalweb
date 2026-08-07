@@ -182,7 +182,10 @@
             day. Prefer to talk? The buttons in the header reach us on WhatsApp,
             Telegram, or by phone.
           </p>
-          <form class="contact-form">
+          <!-- No backend: main.js composes the enquiry and opens WhatsApp with it
+               ready to send, so the conversation starts in the visitor own
+               WhatsApp and lands in the same inbox as the header buttons. -->
+          <form class="contact-form" data-whatsapp="60139975304">
             <div class="field">
               <label for="name">Name</label>
               <input id="name" name="name" type="text" autocomplete="name" required>
@@ -214,11 +217,15 @@
             </div>
 
             <button class="cta-button contact-submit" type="submit">
-              <span class="cta-button-label">Send message</span>
+              <span class="cta-button-label">Send on WhatsApp</span>
               <span class="cta-button-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                <svg viewBox="0 0 24 24" focusable="false"><use href="#icon-whatsapp"/></svg>
               </span>
             </button>
+
+            <!-- role=status announces the hand-off without stealing focus; it
+                 stays empty until there is something to say. -->
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>

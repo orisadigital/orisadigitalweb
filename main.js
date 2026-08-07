@@ -883,6 +883,75 @@
   if (el) el.textContent = String(new Date().getFullYear());
 })();
 
+/* Contact form — hands the enquiry to WhatsApp.
+
+   There is no server behind this page, so instead of posting anywhere the
+   submit composes the message and opens wa.me with it already written. The
+   visitor sends it from their own WhatsApp, which puts the enquiry in the same
+   thread as the header's WhatsApp button and gives both sides a conversation
+   rather than a one-way form. */
+(() => {
+  "use strict";
+
+  const form = document.querySelector(".contact-form");
+  if (!form) return;
+
+  // wa.me wants digits only: country code first, no plus, no spaces
+  const number = (form.dataset.whatsapp || "").replace(/\D/g, "");
+  if (!number) return;
+
+  const status = form.querySelector(".form-status");
+
+  const value = (name) => {
+    const field = form.elements[name];
+    return field ? field.value.trim() : "";
+  };
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const select = form.elements.service;
+    const need = select ? select.options[select.selectedIndex].text : "";
+
+    // falsy entries drop out, so an omitted phone leaves no empty line behind
+    const lines = [
+      "Hi Orisa Digital — enquiry from your website.",
+      "",
+      `Name: ${value("name")}`,
+      `Email: ${value("email")}`,
+      value("phone") && `Phone: ${value("phone")}`,
+      need && `Looking for: ${need}`,
+      "",
+      value("message"),
+    ].filter(Boolean);
+
+    const url = `https://wa.me/${number}?text=${encodeURIComponent(
+      lines.join("\n")
+    )}`;
+
+    /* A new tab keeps the site open behind the conversation. Popup blockers
+       normally allow this because it is a click, but if one intervenes the
+       current tab goes there instead so the enquiry is never simply lost. */
+    const opened = window.open(url, "_blank", "noopener");
+    if (!opened) window.location.href = url;
+
+    if (status) {
+      status.dataset.state = "info";
+      status.textContent = "";
+
+      status.append("Opening WhatsApp with your message ready to send. ");
+
+      // nothing on screen confirms an app handoff, so leave a way back in
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Not opening? Tap here.";
+      status.append(link);
+    }
+  });
+})();
+
 /* Contact map — Leaflet on a dark basemap, centred on Kuching. */
 (() => {
   "use strict";
