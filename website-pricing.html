@@ -662,7 +662,7 @@
                 </label>
 
                 <label class="calc-option">
-                  <input type="radio" name="logo" value="start" data-price="1500">
+                  <input type="radio" id="logo-start" name="logo" value="start" data-price="1500">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Start</span>
                     <span class="calc-option-price">RM1,500</span>
@@ -673,7 +673,7 @@
                 </label>
 
                 <label class="calc-option">
-                  <input type="radio" name="logo" value="business" data-price="3000">
+                  <input type="radio" id="logo-business" name="logo" value="business" data-price="3000">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Business</span>
                     <span class="calc-option-price">RM3,000</span>
@@ -684,7 +684,7 @@
                 </label>
 
                 <label class="calc-option">
-                  <input type="radio" name="logo" value="growth" data-price="10000">
+                  <input type="radio" id="logo-growth" name="logo" value="growth" data-price="10000">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Growth</span>
                     <span class="calc-option-price">RM10,000</span>
@@ -693,6 +693,37 @@
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
                   </span>
                 </label>
+              </div>
+
+              <!-- One per tier, outside the cards they describe, so a tier
+                   explains itself once chosen rather than making the visitor
+                   guess what separates RM1,500 from RM10,000. -->
+              <div class="calc-subfield" data-when="#logo-start" hidden>
+                <p class="calc-subfield-label">What the Start logo covers</p>
+                <ul class="calc-points">
+                  <li>One logo concept and vector files</li>
+                  <li>2 options</li>
+                  <li>2 revisions</li>
+                </ul>
+              </div>
+
+              <div class="calc-subfield" data-when="#logo-business" hidden>
+                <p class="calc-subfield-label">What the Business logo covers</p>
+                <ul class="calc-points">
+                  <li>One concept and the full file package</li>
+                  <li>3 options</li>
+                  <li>3 revisions</li>
+                </ul>
+              </div>
+
+              <div class="calc-subfield" data-when="#logo-growth" hidden>
+                <p class="calc-subfield-label">What the Growth logo covers</p>
+                <ul class="calc-points">
+                  <li>Logo and branding package</li>
+                  <li>Marketing material</li>
+                  <li>5 options</li>
+                  <li>5 revisions</li>
+                </ul>
               </div>
             </fieldset>
           </div>
