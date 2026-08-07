@@ -6,6 +6,7 @@
   --black: var(--logo-black); /* solid fills */
   --black-hover: #262b2d;
   --neon: #ccff00;
+  --neon-hover: #bcee00;
   /* status green — the only green on the site, reserved for "we're available" */
   --live: #22c55e;
   --page: #ffffff;
@@ -283,14 +284,16 @@ body {
   padding: 0;
   border: 0;
   border-radius: 12px;
-  background: var(--black);
-  color: #fff;
+  /* Neon box, so the icon inverts with it — the stroke is currentColor, and
+     white on this ground is barely 1.2:1 where the ink is past 10:1. */
+  background: var(--neon);
+  color: var(--ink);
   cursor: pointer;
   transition: background-color 0.18s ease;
 }
 
 .chat-toggle:hover {
-  background: var(--black-hover);
+  background: var(--neon-hover);
 }
 
 .chat-icon {
