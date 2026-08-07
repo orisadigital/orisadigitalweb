@@ -1,9 +1,16 @@
 # Cloudflare Pages reads this at deploy time.
 #
 # The HTML is revalidated every time so a deploy goes live immediately, while
-# the assets — which are only ever replaced under a new filename — are cached
-# for a year. That makes a repeat visit cost one small HTML request instead of
-# re-downloading the hero video.
+# the images and video — which are only ever replaced under a new filename — are
+# cached for a year. That makes a repeat visit cost a few small requests instead
+# of re-downloading the hero video.
+#
+# The stylesheet and script revalidate alongside the HTML. They used to be held
+# for an hour, which meant a deploy could leave a visitor running fresh markup
+# against stale behaviour: the contact button read "Send on WhatsApp" while the
+# cached script still opened a mail client. Since neither file is fingerprinted,
+# an hour of that is not worth the two conditional requests it saves — both come
+# back 304 and empty when nothing has changed.
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
@@ -18,7 +25,7 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /styles.css
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /main.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
