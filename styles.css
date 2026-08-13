@@ -4946,13 +4946,33 @@ body {
 
 /* The badge carries its own light field — it is a fully opaque PNG, not dark
    ink on transparency — so it sits on the black footer without a plate behind
-   it. Width and height are on the element, so the box is reserved before the
-   image arrives and the social row below it does not jump. */
-.footer-green {
+   it. Width and height are on the img element too, so the box is reserved
+   before the image arrives and the social row below it does not jump.
+
+   The layout sits on the link rather than the image: an inline anchor would
+   leave a strip of clickable space under the badge, from the line box the
+   image sits on. */
+.footer-green-link {
   display: block;
-  margin: 22px 0 0;
   width: 200px;
   max-width: 100%;
+  margin: 22px 0 0;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.footer-green-link:hover {
+  opacity: 0.85;
+}
+
+.footer-green-link:focus-visible {
+  outline: 2px solid var(--neon);
+  outline-offset: 3px;
+}
+
+.footer-green {
+  display: block;
+  width: 100%;
   height: auto;
 }
 
