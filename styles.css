@@ -4944,6 +4944,18 @@ body {
   }
 }
 
+/* The badge carries its own light field — it is a fully opaque PNG, not dark
+   ink on transparency — so it sits on the black footer without a plate behind
+   it. Width and height are on the element, so the box is reserved before the
+   image arrives and the social row below it does not jump. */
+.footer-green {
+  display: block;
+  margin: 22px 0 0;
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
 .footer-social {
   display: flex;
   align-items: center;
