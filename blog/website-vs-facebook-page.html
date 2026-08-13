@@ -3,43 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Orisa Digital</title>
-  <meta name="description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
-  <link rel="canonical" href="https://orisadigital.com/privacy">
+  <title>Website vs Facebook Page: Do You Need Both? | Orisa Digital</title>
+  <meta name="description" content="A straight answer for Sarawak business owners already running on Facebook and WhatsApp — what a page does well, what it cannot do, and when it is genuinely enough on its own.">
+  <link rel="canonical" href="https://orisadigital.com/blog/website-vs-facebook-page">
   <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
        (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
-  <meta property="og:url" content="https://orisadigital.com/privacy">
-  <meta property="og:title" content="Privacy Policy — Orisa Digital">
-  <meta property="og:description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
+  <meta property="og:url" content="https://orisadigital.com/blog/website-vs-facebook-page">
+  <meta property="og:title" content="Website vs Facebook Page: Do You Need Both? | Orisa Digital">
+  <meta property="og:description" content="A straight answer for Sarawak business owners already running on Facebook and WhatsApp — what a page does well, what it cannot do, and when it is genuinely enough on its own.">
   <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
-  <link rel="apple-touch-icon" href="image/favicon.jpeg">
+  <meta property="article:published_time" content="2026-08-14">
+  <meta property="article:modified_time" content="2026-08-14">
+  <meta property="article:author" content="Faruqi Jeniri">
+  <link rel="icon" href="/image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
+  <link rel="apple-touch-icon" href="/image/favicon.jpeg">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <!-- Self-hosted, so the fonts come off a connection the browser already
-       has rather than two fresh third-party origins. Inter 400 is the body
-       face and Inter Tight 900 every heading, so both are wanted immediately
-       and are preloaded; the rest of the sheet resolves by unicode-range. -->
-  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Self-hosted, so the fonts come off a connection the browser already has.
+       Absolute paths throughout: this page sits one level down, and a relative
+       href would resolve against /blog/ and miss. -->
+  <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-  <script src="main.js" defer></script>
+  <script src="/main.js" defer></script>
 
-  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
-       just saves the DNS and TLS round trip when it does go out. Cookies this
+  <!-- Google Analytics 4. async, so it never blocks rendering. Cookies this
        sets are described on /privacy. -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
@@ -50,9 +51,6 @@
     gtag("config", "G-W1SVHB9G25");
   </script>
 
-  <!-- Structured data. A legal page is not a service page: it describes terms,
-       so the organisation node stays trimmed and the page type is what
-       carries the meaning. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -80,22 +78,38 @@
         ]
       },
       {
-        "@type": "WebPage",
-        "@id": "https://orisadigital.com/privacy#webpage",
-        "url": "https://orisadigital.com/privacy",
-        "name": "Privacy Policy — Orisa Digital",
-        "description": "How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.",
-        "isPartOf": { "@id": "https://orisadigital.com/#website" },
-        "about": { "@id": "https://orisadigital.com/#organization" },
-        "breadcrumb": { "@id": "https://orisadigital.com/privacy#breadcrumb" },
-        "inLanguage": "en-MY"
+        "@type": "BlogPosting",
+        "@id": "https://orisadigital.com/blog/website-vs-facebook-page#post",
+        "headline": "Do You Still Need a Website If You Have a Facebook Page?",
+        "description": "A straight answer for Sarawak business owners already running on Facebook and WhatsApp — what a page does well, what it cannot do, and when it is genuinely enough on its own.",
+        "url": "https://orisadigital.com/blog/website-vs-facebook-page",
+        "mainEntityOfPage": { "@id": "https://orisadigital.com/blog/website-vs-facebook-page#post" },
+        "datePublished": "2026-08-14",
+        "dateModified": "2026-08-14",
+        "inLanguage": "en-MY",
+        "image": "https://orisadigital.com/image/og-team.webp",
+        "author": {
+          "@type": "Person",
+          "@id": "https://orisadigital.com/about#faruqi-jeniri",
+          "name": "Faruqi Jeniri",
+          "jobTitle": "Web Creator & Vibe Coder",
+          "url": "https://orisadigital.com/about"
+        },
+        "publisher": { "@id": "https://orisadigital.com/#organization" },
+        "isPartOf": { "@id": "https://orisadigital.com/blog#blog" },
+        "about": [
+          { "@type": "Thing", "name": "Web design" },
+          { "@type": "Thing", "name": "Small business marketing" }
+        ],
+        "breadcrumb": { "@id": "https://orisadigital.com/blog/website-vs-facebook-page#breadcrumb" }
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://orisadigital.com/privacy#breadcrumb",
+        "@id": "https://orisadigital.com/blog/website-vs-facebook-page#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Privacy Policy" }
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://orisadigital.com/blog" },
+          { "@type": "ListItem", "position": 3, "name": "Do You Still Need a Website If You Have a Facebook Page?" }
         ]
       }
     ]
@@ -124,7 +138,7 @@
       <!-- The lockup already carries the wordmark, so there is no text beside
            it; the link's aria-label names the company for assistive tech. -->
       <a class="logo" href="/" aria-label="Orisa Digital — home">
-        <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92" alt="" aria-hidden="true"></picture>
+        <picture><source srcset="/image/orisa.avif" type="image/avif"><img class="logo-mark" src="/image/orisa.webp" width="254" height="92" alt="" aria-hidden="true"></picture>
       </a>
 
       <!-- Two labels, one shown per breakpoint: the phone header has no room
@@ -242,7 +256,6 @@
         <li><a href="/mobile-app">Mobile App</a></li>
         <li><a class="drawer-link--green" href="/green-energy">Green Energy<svg class="drawer-leaf" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></a></li>
         <li><a href="/website-pricing">Website Pricing</a></li>
-        <li><a href="/blog">Blog</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </div>
@@ -265,184 +278,218 @@
     </div>
   </aside>
 
-  <main class="page legal" id="top">
-    <section class="legal-hero" aria-labelledby="legal-title">
-      <div class="legal-inner">
-        <p class="section-eyebrow">Privacy</p>
-        <h1 class="section-title legal-title" id="legal-title">Privacy Policy</h1>
-        <p class="legal-updated">Last updated 14 August 2026</p>
+  <main class="page post" id="top">
+    <article class="post-article">
+      <header class="post-head">
+        <div class="post-inner">
+          <p class="section-eyebrow"><a class="post-back" href="/blog">Blog</a></p>
+          <h1 class="section-title post-title" id="post-title">Do You Still Need a Website If You Have a Facebook Page?</h1>
+          <p class="post-meta">
+            <time datetime="2026-08-14">14 August 2026</time>
+            <span aria-hidden="true">&middot;</span>
+            <span>6 min read</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Faruqi Jeniri</span>
+          </p>
+        </div>
+      </header>
+
+      <div class="post-body">
+        <div class="post-inner">
+
+        <p class="post-lede">
+          Almost every business we speak to in Kuching already has a Facebook
+          page. Many have WhatsApp Business as well, a decent following, and
+          orders coming in. So the question is fair, and we get it often enough
+          that it deserves a straight answer rather than a sales pitch: if
+          Facebook is working, why pay for a website?
+        </p>
+
+        <p>
+          The honest answer is that it depends on what kind of business you run.
+          Below is what a page genuinely does well, the three things it cannot do
+          no matter how well you run it, and the cases where we would tell you to
+          save your money.
+        </p>
+
+        <h2>What a Facebook page is genuinely good at</h2>
+
+        <p>
+          It is free, it takes an afternoon to set up, and it puts you where
+          people already are. For reaching an audience that follows you, nothing
+          is faster: you post, and it appears in front of people who have already
+          decided they like you. Comments and Messenger give you a conversation
+          rather than a form. For a business that sells to its own community —
+          a bakery, a tuition centre, a boutique — that is a real advantage, and
+          a website will never replace it.
+        </p>
+
+        <p>
+          Anyone who tells you a Facebook page is worthless is selling something.
+          It is a good tool. It is just a tool that has three specific limits.
+        </p>
+
+        <h2>The three things a page cannot do</h2>
+
+        <h3>1. You do not own it</h3>
+
+        <p>
+          This is the one that matters most and gets thought about least. Your
+          page exists because Meta allows it to. Pages get restricted for reasons
+          that are never fully explained, appeals go into a queue with no
+          timeline, and the account that controls the page belongs to a person
+          who might leave the company. If it goes, your photos, your reviews,
+          your entire customer contact history and every link you have ever
+          shared go with it.
+        </p>
+
+        <p>
+          A domain you have registered is yours. If your host disappears tomorrow
+          you move the files somewhere else and carry on with the same address.
+          That difference costs nothing on a good day and is the whole business
+          on a bad one.
+        </p>
+
+        <h3>2. Nobody opens Facebook to find a supplier</h3>
+
+        <p>
+          Think about how you would find a contractor, an accountant, or a
+          supplier for something you needed next week. You would search for it.
+          Someone looking for a printer in Kuching types
+          <em>printing services Kuching</em> into Google, not into the Facebook
+          search bar &mdash; and a page competes very poorly for that kind of
+          search, because it is built to serve people who already follow you
+          rather than people who have never heard of you.
+        </p>
+
+        <p>
+          This is the difference between a place people go when they know you and
+          a place people find when they do not. Facebook is very good at the
+          first. It is close to useless at the second. Pair a website with a
+          <a href="/contact">Google Business Profile</a> and you start appearing
+          for searches you were previously invisible to.
+        </p>
+
+        <h3>3. It cannot be the record</h3>
+
+        <p>
+          A page is a feed, and a feed is ordered by time rather than by
+          importance. Your pricing, your terms, your service list and your
+          coverage area are all somewhere in it, three months down, between a
+          Hari Raya greeting and a photo of the shop. A customer who wants to
+          check what you charge has to scroll, and most will not.
+        </p>
+
+        <p>
+          A website is the opposite shape: a small number of pages that stay put
+          and say the same thing every time. When a customer asks a question you
+          answer once, put it on the site, and send the link for the next five
+          years.
+        </p>
+
+        <h2>When a page really is enough</h2>
+
+        <p>
+          We would rather tell you this than sell you something you do not need.
+          A website is probably not worth it yet if:
+        </p>
+
+        <ul>
+          <li>
+            All your trade is walk-in or word of mouth, and you are not trying to
+            grow beyond that.
+          </li>
+          <li>
+            You sell one or two things at a price that never changes, and your
+            customers already know what they are.
+          </li>
+          <li>
+            You are testing whether the business works at all. Prove the demand
+            first; a site is easier to write once you know who is buying.
+          </li>
+        </ul>
+
+        <p>
+          In those cases a well-kept Facebook page and a WhatsApp Business
+          number will serve you fine. Come back when people start asking
+          questions your feed cannot answer.
+        </p>
+
+        <h2>What changes when you have both</h2>
+
+        <p>
+          The businesses that get the most out of this do not choose. They use
+          each for what it is good at.
+        </p>
+
+        <p>
+          Facebook keeps doing what it does — announcements, photos, the
+          day-to-day. The website becomes the thing everything else points at.
+          The link in your bio goes somewhere that explains what you do properly.
+          Ads land on a page built to convert rather than on a post. Quotes
+          reference a page instead of a screenshot. And the site works while you
+          sleep, for people who searched for what you sell at eleven at night and
+          were never going to find your page.
+        </p>
+
+        <p>
+          One thing worth doing properly: most of Sarawak will open your site on
+          a phone, on mobile data, often outside the city. If it is slow, that
+          visitor is gone before the first image loads. This is why we build
+          <a href="/web-design">lean, fast sites</a> rather than heavy ones, and
+          why we care about <a href="/green-energy">page weight</a> more than most.
+        </p>
+
+        <h2>What it costs to find out</h2>
+
+        <p>
+          A one page site starts at RM1,199 and an SME site at RM3,799. What
+          moves the number is how many pages you need and what has to happen on
+          them &mdash; a booking form, a payment gateway, more than one language.
+          You can work out your own figure on the
+          <a href="/website-pricing">website pricing calculator</a> before
+          speaking to anybody, which is the point of it.
+        </p>
+
+        <h2>The short version</h2>
+
+        <p>
+          Keep the Facebook page. It is doing a job. But it is rented ground, it
+          does not answer searches, and it cannot hold your prices where people
+          can find them. If your business depends on being discovered by someone
+          who does not already know you, that is the gap a website fills &mdash;
+          and it is usually the gap that is costing you.
+        </p>
+
+        <p>
+          If you are not sure which side of that line you are on, tell us what
+          you do and we will give you a straight answer, including
+          &ldquo;you do not need one yet&rdquo; if that is the truth.
+        </p>
+
+        </div>
       </div>
-    </section>
+    </article>
 
-    <section class="legal-body" aria-label="Privacy">
-      <div class="legal-inner">
-        <p class="legal-lede">
-          This policy explains what happens to personal data when you use
-          orisadigital.com. It is written to match what the site actually does,
-          which is less than most sites: we measure visits with Google Analytics
-          and nothing else, we run no advertising or profiling, and the enquiry
-          form does not send anything to a server.
-        </p>
-
-        <h2>Who we are</h2>
-        <p>
-          Orisa Digital Company (SSM registration 017269150250), of Kuching,
-          Sarawak, Malaysia. For anything in this policy, write to
-          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a> or
-          call <a href="tel:+60139975304">+60 13 997 5304</a>.
-        </p>
-        <p>
-          We handle personal data in line with Malaysia's Personal Data
-          Protection Act 2010 (PDPA).
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="cta-inner">
+        <p class="section-eyebrow section-eyebrow--center">Let&rsquo;s Talk</p>
+        <h2 class="section-title cta-title" id="cta-title">Not Sure Which<br>
+          You Need?</h2>
+        <p class="section-text cta-text">
+          Tell us what your business does and how people find you now. We will
+          say what we would actually do in your position.
         </p>
 
-        <h2>What the enquiry form does</h2>
-        <p>
-          The form on our <a href="/contact">contact page</a> asks for your
-          name, email address, phone number, the service you are interested in,
-          and your message. It is worth being precise about where that goes:
-          <strong>the form does not submit to us.</strong> It has no server
-          behind it. When you press send, your browser assembles what you typed
-          into a WhatsApp message and opens WhatsApp with it ready to go.
-        </p>
-        <p>
-          Nothing is transmitted until you send that message yourself, and if
-          you close WhatsApp without sending, we never receive it. Once you do
-          send it, we hold the message the same way we hold any other
-          conversation with a client.
-        </p>
-
-        <h2>What we do with it</h2>
-        <p>
-          We use what you send us to reply to your enquiry, prepare a quotation,
-          and carry out work you engage us for. We do not sell personal data, and
-          we do not use it for advertising or pass it to anyone for marketing.
-        </p>
-
-        <h2>Analytics and cookies</h2>
-        <p>
-          We use Google Analytics 4 to understand how the site is used &mdash;
-          which pages people read, how they arrived, roughly where in the world
-          they are, and what kind of device they are on. We look at this in
-          aggregate, to work out which pages are worth improving. We do not use
-          it to build profiles of individuals, and we run no advertising or
-          remarketing tags.
-        </p>
-        <p>
-          Google Analytics sets two cookies in your browser,
-          <code>_ga</code> and <code>_ga_W1SVHB9G25</code>, which last up to two
-          years and let it tell a returning visit from a new one. It also uses
-          your IP address to estimate your country and city; Google Analytics 4
-          does not log or store the IP address itself.
-        </p>
-        <p>
-          Beyond those two, this site sets no cookies of its own and stores
-          nothing in your browser's local or session storage. Our host,
-          Cloudflare, may set a small number of strictly necessary cookies for
-          security and bot protection, which are set by Cloudflare rather than by
-          us.
-        </p>
-        <p>
-          If you would rather not be counted, you can block cookies for this site
-          in your browser settings, use private browsing, or install Google's
-          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Analytics
-          opt-out add-on</a>. Nothing on the site stops working if you do.
-        </p>
-
-        <h2>Third parties your browser contacts</h2>
-        <p>
-          Some parts of the site load from other companies' servers. When that
-          happens, your IP address and browser details are visible to them, as
-          they would be for any request. We have listed all of them:
-        </p>
-        <ul>
-          <li>
-            <strong>Cloudflare</strong> — hosts the site and serves every page.
-            Cloudflare processes request logs, including IP addresses, for
-            delivery and security.
-          </li>
-          <li>
-            <strong>Google Analytics</strong> — measures page views as described
-            above, under Google's own privacy policy.
-          </li>
-          <li>
-            <strong>jsDelivr</strong> — serves the GSAP animation library.
-          </li>
-          <li>
-            <strong>unpkg</strong> — serves the Leaflet mapping library on the
-            contact page.
-          </li>
-          <li>
-            <strong>The Green Web Foundation</strong> — serves the green hosting
-            badge in the footer, which is fetched live so it shows this domain's
-            current status rather than a saved copy.
-          </li>
-          <li>
-            <strong>CARTO and OpenStreetMap</strong> — serve the map tiles on the
-            contact page.
-          </li>
-          <li>
-            <strong>WhatsApp (Meta) and Telegram</strong> — if you contact us
-            through either, your message and profile details are handled under
-            that company's own privacy policy, not this one.
-          </li>
-        </ul>
-        <p>
-          Typefaces used to be loaded from Google Fonts. They are now served from
-          our own domain, so viewing a page no longer discloses your visit to
-          Google on that account &mdash; though Google Analytics, described above,
-          does.
-        </p>
-
-        <h2>How long we keep things</h2>
-        <p>
-          We keep enquiry messages and project correspondence for as long as we
-          are working together and for a reasonable period afterwards, so we can
-          answer questions about work we have done and meet record-keeping
-          obligations. If you would like your data removed sooner, ask us.
-        </p>
-
-        <h2>Your rights</h2>
-        <p>Under the PDPA you may:</p>
-        <ul>
-          <li>ask what personal data of yours we hold, and get a copy;</li>
-          <li>ask us to correct anything inaccurate or out of date;</li>
-          <li>withdraw consent to us processing it;</li>
-          <li>ask us to limit how we process it.</li>
-        </ul>
-        <p>
-          Write to <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
-          and we will respond as soon as we reasonably can. We may need to
-          confirm who you are before releasing anything.
-        </p>
-
-        <h2>Security</h2>
-        <p>
-          The site is served over HTTPS. We take reasonable steps to protect
-          information you send us, though no method of transmission over the
-          internet is completely secure, and we cannot guarantee absolute
-          security.
-        </p>
-
-        <h2>Children</h2>
-        <p>
-          This site is aimed at businesses and is not directed at children. We do
-          not knowingly collect personal data from anyone under 18.
-        </p>
-
-        <h2>Changes</h2>
-        <p>
-          If this policy changes we will update the date at the top of the page.
-          Material changes will be described here rather than made silently.
-        </p>
-
-        <h2>Contact</h2>
-        <p>
-          Orisa Digital Company<br>
-          Kuching, Sarawak, Malaysia<br>
-          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a><br>
-          <a href="tel:+60139975304">+60 13 997 5304</a>
-        </p>
+        <div class="cta-actions">
+          <a class="cta-button" href="/contact">
+            <span class="cta-button-label">Ask us</span>
+            <span class="cta-button-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+          <a class="cta-alt" href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+        </div>
       </div>
     </section>
   </main>
@@ -451,7 +498,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a class="footer-logo" href="/" aria-label="Orisa Digital — home">
-          <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92"
+          <picture><source srcset="/image/orisa.avif" type="image/avif"><img class="logo-mark" src="/image/orisa.webp" width="254" height="92"
                loading="lazy" decoding="async" alt="" aria-hidden="true"></picture>
         </a>
         <p class="footer-tagline">
@@ -502,7 +549,7 @@
           <li><a href="/">Home</a></li>
           <li><a href="/website-pricing">Website Pricing</a></li>
           <li><a href="/blog">Blog</a></li>
-          <li><a href="/about">About</a></li>
+        <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
       </nav>

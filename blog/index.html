@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Orisa Digital</title>
-  <meta name="description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
-  <link rel="canonical" href="https://orisadigital.com/privacy">
+  <title>Blog — Web Design &amp; Mobile Apps in Sarawak | Orisa Digital</title>
+  <meta name="description" content="Notes on web design, mobile apps, and running a business online in Kuching and across Sarawak. Written for business owners, not for other agencies.">
+  <link rel="canonical" href="https://orisadigital.com/blog">
   <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
@@ -13,33 +13,31 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
-  <meta property="og:url" content="https://orisadigital.com/privacy">
-  <meta property="og:title" content="Privacy Policy — Orisa Digital">
-  <meta property="og:description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
+  <meta property="og:url" content="https://orisadigital.com/blog">
+  <meta property="og:title" content="Blog — Web Design &amp; Mobile Apps in Sarawak | Orisa Digital">
+  <meta property="og:description" content="Notes on web design, mobile apps, and running a business online in Kuching and across Sarawak. Written for business owners, not for other agencies.">
   <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
-  <link rel="apple-touch-icon" href="image/favicon.jpeg">
+  <link rel="icon" href="/image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
+  <link rel="apple-touch-icon" href="/image/favicon.jpeg">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <!-- Self-hosted, so the fonts come off a connection the browser already
-       has rather than two fresh third-party origins. Inter 400 is the body
-       face and Inter Tight 900 every heading, so both are wanted immediately
-       and are preloaded; the rest of the sheet resolves by unicode-range. -->
-  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Self-hosted, so the fonts come off a connection the browser already has.
+       Absolute paths throughout: this page sits one level down, and a relative
+       href would resolve against /blog/ and miss. -->
+  <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-  <script src="main.js" defer></script>
+  <script src="/main.js" defer></script>
 
-  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
-       just saves the DNS and TLS round trip when it does go out. Cookies this
+  <!-- Google Analytics 4. async, so it never blocks rendering. Cookies this
        sets are described on /privacy. -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
@@ -50,9 +48,6 @@
     gtag("config", "G-W1SVHB9G25");
   </script>
 
-  <!-- Structured data. A legal page is not a service page: it describes terms,
-       so the organisation node stays trimmed and the page type is what
-       carries the meaning. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -62,16 +57,7 @@
         "@id": "https://orisadigital.com/#organization",
         "name": "Orisa Digital",
         "legalName": "Orisa Digital Company",
-        "identifier": "017269150250",
         "url": "https://orisadigital.com/",
-        "email": "hello@orisadigital.com",
-        "telephone": "+60-13-997-5304",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Kuching",
-          "addressRegion": "Sarawak",
-          "addressCountry": "MY"
-        },
         "sameAs": [
           "https://wa.me/60139975304",
           "https://t.me/faruqijeniri",
@@ -80,22 +66,23 @@
         ]
       },
       {
-        "@type": "WebPage",
-        "@id": "https://orisadigital.com/privacy#webpage",
-        "url": "https://orisadigital.com/privacy",
-        "name": "Privacy Policy — Orisa Digital",
-        "description": "How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.",
-        "isPartOf": { "@id": "https://orisadigital.com/#website" },
-        "about": { "@id": "https://orisadigital.com/#organization" },
-        "breadcrumb": { "@id": "https://orisadigital.com/privacy#breadcrumb" },
-        "inLanguage": "en-MY"
+        "@type": "Blog",
+        "@id": "https://orisadigital.com/blog#blog",
+        "url": "https://orisadigital.com/blog",
+        "name": "Orisa Digital Blog",
+        "description": "Notes on web design, mobile apps, and running a business online in Kuching and across Sarawak.",
+        "inLanguage": "en-MY",
+        "publisher": { "@id": "https://orisadigital.com/#organization" },
+        "blogPost": [
+          { "@id": "https://orisadigital.com/blog/website-vs-facebook-page#post" }
+        ]
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://orisadigital.com/privacy#breadcrumb",
+        "@id": "https://orisadigital.com/blog#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Privacy Policy" }
+          { "@type": "ListItem", "position": 2, "name": "Blog" }
         ]
       }
     ]
@@ -124,7 +111,7 @@
       <!-- The lockup already carries the wordmark, so there is no text beside
            it; the link's aria-label names the company for assistive tech. -->
       <a class="logo" href="/" aria-label="Orisa Digital — home">
-        <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92" alt="" aria-hidden="true"></picture>
+        <picture><source srcset="/image/orisa.avif" type="image/avif"><img class="logo-mark" src="/image/orisa.webp" width="254" height="92" alt="" aria-hidden="true"></picture>
       </a>
 
       <!-- Two labels, one shown per breakpoint: the phone header has no room
@@ -265,184 +252,38 @@
     </div>
   </aside>
 
-  <main class="page legal" id="top">
-    <section class="legal-hero" aria-labelledby="legal-title">
+  <main class="page" id="top">
+    <section class="legal-hero" aria-labelledby="blog-title">
       <div class="legal-inner">
-        <p class="section-eyebrow">Privacy</p>
-        <h1 class="section-title legal-title" id="legal-title">Privacy Policy</h1>
-        <p class="legal-updated">Last updated 14 August 2026</p>
+        <p class="section-eyebrow">Blog</p>
+        <h1 class="section-title" id="blog-title">Notes on Building<br>
+          Things Online</h1>
+        <p class="section-text">
+          Web design, mobile apps, and running a business online in Kuching and
+          across Sarawak. Written for business owners rather than for other
+          agencies, and only when we have something worth saying.
+        </p>
       </div>
     </section>
 
-    <section class="legal-body" aria-label="Privacy">
+    <section class="post-list-section" aria-label="Articles">
       <div class="legal-inner">
-        <p class="legal-lede">
-          This policy explains what happens to personal data when you use
-          orisadigital.com. It is written to match what the site actually does,
-          which is less than most sites: we measure visits with Google Analytics
-          and nothing else, we run no advertising or profiling, and the enquiry
-          form does not send anything to a server.
-        </p>
-
-        <h2>Who we are</h2>
-        <p>
-          Orisa Digital Company (SSM registration 017269150250), of Kuching,
-          Sarawak, Malaysia. For anything in this policy, write to
-          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a> or
-          call <a href="tel:+60139975304">+60 13 997 5304</a>.
-        </p>
-        <p>
-          We handle personal data in line with Malaysia's Personal Data
-          Protection Act 2010 (PDPA).
-        </p>
-
-        <h2>What the enquiry form does</h2>
-        <p>
-          The form on our <a href="/contact">contact page</a> asks for your
-          name, email address, phone number, the service you are interested in,
-          and your message. It is worth being precise about where that goes:
-          <strong>the form does not submit to us.</strong> It has no server
-          behind it. When you press send, your browser assembles what you typed
-          into a WhatsApp message and opens WhatsApp with it ready to go.
-        </p>
-        <p>
-          Nothing is transmitted until you send that message yourself, and if
-          you close WhatsApp without sending, we never receive it. Once you do
-          send it, we hold the message the same way we hold any other
-          conversation with a client.
-        </p>
-
-        <h2>What we do with it</h2>
-        <p>
-          We use what you send us to reply to your enquiry, prepare a quotation,
-          and carry out work you engage us for. We do not sell personal data, and
-          we do not use it for advertising or pass it to anyone for marketing.
-        </p>
-
-        <h2>Analytics and cookies</h2>
-        <p>
-          We use Google Analytics 4 to understand how the site is used &mdash;
-          which pages people read, how they arrived, roughly where in the world
-          they are, and what kind of device they are on. We look at this in
-          aggregate, to work out which pages are worth improving. We do not use
-          it to build profiles of individuals, and we run no advertising or
-          remarketing tags.
-        </p>
-        <p>
-          Google Analytics sets two cookies in your browser,
-          <code>_ga</code> and <code>_ga_W1SVHB9G25</code>, which last up to two
-          years and let it tell a returning visit from a new one. It also uses
-          your IP address to estimate your country and city; Google Analytics 4
-          does not log or store the IP address itself.
-        </p>
-        <p>
-          Beyond those two, this site sets no cookies of its own and stores
-          nothing in your browser's local or session storage. Our host,
-          Cloudflare, may set a small number of strictly necessary cookies for
-          security and bot protection, which are set by Cloudflare rather than by
-          us.
-        </p>
-        <p>
-          If you would rather not be counted, you can block cookies for this site
-          in your browser settings, use private browsing, or install Google's
-          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Analytics
-          opt-out add-on</a>. Nothing on the site stops working if you do.
-        </p>
-
-        <h2>Third parties your browser contacts</h2>
-        <p>
-          Some parts of the site load from other companies' servers. When that
-          happens, your IP address and browser details are visible to them, as
-          they would be for any request. We have listed all of them:
-        </p>
-        <ul>
-          <li>
-            <strong>Cloudflare</strong> — hosts the site and serves every page.
-            Cloudflare processes request logs, including IP addresses, for
-            delivery and security.
-          </li>
-          <li>
-            <strong>Google Analytics</strong> — measures page views as described
-            above, under Google's own privacy policy.
-          </li>
-          <li>
-            <strong>jsDelivr</strong> — serves the GSAP animation library.
-          </li>
-          <li>
-            <strong>unpkg</strong> — serves the Leaflet mapping library on the
-            contact page.
-          </li>
-          <li>
-            <strong>The Green Web Foundation</strong> — serves the green hosting
-            badge in the footer, which is fetched live so it shows this domain's
-            current status rather than a saved copy.
-          </li>
-          <li>
-            <strong>CARTO and OpenStreetMap</strong> — serve the map tiles on the
-            contact page.
-          </li>
-          <li>
-            <strong>WhatsApp (Meta) and Telegram</strong> — if you contact us
-            through either, your message and profile details are handled under
-            that company's own privacy policy, not this one.
+        <ul class="post-list">
+          <li class="post-card">
+            <a class="post-card-link" href="/blog/website-vs-facebook-page">
+              <p class="post-card-meta">
+                <time datetime="2026-08-14">14 August 2026</time>
+                <span aria-hidden="true">&middot;</span>
+                <span>6 min read</span>
+              </p>
+              <h2 class="post-card-title">Do You Still Need a Website If You Have a Facebook Page?</h2>
+              <p class="post-card-excerpt">Most businesses in Kuching start on Facebook, and plenty do well there. So what does a website add that a page cannot — and when is the honest answer nothing?</p>
+              <span class="post-card-more" aria-hidden="true">Read
+                <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </a>
           </li>
         </ul>
-        <p>
-          Typefaces used to be loaded from Google Fonts. They are now served from
-          our own domain, so viewing a page no longer discloses your visit to
-          Google on that account &mdash; though Google Analytics, described above,
-          does.
-        </p>
-
-        <h2>How long we keep things</h2>
-        <p>
-          We keep enquiry messages and project correspondence for as long as we
-          are working together and for a reasonable period afterwards, so we can
-          answer questions about work we have done and meet record-keeping
-          obligations. If you would like your data removed sooner, ask us.
-        </p>
-
-        <h2>Your rights</h2>
-        <p>Under the PDPA you may:</p>
-        <ul>
-          <li>ask what personal data of yours we hold, and get a copy;</li>
-          <li>ask us to correct anything inaccurate or out of date;</li>
-          <li>withdraw consent to us processing it;</li>
-          <li>ask us to limit how we process it.</li>
-        </ul>
-        <p>
-          Write to <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
-          and we will respond as soon as we reasonably can. We may need to
-          confirm who you are before releasing anything.
-        </p>
-
-        <h2>Security</h2>
-        <p>
-          The site is served over HTTPS. We take reasonable steps to protect
-          information you send us, though no method of transmission over the
-          internet is completely secure, and we cannot guarantee absolute
-          security.
-        </p>
-
-        <h2>Children</h2>
-        <p>
-          This site is aimed at businesses and is not directed at children. We do
-          not knowingly collect personal data from anyone under 18.
-        </p>
-
-        <h2>Changes</h2>
-        <p>
-          If this policy changes we will update the date at the top of the page.
-          Material changes will be described here rather than made silently.
-        </p>
-
-        <h2>Contact</h2>
-        <p>
-          Orisa Digital Company<br>
-          Kuching, Sarawak, Malaysia<br>
-          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a><br>
-          <a href="tel:+60139975304">+60 13 997 5304</a>
-        </p>
       </div>
     </section>
   </main>
@@ -451,7 +292,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a class="footer-logo" href="/" aria-label="Orisa Digital — home">
-          <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92"
+          <picture><source srcset="/image/orisa.avif" type="image/avif"><img class="logo-mark" src="/image/orisa.webp" width="254" height="92"
                loading="lazy" decoding="async" alt="" aria-hidden="true"></picture>
         </a>
         <p class="footer-tagline">
