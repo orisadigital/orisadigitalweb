@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  The seven public pages. Extensionless, to match the canonical on each page and
+  The nine public pages. Extensionless, to match the canonical on each page and
   the hrefs in the nav — Cloudflare Pages serves both /about and /about.html, and
   listing the other form here would hand search engines a second URL for the same
   content.
@@ -40,6 +40,14 @@
   </url>
   <url>
     <loc>https://orisadigital.com/contact</loc>
+    <lastmod>2026-08-14</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/privacy</loc>
+    <lastmod>2026-08-14</lastmod>
+  </url>
+  <url>
+    <loc>https://orisadigital.com/terms</loc>
     <lastmod>2026-08-14</lastmod>
   </url>
 </urlset>

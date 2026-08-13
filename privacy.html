@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Orisa Digital — Web Design Agency in Kuching</title>
-  <meta name="description" content="Tell us what you are planning. Reach Orisa Digital in Kuching, Sarawak by WhatsApp, Telegram, phone, or email — we come back to you as soon as we can.">
-  <link rel="canonical" href="https://orisadigital.com/contact">
+  <title>Privacy Policy — Orisa Digital</title>
+  <meta name="description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
+  <link rel="canonical" href="https://orisadigital.com/privacy">
   <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
@@ -13,9 +13,9 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
-  <meta property="og:url" content="https://orisadigital.com/contact">
-  <meta property="og:title" content="Contact Orisa Digital — Kuching, Sarawak">
-  <meta property="og:description" content="Tell us what you are planning. Fill in what you can and we will come back to you as soon as possible.">
+  <meta property="og:url" content="https://orisadigital.com/privacy">
+  <meta property="og:title" content="Privacy Policy — Orisa Digital">
+  <meta property="og:description" content="How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.">
   <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1200">
@@ -32,17 +32,15 @@
   <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- defer preserves order, so GSAP and Leaflet are both ready before main.js -->
+  <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="main.js" defer></script>
 
-  <!-- Structured data. This is the page that carries the location and the ways
-       to reach it, so the organisation node here is the fullest one on the
-       site — the coordinates match the marker main.js drops on the map. -->
+  <!-- Structured data. A legal page is not a service page: it describes terms,
+       so the organisation node stays trimmed and the page type is what
+       carries the meaning. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,69 +54,35 @@
         "url": "https://orisadigital.com/",
         "email": "hello@orisadigital.com",
         "telephone": "+60-13-997-5304",
-        "logo": {
-          "@type": "ImageObject",
-          "@id": "https://orisadigital.com/#logo",
-          "url": "https://orisadigital.com/image/orisa.webp",
-          "width": 254,
-          "height": 92
-        },
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Kuching",
           "addressRegion": "Sarawak",
           "addressCountry": "MY"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 1.5533,
-          "longitude": 110.3592
-        },
-        "areaServed": [
-          { "@type": "AdministrativeArea", "name": "Sarawak" },
-          { "@type": "Country", "name": "Malaysia" }
-        ],
-        "priceRange": "RM1,199+",
-        "currenciesAccepted": "MYR",
         "sameAs": [
           "https://wa.me/60139975304",
           "https://t.me/faruqijeniri",
           "https://www.google.com/maps?cid=12610751196808370303"
-        ],
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "contactType": "sales",
-            "telephone": "+60-13-997-5304",
-            "email": "hello@orisadigital.com",
-            "areaServed": "MY",
-            "url": "https://orisadigital.com/contact"
-          },
-          {
-            "@type": "ContactPoint",
-            "contactType": "customer support",
-            "telephone": "+60-13-997-5304",
-            "url": "https://wa.me/60139975304"
-          }
         ]
       },
       {
-        "@type": "ContactPage",
-        "@id": "https://orisadigital.com/contact#webpage",
-        "url": "https://orisadigital.com/contact",
-        "name": "Contact Orisa Digital — Web Design Agency in Kuching",
-        "description": "Tell us what you are planning. Reach Orisa Digital in Kuching, Sarawak by WhatsApp, Telegram, phone, or email — we come back to you as soon as we can.",
+        "@type": "WebPage",
+        "@id": "https://orisadigital.com/privacy#webpage",
+        "url": "https://orisadigital.com/privacy",
+        "name": "Privacy Policy — Orisa Digital",
+        "description": "How Orisa Digital handles personal data, in line with Malaysia's Personal Data Protection Act 2010. What the enquiry form does, which third parties are involved, and your rights.",
         "isPartOf": { "@id": "https://orisadigital.com/#website" },
         "about": { "@id": "https://orisadigital.com/#organization" },
-        "breadcrumb": { "@id": "https://orisadigital.com/contact#breadcrumb" },
+        "breadcrumb": { "@id": "https://orisadigital.com/privacy#breadcrumb" },
         "inLanguage": "en-MY"
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://orisadigital.com/contact#breadcrumb",
+        "@id": "https://orisadigital.com/privacy#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Contact" }
+          { "@type": "ListItem", "position": 2, "name": "Privacy Policy" }
         ]
       }
     ]
@@ -126,6 +90,7 @@
   </script>
 </head>
 <body>
+
 
   <!-- Icon sprite. The WhatsApp and Telegram paths are long and are needed in
        both the header menu and the footer, so they live here once. -->
@@ -135,10 +100,6 @@
     </symbol>
     <symbol id="icon-telegram" viewBox="0 0 24 24">
       <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.009-1.252-.242-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-    </symbol>
-    <!-- A marquee repeats this once per item, twice over — worth a symbol. -->
-    <symbol id="icon-star" viewBox="0 0 24 24">
-      <path d="M12 1.6c.62 5.4 4.4 9.18 9.8 9.8-5.4.62-9.18 4.4-9.8 9.8-.62-5.4-4.4-9.18-9.8-9.8 5.4-.62 9.18-4.4 9.8-9.8Z"/>
     </symbol>
   </svg>
 
@@ -287,81 +248,157 @@
     </div>
   </aside>
 
-  <main class="page" id="top">
-    <!-- The form comes first in the source so it leads on a phone, where the
-         two panels stack; the grid puts it on the right at desktop. -->
-    <section class="contact-split" aria-labelledby="contact-title">
-      <div class="contact-panel">
-        <div class="contact-panel-inner">
-          <p class="section-eyebrow">Contact</p>
-          <h1 class="section-title contact-title" id="contact-title">Tell Us About<br>
-            Your Project</h1>
-          <p class="section-text contact-intro">
-            Tell us what you are planning &mdash; a new website, a mobile app, or
-            something you have not pinned down yet. Fill in what you can and
-            we&rsquo;ll come back to you as soon as possible.
-          </p>
-          <!-- No backend: main.js composes the enquiry and opens WhatsApp with it
-               ready to send, so the conversation starts in the visitor own
-               WhatsApp and lands in the same inbox as the header buttons. -->
-          <form class="contact-form" data-whatsapp="60139975304">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required>
-            </div>
-
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required>
-            </div>
-
-            <div class="field">
-              <label for="phone">Phone <span class="field-note">optional</span></label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel">
-            </div>
-
-            <div class="field">
-              <label for="service">What do you need?</label>
-              <select id="service" name="service">
-                <!-- selected but valueless, so an untouched select says nothing
-                     rather than volunteering Web Design on the visitor's behalf -->
-                <option value="" selected>Choose one</option>
-                <option value="web-design">Web Design</option>
-                <option value="mobile-app">Mobile App</option>
-                <option value="digital-solution">Digital Solution</option>
-                <option value="other">Something else</option>
-              </select>
-            </div>
-
-            <div class="field field--full">
-              <label for="message">Project details</label>
-              <textarea id="message" name="message" rows="5" required></textarea>
-            </div>
-
-            <!-- A link, not a submit button, and for the same reason the header
-                 button is one: WhatsApp only offers to open the installed app
-                 when the browser can see a person clicking a link to it. Script
-                 opening a window is what lands on the QR page instead. main.js
-                 keeps the href in step with the fields as they are filled. -->
-            <a class="cta-button contact-submit" href="https://wa.me/60139975304"
-               target="_blank" rel="noopener noreferrer">
-              <span class="cta-button-label">Send on WhatsApp</span>
-              <span class="cta-button-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </span>
-            </a>
-
-            <!-- role=status announces the hand-off without stealing focus; it
-                 stays empty until there is something to say. -->
-            <p class="form-status" role="status" aria-live="polite"></p>
-          </form>
-        </div>
+  <main class="page legal" id="top">
+    <section class="legal-hero" aria-labelledby="legal-title">
+      <div class="legal-inner">
+        <p class="section-eyebrow">Privacy</p>
+        <h1 class="section-title legal-title" id="legal-title">Privacy Policy</h1>
+        <p class="legal-updated">Last updated 14 August 2026</p>
       </div>
+    </section>
 
-      <!-- main.js builds the map; without it this stays an empty panel rather
-           than a broken frame. -->
-      <div class="map" id="map" role="img"
-           aria-label="Map showing Orisa Digital's location in Kuching, Sarawak"></div>
+    <section class="legal-body" aria-label="Privacy">
+      <div class="legal-inner">
+        <p class="legal-lede">
+          This policy explains what happens to personal data when you use
+          orisadigital.com. It is written to match what the site actually does,
+          which is less than most sites: we run no analytics, set no cookies of
+          our own, and the enquiry form does not send anything to a server.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          Orisa Digital Company (SSM registration 017269150250), of Kuching,
+          Sarawak, Malaysia. For anything in this policy, write to
+          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a> or
+          call <a href="tel:+60139975304">+60 13 997 5304</a>.
+        </p>
+        <p>
+          We handle personal data in line with Malaysia's Personal Data
+          Protection Act 2010 (PDPA).
+        </p>
+
+        <h2>What the enquiry form does</h2>
+        <p>
+          The form on our <a href="/contact">contact page</a> asks for your
+          name, email address, phone number, the service you are interested in,
+          and your message. It is worth being precise about where that goes:
+          <strong>the form does not submit to us.</strong> It has no server
+          behind it. When you press send, your browser assembles what you typed
+          into a WhatsApp message and opens WhatsApp with it ready to go.
+        </p>
+        <p>
+          Nothing is transmitted until you send that message yourself, and if
+          you close WhatsApp without sending, we never receive it. Once you do
+          send it, we hold the message the same way we hold any other
+          conversation with a client.
+        </p>
+
+        <h2>What we do with it</h2>
+        <p>
+          We use what you send us to reply to your enquiry, prepare a quotation,
+          and carry out work you engage us for. We do not sell personal data, and
+          we do not use it for advertising or pass it to anyone for marketing.
+        </p>
+
+        <h2>Cookies and tracking</h2>
+        <p>
+          This site sets no cookies of its own. It stores nothing in your
+          browser's local or session storage, and it runs no analytics,
+          advertising, or tracking scripts. There is no consent banner because
+          there is nothing to consent to.
+        </p>
+        <p>
+          Our host, Cloudflare, may set a small number of strictly necessary
+          cookies for security and bot protection. Those are set by Cloudflare
+          rather than by us.
+        </p>
+
+        <h2>Third parties your browser contacts</h2>
+        <p>
+          Some parts of the site load from other companies' servers. When that
+          happens, your IP address and browser details are visible to them, as
+          they would be for any request. We have listed all of them:
+        </p>
+        <ul>
+          <li>
+            <strong>Cloudflare</strong> — hosts the site and serves every page.
+            Cloudflare processes request logs, including IP addresses, for
+            delivery and security.
+          </li>
+          <li>
+            <strong>jsDelivr</strong> — serves the GSAP animation library.
+          </li>
+          <li>
+            <strong>unpkg</strong> — serves the Leaflet mapping library on the
+            contact page.
+          </li>
+          <li>
+            <strong>CARTO and OpenStreetMap</strong> — serve the map tiles on the
+            contact page.
+          </li>
+          <li>
+            <strong>WhatsApp (Meta) and Telegram</strong> — if you contact us
+            through either, your message and profile details are handled under
+            that company's own privacy policy, not this one.
+          </li>
+        </ul>
+        <p>
+          Typefaces used to be loaded from Google Fonts. They are now served from
+          our own domain, so using this site no longer discloses anything to
+          Google.
+        </p>
+
+        <h2>How long we keep things</h2>
+        <p>
+          We keep enquiry messages and project correspondence for as long as we
+          are working together and for a reasonable period afterwards, so we can
+          answer questions about work we have done and meet record-keeping
+          obligations. If you would like your data removed sooner, ask us.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>Under the PDPA you may:</p>
+        <ul>
+          <li>ask what personal data of yours we hold, and get a copy;</li>
+          <li>ask us to correct anything inaccurate or out of date;</li>
+          <li>withdraw consent to us processing it;</li>
+          <li>ask us to limit how we process it.</li>
+        </ul>
+        <p>
+          Write to <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+          and we will respond as soon as we reasonably can. We may need to
+          confirm who you are before releasing anything.
+        </p>
+
+        <h2>Security</h2>
+        <p>
+          The site is served over HTTPS. We take reasonable steps to protect
+          information you send us, though no method of transmission over the
+          internet is completely secure, and we cannot guarantee absolute
+          security.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+          This site is aimed at businesses and is not directed at children. We do
+          not knowingly collect personal data from anyone under 18.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          If this policy changes we will update the date at the top of the page.
+          Material changes will be described here rather than made silently.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Orisa Digital Company<br>
+          Kuching, Sarawak, Malaysia<br>
+          <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a><br>
+          <a href="tel:+60139975304">+60 13 997 5304</a>
+        </p>
+      </div>
     </section>
   </main>
 

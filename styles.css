@@ -4316,6 +4316,96 @@ body {
   }
 }
 
+/* ---------- Legal pages ---------- */
+
+/* Privacy and terms. One narrow column of prose — no grid, no bands. The
+   measure is the whole design here: these are pages someone reads under
+   pressure, looking for one clause, so the job is to stay out of the way. */
+.legal-hero {
+  padding: calc(var(--header-height) + var(--header-offset) + clamp(48px, 7vw, 96px)) 24px clamp(20px, 3vw, 32px);
+}
+
+.legal-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.legal-title {
+  margin-bottom: 12px;
+}
+
+.legal-updated {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(50, 56, 58, 0.5);
+}
+
+.legal-body {
+  padding: 0 24px clamp(64px, 9vw, 120px);
+}
+
+.legal-lede {
+  margin: 0 0 8px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(50, 56, 58, 0.12);
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  line-height: 1.7;
+  color: rgba(50, 56, 58, 0.82);
+  text-wrap: pretty;
+}
+
+.legal-body h2 {
+  margin: clamp(36px, 4.5vw, 52px) 0 14px;
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.legal-body p,
+.legal-body li {
+  font-size: clamp(0.9375rem, 1.05vw, 1rem);
+  line-height: 1.75;
+  color: rgba(50, 56, 58, 0.72);
+  text-wrap: pretty;
+}
+
+.legal-body p {
+  margin: 0 0 16px;
+}
+
+.legal-body ul {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+
+.legal-body li {
+  margin-bottom: 10px;
+}
+
+.legal-body li::marker {
+  color: rgba(50, 56, 58, 0.35);
+}
+
+.legal-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.legal-body a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(50, 56, 58, 0.28);
+  transition: border-color 0.25s ease;
+}
+
+.legal-body a:hover,
+.legal-body a:focus-visible {
+  border-bottom-color: var(--neon);
+  border-bottom-width: 2px;
+}
+
 /* ---------- FAQ ---------- */
 
 /* Same two-column split as the approach section — a short intro that holds
@@ -4821,6 +4911,37 @@ body {
   margin: 0;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.45);
+}
+
+/* Sits between the copyright and the back-to-top link on a wide footer, and
+   drops onto its own line before either of them wraps. Quieter than the column
+   links above: these are the ones you go looking for, not ones to be offered. */
+.footer-legal {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.footer-legal a {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 620px) {
+  /* full width so the three links share one row rather than being squeezed
+     against the copyright */
+  .footer-legal {
+    order: 1;
+    width: 100%;
+  }
 }
 
 .footer-social {
