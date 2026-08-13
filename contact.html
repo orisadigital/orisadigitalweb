@@ -40,6 +40,18 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="main.js" defer></script>
 
+  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
+       just saves the DNS and TLS round trip when it does go out. Cookies this
+       sets are described on /privacy. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-W1SVHB9G25");
+  </script>
+
   <!-- Structured data. This is the page that carries the location and the ways
        to reach it, so the organisation node here is the fullest one on the
        site — the coordinates match the marker main.js drops on the map. -->

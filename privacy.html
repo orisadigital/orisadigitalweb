@@ -38,6 +38,18 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
 
+  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
+       just saves the DNS and TLS round trip when it does go out. Cookies this
+       sets are described on /privacy. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-W1SVHB9G25");
+  </script>
+
   <!-- Structured data. A legal page is not a service page: it describes terms,
        so the organisation node stays trimmed and the page type is what
        carries the meaning. -->
@@ -266,8 +278,9 @@
         <p class="legal-lede">
           This policy explains what happens to personal data when you use
           orisadigital.com. It is written to match what the site actually does,
-          which is less than most sites: we run no analytics, set no cookies of
-          our own, and the enquiry form does not send anything to a server.
+          which is less than most sites: we measure visits with Google Analytics
+          and nothing else, we run no advertising or profiling, and the enquiry
+          form does not send anything to a server.
         </p>
 
         <h2>Who we are</h2>
@@ -305,17 +318,34 @@
           we do not use it for advertising or pass it to anyone for marketing.
         </p>
 
-        <h2>Cookies and tracking</h2>
+        <h2>Analytics and cookies</h2>
         <p>
-          This site sets no cookies of its own. It stores nothing in your
-          browser's local or session storage, and it runs no analytics,
-          advertising, or tracking scripts. There is no consent banner because
-          there is nothing to consent to.
+          We use Google Analytics 4 to understand how the site is used &mdash;
+          which pages people read, how they arrived, roughly where in the world
+          they are, and what kind of device they are on. We look at this in
+          aggregate, to work out which pages are worth improving. We do not use
+          it to build profiles of individuals, and we run no advertising or
+          remarketing tags.
         </p>
         <p>
-          Our host, Cloudflare, may set a small number of strictly necessary
-          cookies for security and bot protection. Those are set by Cloudflare
-          rather than by us.
+          Google Analytics sets two cookies in your browser,
+          <code>_ga</code> and <code>_ga_W1SVHB9G25</code>, which last up to two
+          years and let it tell a returning visit from a new one. It also uses
+          your IP address to estimate your country and city; Google Analytics 4
+          does not log or store the IP address itself.
+        </p>
+        <p>
+          Beyond those two, this site sets no cookies of its own and stores
+          nothing in your browser's local or session storage. Our host,
+          Cloudflare, may set a small number of strictly necessary cookies for
+          security and bot protection, which are set by Cloudflare rather than by
+          us.
+        </p>
+        <p>
+          If you would rather not be counted, you can block cookies for this site
+          in your browser settings, use private browsing, or install Google's
+          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Analytics
+          opt-out add-on</a>. Nothing on the site stops working if you do.
         </p>
 
         <h2>Third parties your browser contacts</h2>
@@ -329,6 +359,10 @@
             <strong>Cloudflare</strong> — hosts the site and serves every page.
             Cloudflare processes request logs, including IP addresses, for
             delivery and security.
+          </li>
+          <li>
+            <strong>Google Analytics</strong> — measures page views as described
+            above, under Google's own privacy policy.
           </li>
           <li>
             <strong>jsDelivr</strong> — serves the GSAP animation library.
@@ -349,8 +383,9 @@
         </ul>
         <p>
           Typefaces used to be loaded from Google Fonts. They are now served from
-          our own domain, so using this site no longer discloses anything to
-          Google.
+          our own domain, so viewing a page no longer discloses your visit to
+          Google on that account &mdash; though Google Analytics, described above,
+          does.
         </p>
 
         <h2>How long we keep things</h2>

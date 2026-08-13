@@ -38,6 +38,18 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
 
+  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
+       just saves the DNS and TLS round trip when it does go out. Cookies this
+       sets are described on /privacy. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-W1SVHB9G25");
+  </script>
+
   <!-- Structured data. The two package tiers are the only fixed prices on the
        page — everything else is an add-on the calculator sums — so they are what
        the offers describe, each as a floor rather than a final figure. -->

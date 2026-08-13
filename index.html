@@ -40,6 +40,18 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
 
+  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
+       just saves the DNS and TLS round trip when it does go out. Cookies this
+       sets are described on /privacy. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-W1SVHB9G25");
+  </script>
+
   <!-- Structured data. One @graph so the nodes can reference each other by @id
        instead of repeating themselves; the organisation node is the one every
        other page points back to, so its @id is fixed and must not drift. -->
