@@ -1917,6 +1917,73 @@
   }).addTo(map);
 })();
 
+/* Enquiry tracking — reports WhatsApp handoffs to Analytics.
+
+   Every enquiry leaves the site the same way: a link to WhatsApp. Without this
+   Analytics counts the visit and stops there, so a page that brings people in
+   and a page that turns them into conversations look identical in the reports.
+
+   Delegated from the document rather than bound per link. The contact form
+   rewrites its button's href on every keystroke, the chat menu is built from
+   markup that may move, and a listener attached at load would have to be kept
+   in step with all of it; one listener on the document reads whatever href the
+   link happens to carry at the moment it is clicked.
+
+   Nothing here is load-bearing. If gtag is missing — blocked by an extension,
+   or Analytics simply failed — send() returns and the click proceeds untouched. */
+(() => {
+  "use strict";
+
+  const send = (name, params) => {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params);
+  };
+
+  const placeOf = (el) => {
+    if (el.closest(".contact-form")) return "contact_form";
+    if (el.closest(".site-header")) return "header";
+    if (el.closest(".drawer")) return "menu_drawer";
+    if (el.closest(".site-footer")) return "footer";
+    if (el.closest(".cta")) return "cta";
+    return "page";
+  };
+
+  /* Three addresses reach the same conversation: wa.me, the whatsapp:// the
+     desktop app answers to, and web.whatsapp.com. Matching only the first would
+     miss every desktop enquiry, which is the half most worth counting. */
+  const isWhatsApp = (href) =>
+    /^https?:\/\/(wa\.me|web\.whatsapp\.com)\b/i.test(href) ||
+    /^whatsapp:/i.test(href);
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      /* The submit button blocks its own click when a required field is empty.
+         That click still bubbles to here, so without this an unfinished form
+         would report a lead it never sent. */
+      if (event.defaultPrevented) return;
+
+      const link = event.target.closest("a[href]");
+      if (!link) return;
+
+      const href = link.getAttribute("href") || "";
+      if (!isWhatsApp(href)) return;
+
+      const place = placeOf(link);
+
+      /* A form click carries a written brief — name, contact details and what
+         they are after — while the others open an empty chat. Only the first is
+         a lead; mark generate_lead as the key event in Analytics, not the click. */
+      if (place === "contact_form") {
+        send("generate_lead", { method: "whatsapp", link_location: place });
+      }
+
+      send("whatsapp_click", { link_location: place });
+    },
+    { passive: true }
+  );
+})();
+
 /* Video bands — hold the file back until the band is nearly on screen.
 
    These sit well below the fold, and an autoplaying <video> fetches its whole
