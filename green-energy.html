@@ -359,10 +359,13 @@
     <!-- Decorative. The sections either side carry the message, so this is
          hidden from assistive tech and holds no controls. -->
     <section class="video-band" aria-hidden="true">
-      <video class="video-band-media" autoplay muted loop playsinline
-             preload="metadata" tabindex="-1">
-        <source src="image/jungle.mp4" type="video/mp4">
-      </video>
+      <!-- The source is held in data-src until the band is near the viewport.
+           This one sits well below the fold, so loading it eagerly spends the
+           whole file on visitors who may never scroll that far; the poster
+           holds the frame in the meantime and main.js swaps the source in. -->
+      <video class="video-band-media" muted loop playsinline
+             preload="none" poster="image/poster/jungle.webp" tabindex="-1"
+             data-src="image/jungle.mp4"></video>
     </section>
 
     <section class="impact" aria-labelledby="impact-title">

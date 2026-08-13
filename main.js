@@ -1917,6 +1917,62 @@
   }).addTo(map);
 })();
 
+/* Video bands — hold the file back until the band is nearly on screen.
+
+   These sit well below the fold, and an autoplaying <video> fetches its whole
+   source whether or not anyone scrolls to it: the green energy band alone was
+   8.5 MB spent before the visitor had read the first section. The markup ships
+   a poster and a data-src instead, and the source is attached one viewport
+   ahead of the band so the swap has landed by the time it is in view.
+
+   Without JS, or without IntersectionObserver, the poster is what shows. That
+   is a still frame of the same footage, so the band still reads as intended —
+   it simply does not move. */
+(() => {
+  "use strict";
+
+  const bands = Array.from(document.querySelectorAll("video[data-src]"));
+  if (!bands.length) return;
+
+  const start = (video) => {
+    if (video.dataset.loaded) return;
+    video.dataset.loaded = "1";
+
+    const source = document.createElement("source");
+    source.src = video.dataset.src;
+    source.type = "video/mp4";
+    video.appendChild(source);
+    video.load();
+
+    // autoplay is not on the element — it would defeat the whole point — so the
+    // play has to be asked for. It is muted and inline, which is what lets the
+    // request succeed without a user gesture; a rejection still leaves the
+    // poster in place, so nothing needs handling beyond not throwing.
+    video.play().catch(() => {});
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    bands.forEach(start);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        start(entry.target);
+      });
+    },
+    // one viewport of lead time: enough for the first frames to arrive before
+    // the band is actually looked at, without reaching so far that a visitor
+    // who stops half way still pays for it
+    { rootMargin: "100% 0px" }
+  );
+
+  bands.forEach((video) => observer.observe(video));
+})();
+
 /* Approach steps — lights the card crossing the middle of the viewport, so the
    list reads one step at a time against the pinned intro. */
 (() => {
