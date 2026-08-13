@@ -24,6 +24,16 @@
 /video/*
   Cache-Control: public, max-age=31536000, immutable
 
+# The font files are content-addressed by name — a different weight or subset is
+# a different filename — so they can be held as long as the images. fonts.css
+# revalidates with the other stylesheets, since that is where the @font-face
+# rules pointing at them live.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts.css
+  Cache-Control: public, max-age=0, must-revalidate
+
 /styles.css
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -4316,6 +4316,223 @@ body {
   }
 }
 
+/* ---------- FAQ ---------- */
+
+/* Same two-column split as the approach section — a short intro that holds
+   position beside the longer list — so the page keeps one rhythm rather than
+   introducing a second one this close to the end. */
+.faq {
+  padding: clamp(56px, 8vw, 104px) 24px clamp(64px, 9vw, 120px);
+}
+
+.faq-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+.faq-intro {
+  position: sticky;
+  /* clears the fixed header, which is what the offset variable is for */
+  top: calc(var(--header-height) + var(--header-offset) + 24px);
+}
+
+.faq-intro .section-text {
+  margin-bottom: 28px;
+}
+
+/* Same neon underline the inline document link uses, so a text link in a body
+   column reads the same way wherever it turns up. */
+.faq-link {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--neon);
+  padding-bottom: 2px;
+  transition: background-size 0.35s ease;
+  background-image: linear-gradient(var(--neon), var(--neon));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0;
+}
+
+.faq-link:hover,
+.faq-link:focus-visible {
+  background-size: 100% 100%;
+}
+
+.faq-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* the rows carry a bottom rule each, so the top one needs its own */
+  border-top: 1px solid rgba(50, 56, 58, 0.12);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(50, 56, 58, 0.12);
+}
+
+.faq-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: clamp(20px, 2.4vw, 26px) 0;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.3s ease;
+}
+
+/* Safari draws its own disclosure triangle through a pseudo-element that
+   list-style alone does not reach. */
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-summary:hover {
+  color: rgba(50, 56, 58, 0.62);
+}
+
+.faq-summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.faq-question {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.faq-marker {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(50, 56, 58, 0.06);
+  transition: background-color 0.3s ease;
+}
+
+.faq-details[open] .faq-marker {
+  background: var(--neon);
+}
+
+.faq-marker svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
+/* The plus loses its upright to become a minus. Rotating the whole icon a
+   quarter turn would land on an identical cross, so it is the one bar that
+   moves. */
+.faq-marker-bar--v {
+  transform-origin: center;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease;
+}
+
+.faq-details[open] .faq-marker-bar--v {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+.faq-answer {
+  padding: 0 54px clamp(22px, 2.4vw, 28px) 0;
+}
+
+.faq-answer p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: clamp(0.9375rem, 1.05vw, 1rem);
+  line-height: 1.75;
+  color: rgba(50, 56, 58, 0.72);
+  text-wrap: pretty;
+}
+
+.faq-answer a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(50, 56, 58, 0.28);
+  transition: border-color 0.25s ease;
+}
+
+.faq-answer a:hover,
+.faq-answer a:focus-visible {
+  border-bottom-color: var(--neon);
+  border-bottom-width: 2px;
+}
+
+/* Height is not animatable from `auto` on its own. interpolate-size unlocks it,
+   and ::details-content is the box that grows; browsers without either simply
+   snap open, which is the behaviour a <details> has always had. */
+@supports (interpolate-size: allow-keywords) {
+  .faq-details {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-details::details-content {
+    height: 0;
+    overflow: hidden;
+    transition:
+      height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      content-visibility 0.4s allow-discrete;
+  }
+
+  .faq-details[open]::details-content {
+    height: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .faq-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Nothing left to hold position beside once the columns stack. */
+  .faq-intro {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .faq-summary {
+    gap: 14px;
+  }
+
+  .faq-answer {
+    padding-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-marker-bar--v {
+    transition: none;
+  }
+
+  .faq-details::details-content {
+    transition: none;
+  }
+}
+
 /* ---------- Call to action ---------- */
 
 /* The neon band. It closes the white run of sections and hands over to the

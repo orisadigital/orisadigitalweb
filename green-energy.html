@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Energy — Orisa Digital</title>
-  <meta name="description" content="Websites and mobile apps for solar, renewable, and sustainability businesses — turning complex energy offerings into clear digital experiences.">
+  <title>Green Energy Web Design &amp; Renewable Hosting | Orisa Digital</title>
+  <meta name="description" content="Websites and apps for solar, renewable, and sustainability businesses in Sarawak — hosted on renewable power and built to keep their carbon footprint low.">
   <link rel="canonical" href="https://orisadigital.com/green-energy">
+  <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
        (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
@@ -13,21 +14,101 @@
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
   <meta property="og:url" content="https://orisadigital.com/green-energy">
-  <meta property="og:title" content="Green Energy — Orisa Digital">
+  <meta property="og:title" content="Green Energy Web Design &amp; Renewable Hosting — Orisa Digital">
   <meta property="og:description" content="Websites and mobile apps for solar, renewable, and sustainability businesses — turning complex energy offerings into clear digital experiences.">
-  <meta property="og:image" content="https://orisadigital.com/image/Team.webp">
+  <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Inter+Tight:wght@900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- Self-hosted, so the fonts come off a connection the browser already
+       has rather than two fresh third-party origins. Inter 400 is the body
+       face and Inter Tight 900 every heading, so both are wanted immediately
+       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
+
+  <!-- Structured data. The organisation node repeats the @id used on the home
+       page so the two resolve to one entity. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://orisadigital.com/#organization",
+        "name": "Orisa Digital",
+        "url": "https://orisadigital.com/",
+        "email": "hello@orisadigital.com",
+        "telephone": "+60-13-997-5304",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#logo",
+          "url": "https://orisadigital.com/image/orisa.webp",
+          "width": 254,
+          "height": 92
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kuching",
+          "addressRegion": "Sarawak",
+          "addressCountry": "MY"
+        },
+        "priceRange": "RM1,199+",
+        "sameAs": [
+          "https://wa.me/60139975304",
+          "https://t.me/faruqijeniri"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://orisadigital.com/green-energy#service",
+        "name": "Green Energy Digital",
+        "serviceType": "Web design and development for renewable energy businesses",
+        "description": "Websites and mobile apps for solar, renewable, and sustainability businesses, hosted on renewable power and built to keep their carbon footprint low.",
+        "url": "https://orisadigital.com/green-energy",
+        "provider": { "@id": "https://orisadigital.com/#organization" },
+        "audience": {
+          "@type": "BusinessAudience",
+          "name": "Solar, renewable energy, and sustainability businesses"
+        },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Sarawak" },
+          { "@type": "Country", "name": "Malaysia" }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://orisadigital.com/green-energy#webpage",
+        "url": "https://orisadigital.com/green-energy",
+        "name": "Green Energy Web Design & Renewable Hosting | Orisa Digital",
+        "description": "Websites and apps for solar, renewable, and sustainability businesses in Sarawak — hosted on renewable power and built to keep their carbon footprint low.",
+        "isPartOf": { "@id": "https://orisadigital.com/#website" },
+        "about": { "@id": "https://orisadigital.com/green-energy#service" },
+        "breadcrumb": { "@id": "https://orisadigital.com/green-energy#breadcrumb" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://orisadigital.com/green-energy#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Green Energy" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -212,9 +293,9 @@
           <span class="hero-line" data-scramble>Clean Energy</span>
         </h1>
         <p class="hero-desc">
-          Websites and mobile apps for solar, renewable, and sustainability
-          businesses — turning complex energy offerings into clear digital
-          experiences that win trust and customers.
+          Web design and mobile apps for solar, renewable, and sustainability
+          businesses in Sarawak — turning complex energy offerings into clear
+          digital experiences that win trust and customers.
         </p>
       </div>
     </section>

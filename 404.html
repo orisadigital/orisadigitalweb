@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Orisa Digital</title>
+  <meta name="description" content="That page is not here. Head back to the Orisa Digital home page or pick a service below.">
+  <!-- Cloudflare Pages serves this with a real 404, so a crawler already knows
+       not to index it. The tag is here for the crawlers that get to it another
+       way, and to keep the page out of results if it is ever served as a 200. -->
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#32383a">
+  <link rel="icon" href="/image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
+  <link rel="apple-touch-icon" href="/image/favicon.jpeg">
+  <!-- Absolute paths throughout this page: Pages serves it for any unmatched
+       URL, including deep ones like /a/b/c, where a relative href would resolve
+       against /a/b/ and 404 in its own right. -->
+  <link rel="preload" href="/fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts.css">
+
+  <!-- Deliberately standalone. The site stylesheet and main.js exist to drive
+       the header, the animations, and the map; a dead-end page needs none of
+       that, and loading them would make the slowest page on the site the one
+       nobody meant to land on. -->
+  <style>
+    :root {
+      --logo-black: #32383a;
+      --ink: var(--logo-black);
+      --neon: #ccff00;
+      --page: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-block;
+      margin-bottom: 40px;
+    }
+
+    .logo img {
+      display: block;
+      width: 140px;
+      height: auto;
+    }
+
+    .code {
+      margin: 0;
+      font-family: "Inter Tight", Inter, system-ui, sans-serif;
+      font-weight: 900;
+      font-size: clamp(88px, 22vw, 180px);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 20px 0 0;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .lede {
+      margin: 14px auto 0;
+      max-width: 44ch;
+      font-size: 17px;
+      line-height: 1.6;
+      opacity: 0.72;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 15px 30px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--page);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .cta:hover,
+    .cta:focus-visible { background: #262b2d; }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 28px;
+      margin: 40px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .links a {
+      color: inherit;
+      font-size: 15px;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s ease;
+    }
+
+    .links a:hover,
+    .links a:focus-visible { border-bottom-color: var(--neon); }
+
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+  <main>
+    <a class="logo" href="/" aria-label="Orisa Digital — home">
+      <picture>
+        <source srcset="/image/orisa.avif" type="image/avif">
+        <img src="/image/orisa.webp" width="254" height="92" alt="Orisa Digital">
+      </picture>
+    </a>
+
+    <p class="code" aria-hidden="true">404</p>
+    <h1>This page isn&rsquo;t here</h1>
+    <p class="lede">
+      The link may be old, or the address slightly off. Everything else is
+      still where you left it.
+    </p>
+
+    <a class="cta" href="/">Back to home</a>
+
+    <nav aria-label="Site">
+      <ul class="links">
+        <li><a href="/web-design">Web Design</a></li>
+        <li><a href="/mobile-app">Mobile App</a></li>
+        <li><a href="/green-energy">Green Energy</a></li>
+        <li><a href="/website-pricing">Website Pricing</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </main>
+
+</body>
+</html>

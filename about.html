@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — Orisa Digital</title>
-  <meta name="description" content="We combine strategy, design, and technology to create digital experiences that deliver measurable results and long-term value.">
+  <title>About Orisa Digital — Digital Agency in Kuching, Sarawak</title>
+  <meta name="description" content="Orisa Digital is a Kuching-based digital agency combining strategy, design, and technology to deliver measurable results for businesses across Sarawak.">
   <link rel="canonical" href="https://orisadigital.com/about">
+  <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
        (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
@@ -13,21 +14,110 @@
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
   <meta property="og:url" content="https://orisadigital.com/about">
-  <meta property="og:title" content="About — Orisa Digital">
+  <meta property="og:title" content="About Orisa Digital — Digital Agency in Kuching, Sarawak">
   <meta property="og:description" content="We combine strategy, design, and technology to create digital experiences that deliver measurable results and long-term value.">
-  <meta property="og:image" content="https://orisadigital.com/image/Team.webp">
+  <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Inter+Tight:wght@900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- Self-hosted, so the fonts come off a connection the browser already
+       has rather than two fresh third-party origins. Inter 400 is the body
+       face and Inter Tight 900 every heading, so both are wanted immediately
+       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
+
+  <!-- Structured data. This is the page that names the people behind the
+       company, so it is the one that carries founder and employee. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://orisadigital.com/#organization",
+        "name": "Orisa Digital",
+        "legalName": "Orisa Digital Company",
+        "identifier": "017269150250",
+        "url": "https://orisadigital.com/",
+        "description": "Orisa Digital combines strategy, design, and technology to create digital experiences that deliver measurable results and long-term value.",
+        "email": "hello@orisadigital.com",
+        "telephone": "+60-13-997-5304",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#logo",
+          "url": "https://orisadigital.com/image/orisa.webp",
+          "width": 254,
+          "height": 92
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kuching",
+          "addressRegion": "Sarawak",
+          "addressCountry": "MY"
+        },
+        "priceRange": "RM1,199+",
+        "sameAs": [
+          "https://wa.me/60139975304",
+          "https://t.me/faruqijeniri"
+        ],
+        "founder": { "@id": "https://orisadigital.com/about#faruqi-jeniri" },
+        "employee": [
+          { "@id": "https://orisadigital.com/about#faruqi-jeniri" },
+          { "@id": "https://orisadigital.com/about#amirul-5am" }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://orisadigital.com/about#faruqi-jeniri",
+        "name": "Faruqi Jeniri",
+        "jobTitle": "Web Creator & Vibe Coder",
+        "description": "Founder of Orisa Digital, specialising in modern websites, mobile apps, and business automation.",
+        "image": "https://orisadigital.com/image/Ukee.webp",
+        "worksFor": { "@id": "https://orisadigital.com/#organization" },
+        "sameAs": ["https://t.me/faruqijeniri"]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://orisadigital.com/about#amirul-5am",
+        "name": "Amirul 5AM",
+        "jobTitle": "Web Designer & App Developer",
+        "image": "https://orisadigital.com/image/5AM.webp",
+        "worksFor": { "@id": "https://orisadigital.com/#organization" }
+      },
+      {
+        "@type": "AboutPage",
+        "@id": "https://orisadigital.com/about#webpage",
+        "url": "https://orisadigital.com/about",
+        "name": "About Orisa Digital — Digital Agency in Kuching, Sarawak",
+        "description": "Orisa Digital is a Kuching-based digital agency combining strategy, design, and technology to deliver measurable results for businesses across Sarawak.",
+        "isPartOf": { "@id": "https://orisadigital.com/#website" },
+        "about": { "@id": "https://orisadigital.com/#organization" },
+        "breadcrumb": { "@id": "https://orisadigital.com/about#breadcrumb" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://orisadigital.com/about#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
+          { "@type": "ListItem", "position": 2, "name": "About" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -203,8 +293,9 @@
             Growth Partner</h1>
 
           <p class="section-text">
-            We combine strategy, design, and technology to create digital
-            experiences that deliver measurable results and long-term value.
+            A web design and mobile app company in Kuching, Sarawak. We combine
+            strategy, design, and technology to create digital experiences that
+            deliver measurable results and long-term value.
           </p>
         </div>
 

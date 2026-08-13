@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobile App — Orisa Digital</title>
-  <meta name="description" content="Custom mobile and web applications built to streamline operations, enhance customer experiences, and support long-term growth.">
+  <title>Mobile App Development Kuching, Sarawak | Orisa Digital</title>
+  <meta name="description" content="Mobile and web app development in Kuching, Sarawak. Cross-platform apps built to streamline operations, improve customer experience, and scale as you grow.">
   <link rel="canonical" href="https://orisadigital.com/mobile-app">
+  <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
        (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
@@ -13,21 +14,107 @@
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
   <meta property="og:url" content="https://orisadigital.com/mobile-app">
-  <meta property="og:title" content="Mobile App — Orisa Digital">
+  <meta property="og:title" content="Mobile App Development in Kuching, Sarawak — Orisa Digital">
   <meta property="og:description" content="Custom mobile and web applications built to streamline operations, enhance customer experiences, and support long-term growth.">
-  <meta property="og:image" content="https://orisadigital.com/image/Team.webp">
+  <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Inter+Tight:wght@900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- Self-hosted, so the fonts come off a connection the browser already
+       has rather than two fresh third-party origins. Inter 400 is the body
+       face and Inter Tight 900 every heading, so both are wanted immediately
+       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
+
+  <!-- Structured data. The organisation node repeats the @id used on the home
+       page so the two resolve to one entity. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://orisadigital.com/#organization",
+        "name": "Orisa Digital",
+        "url": "https://orisadigital.com/",
+        "email": "hello@orisadigital.com",
+        "telephone": "+60-13-997-5304",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#logo",
+          "url": "https://orisadigital.com/image/orisa.webp",
+          "width": 254,
+          "height": 92
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kuching",
+          "addressRegion": "Sarawak",
+          "addressCountry": "MY"
+        },
+        "priceRange": "RM1,199+",
+        "sameAs": [
+          "https://wa.me/60139975304",
+          "https://t.me/faruqijeniri"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://orisadigital.com/mobile-app#service",
+        "name": "Mobile App Development",
+        "serviceType": "Mobile and web application development",
+        "description": "Cross-platform mobile and web applications for businesses in Kuching and across Sarawak — built to streamline operations, improve customer experience, and scale.",
+        "url": "https://orisadigital.com/mobile-app",
+        "provider": { "@id": "https://orisadigital.com/#organization" },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Sarawak" },
+          { "@type": "Country", "name": "Malaysia" }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "What an app build includes",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cross-Platform Development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UI/UX Design and Research" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Scalable Architecture" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Prototyping" } }
+          ]
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://orisadigital.com/mobile-app#webpage",
+        "url": "https://orisadigital.com/mobile-app",
+        "name": "Mobile App Development Kuching, Sarawak | Orisa Digital",
+        "description": "Mobile and web app development in Kuching, Sarawak. Cross-platform apps built to streamline operations, improve customer experience, and scale with your business.",
+        "isPartOf": { "@id": "https://orisadigital.com/#website" },
+        "about": { "@id": "https://orisadigital.com/mobile-app#service" },
+        "breadcrumb": { "@id": "https://orisadigital.com/mobile-app#breadcrumb" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://orisadigital.com/mobile-app#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Mobile App" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -194,21 +281,21 @@
   <main class="page">
     <section class="hero" id="top">
       <video class="hero-video" autoplay muted loop playsinline preload="metadata"
-             aria-hidden="true" tabindex="-1">
+             poster="image/poster/mobile-app.webp" aria-hidden="true" tabindex="-1">
         <source src="image/mobile-app.mp4" type="video/mp4">
       </video>
       <div class="hero-veil" aria-hidden="true"></div>
 
       <!-- TODO: replace with your own headline and intro -->
       <div class="hero-content">
-        <p class="hero-eyebrow">Mobile App</p>
+        <p class="hero-eyebrow">Mobile App &amp; Web App Kuching</p>
         <h1 class="hero-title">
           <span class="hero-line" data-scramble>Mobile Apps That</span>
           <span class="hero-line" data-scramble>Move Business</span>
         </h1>
         <p class="hero-desc">
-          Custom mobile and web applications built to streamline operations,
-          enhance customer experiences, and support long-term growth.
+          Custom mobile app and web app development in Kuching, built to streamline
+          operations, enhance customer experiences, and support long-term growth.
         </p>
       </div>
     </section>
@@ -220,9 +307,9 @@
           <h2 class="section-title feature-title" id="intro-title">Mobile Apps Designed<br>
             For Your Business</h2>
           <p class="section-text feature-text">
-            We build mobile applications that automate workflows, enhance
-            productivity, and help businesses make smarter decisions through
-            intelligent technology.
+            We build mobile apps and web apps for businesses in Kuching that
+            automate workflows, enhance productivity, and help them make smarter
+            decisions through intelligent technology.
           </p>
         </div>
 

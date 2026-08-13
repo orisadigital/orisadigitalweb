@@ -3,31 +3,229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orisa Digital</title>
-  <meta name="description" content="We create premium websites, mobile apps, and digital experiences that drive business growth across Sarawak.">
+  <title>Web Design &amp; App Development Kuching, Sarawak | Orisa Digital</title>
+  <meta name="description" content="Orisa Digital builds premium websites and mobile apps for businesses in Kuching and across Sarawak — design, development, and green hosting under one roof.">
   <link rel="canonical" href="https://orisadigital.com/">
+  <meta name="theme-color" content="#32383a">
 
   <!-- Link previews. og:image must be absolute: the scrapers that read it
-       (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
+       (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths.
+       The dimensions save the scraper a fetch and stop the card reflowing once
+       the image finally loads. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Orisa Digital">
   <meta property="og:locale" content="en_MY">
   <meta property="og:url" content="https://orisadigital.com/">
   <meta property="og:title" content="Orisa Digital — Websites, Mobile Apps and Digital Solutions in Sarawak">
-  <meta property="og:description" content="We create premium websites, mobile apps, and digital experiences that drive business growth across Sarawak.">
-  <meta property="og:image" content="https://orisadigital.com/image/Team.webp">
+  <meta property="og:description" content="Premium web design, mobile apps, and web app development built in Kuching for businesses across Sarawak.">
+  <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Orisa Digital team">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Inter+Tight:wght@900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- Self-hosted, so the fonts come off a connection the browser already
+       has rather than two fresh third-party origins. Inter 400 is the body
+       face and Inter Tight 900 every heading, so both are wanted immediately
+       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="styles.css">
   <!-- defer preserves order, so GSAP is ready before main.js runs -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
   <script src="main.js" defer></script>
+
+  <!-- Structured data. One @graph so the nodes can reference each other by @id
+       instead of repeating themselves; the organisation node is the one every
+       other page points back to, so its @id is fixed and must not drift. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://orisadigital.com/#organization",
+        "name": "Orisa Digital",
+        "legalName": "Orisa Digital Company",
+        "identifier": "017269150250",
+        "url": "https://orisadigital.com/",
+        "description": "Orisa Digital designs and builds websites, mobile apps, and digital experiences for businesses in Kuching and across Sarawak.",
+        "email": "hello@orisadigital.com",
+        "telephone": "+60-13-997-5304",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#logo",
+          "url": "https://orisadigital.com/image/orisa.webp",
+          "contentUrl": "https://orisadigital.com/image/orisa.webp",
+          "width": 254,
+          "height": 92,
+          "caption": "Orisa Digital"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#primaryimage",
+          "url": "https://orisadigital.com/image/Team.webp",
+          "contentUrl": "https://orisadigital.com/image/Team.webp",
+          "width": 1024,
+          "height": 735,
+          "caption": "The Orisa Digital team"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kuching",
+          "addressRegion": "Sarawak",
+          "addressCountry": "MY"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 1.5533,
+          "longitude": 110.3592
+        },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Sarawak" },
+          { "@type": "Country", "name": "Malaysia" }
+        ],
+        "priceRange": "RM1,199+",
+        "currenciesAccepted": "MYR",
+        "knowsAbout": [
+          "Web design",
+          "Web development",
+          "Mobile app development",
+          "UI/UX design",
+          "Graphic design",
+          "Green web hosting"
+        ],
+        "sameAs": [
+          "https://wa.me/60139975304",
+          "https://t.me/faruqijeniri"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "telephone": "+60-13-997-5304",
+          "email": "hello@orisadigital.com",
+          "areaServed": "MY",
+          "url": "https://orisadigital.com/contact"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Digital services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web Design",
+                "url": "https://orisadigital.com/web-design"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Mobile App Development",
+                "url": "https://orisadigital.com/mobile-app"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Green Energy Digital",
+                "url": "https://orisadigital.com/green-energy"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://orisadigital.com/#website",
+        "url": "https://orisadigital.com/",
+        "name": "Orisa Digital",
+        "publisher": { "@id": "https://orisadigital.com/#organization" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://orisadigital.com/#webpage",
+        "url": "https://orisadigital.com/",
+        "name": "Web Design & App Development Kuching, Sarawak | Orisa Digital",
+        "description": "Orisa Digital builds premium websites and mobile apps for businesses in Kuching and across Sarawak — design, development, and green hosting under one roof.",
+        "isPartOf": { "@id": "https://orisadigital.com/#website" },
+        "about": { "@id": "https://orisadigital.com/#organization" },
+        "primaryImageOfPage": { "@id": "https://orisadigital.com/#primaryimage" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://orisadigital.com/#faq",
+        "url": "https://orisadigital.com/",
+        "isPartOf": { "@id": "https://orisadigital.com/#webpage" },
+        "inLanguage": "en-MY",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does a website cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A one page website starts at RM1,199 and an SME website at RM3,799. What moves the figure from there is the number of pages, the features you need, and add-ons like a blog, a booking form, or a payment gateway. The website pricing calculator adds it all up so you know the number before you get in touch.",
+              "url": "https://orisadigital.com/website-pricing"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a project take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on how much there is to build. Every project runs through the same six stages — research, wireframe, mockup, prototype, build, and handover — and you get a timeline with your quote, once we know the scope, rather than a guess before we do."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you work with businesses outside Kuching?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We are based in Kuching and work with businesses across Sarawak and the rest of Malaysia. Most of a project runs over WhatsApp, email, and calls, so where you are rarely changes how it goes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is included in a website?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Responsive design that holds up on phone, tablet, and desktop; UI/UX design and research; a content management system so you can edit your own pages afterwards; performance and security work; and a full handover once everything is tested and live.",
+              "url": "https://orisadigital.com/web-design"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you build mobile apps as well?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We build cross-platform mobile and web applications for businesses that need to streamline operations or put something in their customers' hands.",
+              "url": "https://orisadigital.com/mobile-app"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is green hosting, and does it matter?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every website runs on a server somewhere, and data centres account for roughly 2% of global carbon emissions. We host on providers running renewable power and build lean sites that move less data to begin with.",
+              "url": "https://orisadigital.com/green-energy"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -193,8 +391,12 @@
 
   <main class="page">
     <section class="hero" id="top">
+      <!-- The poster is the first thing that can paint here: without it the hero
+           holds an empty box until enough of the video has arrived, and that wait
+           is what the largest-contentful-paint measurement lands on. Frame is
+           pulled from the video itself, so the swap is invisible. -->
       <video class="hero-video" autoplay muted loop playsinline preload="metadata"
-             aria-hidden="true" tabindex="-1">
+             poster="image/poster/loom-mac.webp" aria-hidden="true" tabindex="-1">
         <source src="video/loom-mac.mp4" type="video/mp4">
       </video>
       <div class="hero-veil" aria-hidden="true"></div>
@@ -210,8 +412,8 @@
           <span class="hero-line" data-scramble>Digital Future</span>
         </h1>
         <p class="hero-desc">
-          We create premium websites, mobile apps, and digital experiences
-          that drive business growth across Sarawak.
+          Premium web design, mobile apps, and digital experiences built in
+          Kuching for businesses across Sarawak.
         </p>
       </div>
 
@@ -463,7 +665,8 @@
             Digital Future</h2>
           <p class="section-text">
             Faruqi, Founder of Orisa Digital, is committed to helping SMEs, corporations,
-            and government agencies across Sarawak. Guided by the
+            and government agencies across Sarawak with web design, mobile apps, and
+            web app development. Guided by the
             <a class="doc-link" href="image/sde.pdf" download data-tip="Download the Blueprint &middot; PDF"
                aria-label="Sarawak Digital Economy Strategy 2030 — download the blueprint, PDF">Sarawak
               Digital Economy Strategy 2030<svg class="doc-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5v11m0 0 4-4m-4 4-4-4M4.5 17.5v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1"/></svg></a>, he proudly supports the state&rsquo;s vision by
@@ -484,7 +687,7 @@
 
     <section class="services" aria-labelledby="services-title">
       <header class="services-head">
-        <p class="section-eyebrow">Our Services</p>
+        <p class="section-eyebrow">Web Design Kuching &amp; Mobile App Development</p>
         <!-- the newline after <br> keeps a space in the text content, so the
              heading doesn't read as "Full-StackDigital Growth" -->
         <h2 class="section-title" id="services-title">Full-Stack<br>
@@ -526,7 +729,8 @@
               <span class="service-index">02</span>
               <span class="service-name">Web Design</span>
               <span class="service-desc">
-                Modern, responsive websites designed to engage visitors and deliver results.
+                Modern, responsive web design for businesses in Kuching and across
+                Sarawak, built to engage visitors and deliver results.
               </span>
               <span class="service-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
@@ -540,8 +744,9 @@
               <span class="service-index">03</span>
               <span class="service-name">Mobile App</span>
               <span class="service-desc">
-                Custom web and mobile applications designed to streamline operations,
-                enhance customer experiences, and support business growth.
+                Custom mobile app and web app development in Kuching, designed to
+                streamline operations, enhance customer experiences, and support
+                business growth.
               </span>
               <span class="service-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg>
@@ -649,6 +854,171 @@
           <li class="gallery-item">
             <picture><source srcset="image/mne.avif" type="image/avif"><img src="image/mne.webp" width="840" height="410" loading="lazy"
                  decoding="async" alt="MNE — project preview"></picture>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sits between the work and the call to action on purpose: these are the
+         questions someone asks themselves right before they decide to write in.
+
+         Built on <details>, so it opens, closes, and takes focus with no script
+         at all — and the answers are in the DOM whether a row is open or not,
+         which is what keeps them indexable. The shared `name` makes the group an
+         exclusive accordion in browsers that support it; in the ones that don't,
+         more than one row can sit open, which costs nothing. -->
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="faq-inner">
+        <div class="faq-intro">
+          <p class="section-eyebrow">Questions</p>
+          <h2 class="section-title" id="faq-title">Before You<br>
+            Get in Touch</h2>
+          <p class="section-text">
+            The things people ask us most, answered plainly. If yours is not
+            here, send it over — we would rather answer it than have you guess.
+          </p>
+          <a class="faq-link" href="/contact">Ask us directly</a>
+        </div>
+
+        <ul class="faq-list">
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">How much does a website cost?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  A one page website starts at RM1,199 and an SME website at
+                  RM3,799. What moves the figure from there is the number of
+                  pages, the features you need, and add-ons like a blog, a
+                  booking form, or a payment gateway. The
+                  <a href="/website-pricing">website pricing calculator</a> adds
+                  it all up so you know the number before you get in touch.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">How long does a project take?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  It depends on how much there is to build. Every project runs
+                  through the same six stages — research, wireframe, mockup,
+                  prototype, build, and handover — and you get a timeline with
+                  your quote, once we know the scope, rather than a guess before
+                  we do.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">Do you work with businesses outside Kuching?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Yes. We are based in Kuching and work with businesses across
+                  Sarawak and the rest of Malaysia. Most of a project runs over
+                  WhatsApp, email, and calls, so where you are rarely changes
+                  how it goes.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">What is included in a website?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Responsive design that holds up on phone, tablet, and desktop;
+                  UI/UX design and research; a content management system so you
+                  can edit your own pages afterwards; performance and security
+                  work; and a full handover once everything is tested and live.
+                  The <a href="/web-design">web design</a> page goes through it
+                  in detail.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">Do you build mobile apps as well?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Yes. We build cross-platform mobile and web applications for
+                  businesses that need to streamline operations or put something
+                  in their customers&rsquo; hands. See the
+                  <a href="/mobile-app">mobile app</a> page for how those are
+                  built.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li class="faq-item">
+            <details class="faq-details" name="faq">
+              <summary class="faq-summary">
+                <h3 class="faq-question">What is green hosting, and does it matter?</h3>
+                <span class="faq-marker" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path class="faq-marker-bar" d="M5 12h14"/>
+                    <path class="faq-marker-bar faq-marker-bar--v" d="M12 5v14"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Every website runs on a server somewhere, and data centres
+                  account for roughly 2% of global carbon emissions. We host on
+                  providers running renewable power and build lean sites that
+                  move less data to begin with. The
+                  <a href="/green-energy">green energy</a> page has the full
+                  picture.
+                </p>
+              </div>
+            </details>
           </li>
         </ul>
       </div>
