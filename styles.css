@@ -2371,8 +2371,10 @@ body {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Tighter than the other grids on the page. Four columns leave 252px at the
+     old gap, and the longest role needs 264px to keep its pill on one line. */
+  gap: clamp(16px, 1.8vw, 28px);
   margin: clamp(32px, 4.5vw, 56px) 0 0;
   padding: 0;
   list-style: none;
@@ -2415,7 +2417,7 @@ body {
 
 .team-role {
   margin: 0 0 16px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1;
@@ -2435,27 +2437,26 @@ body {
   box-decoration-break: clone;
 }
 
-.team-bio {
-  margin: 0;
-  max-width: 52ch;
-  font-size: clamp(0.9rem, 1vw, 0.975rem);
-  line-height: 1.7;
-  color: rgba(50, 56, 58, 0.66);
-  text-wrap: pretty;
-}
-
-.team-bio strong {
-  font-weight: 600;
-  color: var(--ink);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .team-photo img {
     transition: none;
   }
 }
 
-@media (max-width: 760px) {
+/* Four across needs the full 1160px to keep the longer roles on one line.
+   Below that they pair off, and below 560px the photo is the thing worth the
+   width, so each card takes the row. */
+@media (max-width: 1180px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-role {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 560px) {
   .team-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 44px;
