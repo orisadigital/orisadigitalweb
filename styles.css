@@ -2371,7 +2371,7 @@ body {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(28px, 4vw, 56px);
   margin: clamp(32px, 4.5vw, 56px) 0 0;
   padding: 0;
@@ -2452,6 +2452,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .team-photo img {
     transition: none;
+  }
+}
+
+/* Three across only while the cards can still carry a photo and a paragraph.
+   Below this the third one drops to a second row, which is the usual way a
+   three-person grid falls apart and reads fine. */
+@media (max-width: 1040px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
