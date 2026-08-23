@@ -1086,6 +1086,17 @@
                 </label>
 
                 <label class="calc-option">
+                  <input type="radio" id="photo-ai" name="photography" value="ai" data-price="149">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">AI / Stock Images</span>
+                    <span class="calc-option-price">RM149</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option">
                   <input type="radio" id="photo-professional" name="photography" value="professional" data-price="499">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Professional</span>
@@ -1095,6 +1106,18 @@
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
                   </span>
                 </label>
+              </div>
+
+              <!-- Said plainly, because what is saved here is the shoot
+                   itself, and anyone reading this as a cheaper one would be let
+                   down by the first draft. -->
+              <div class="calc-subfield" data-when="#photo-ai" hidden>
+                <p class="calc-subfield-label">What AI / Stock Images covers</p>
+                <ul class="calc-points">
+                  <li>No shoot — nothing of your own premises or team</li>
+                  <li>20 licensed or generated images, sized for the site</li>
+                  <li>1 round of swaps</li>
+                </ul>
               </div>
 
               <!-- Counts of finished images rather than of shots taken, since
@@ -1134,6 +1157,17 @@
                 </label>
 
                 <label class="calc-option">
+                  <input type="radio" id="video-ai" name="video" value="ai" data-price="199">
+                  <span class="calc-option-body">
+                    <span class="calc-option-name">AI / Stock Video</span>
+                    <span class="calc-option-price">RM199</span>
+                  </span>
+                  <span class="calc-option-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  </span>
+                </label>
+
+                <label class="calc-option">
                   <input type="radio" id="video-professional" name="video" value="professional" data-price="499">
                   <span class="calc-option-body">
                     <span class="calc-option-name">Professional</span>
@@ -1143,6 +1177,19 @@
                     <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
                   </span>
                 </label>
+              </div>
+
+              <!-- A length rather than a day, since there is no day on
+                   location: the work is the cut, and the footage is bought or
+                   generated. -->
+              <div class="calc-subfield" data-when="#video-ai" hidden>
+                <p class="calc-subfield-label">What AI / Stock Video covers</p>
+                <ul class="calc-points">
+                  <li>No filming — nothing of your own premises or team</li>
+                  <li>Up to 30 seconds, cut from licensed or generated footage</li>
+                  <li>Music, captions and colour grading</li>
+                  <li>1 revision</li>
+                </ul>
               </div>
 
               <!-- Revisions but no options, unlike the design tiers: a second
