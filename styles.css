@@ -911,6 +911,14 @@ html::-webkit-scrollbar-thumb:hover {
   text-wrap: pretty;
 }
 
+/* Kept whole. Left to wrap on its own the sentence broke after "payment." and
+   stranded "No obligation." on a line by itself. It measures 268px against a
+   327px column on a phone, so holding it together costs no extra line — it
+   only moves the break to the sentence boundary, where it belongs. */
+.hero-desc-promise {
+  white-space: nowrap;
+}
+
 /* ---------- Hero actions ---------- */
 
 /* Centred under the description like the rest of the hero, and allowed to wrap:
