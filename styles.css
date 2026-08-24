@@ -3544,6 +3544,22 @@ html::-webkit-scrollbar-thumb:hover {
   padding: clamp(8px, 2vw, 28px) 24px clamp(48px, 6vw, 88px);
 }
 
+/* Pulled up under the video on /start-free. The shared rule opens with enough
+   room to separate the strip from the stats block above it on the homepage;
+   here it belongs to the clip directly above, so it closes the gap instead.
+
+   The track margin has to go too, not just the section padding: .clients-track
+   carries a top margin that spaces the two rows apart, and it lands before the
+   first row as well. The row-to-row gap is set by the adjacent-sibling rule
+   below, so zeroing the first one does not close the pair up. */
+.clients--tight {
+  padding-top: 0;
+}
+
+.clients--tight .clients-track:first-child {
+  margin-top: 0;
+}
+
 /* ---- Homepage: the logos run as a strip ---- */
 
 /* The strip is clipped here rather than at the section edge, so it runs to the
@@ -5080,7 +5096,9 @@ html::-webkit-scrollbar-thumb:hover {
 .prototype-video {
   /* No top padding: the hero above already carries its own bottom padding, and
      two stacked gaps put 133px between the heading and the video it belongs to. */
-  padding: 0 24px clamp(40px, 5vw, 64px);
+  /* Closes tight at the bottom too: the logo strip below belongs to this clip,
+     not to the section after it. */
+  padding: 0 24px clamp(14px, 1.8vw, 22px);
 }
 
 .prototype-video-inner {
