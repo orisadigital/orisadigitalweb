@@ -130,16 +130,28 @@
   // motion — the correct numbers are simply left on screen.
   if (prefersReduced || !("IntersectionObserver" in window)) return;
 
+  // A target may carry decimals — 4.8 out of 5 — so it is read as a float and
+  // rendered to whatever precision the attribute was written with. An integer
+  // target still counts in whole numbers, exactly as before.
+  function readTarget(el) {
+    const raw = el.dataset.countTo;
+    const value = parseFloat(raw);
+    if (!Number.isFinite(value)) return null;
+    const dot = raw.indexOf(".");
+    const decimals = dot === -1 ? 0 : raw.length - dot - 1;
+    return { value, decimals, fmt: (n) => n.toFixed(decimals) };
+  }
+
   function run() {
     numbers.forEach((el) => {
-      const target = parseInt(el.dataset.countTo, 10);
-      if (!Number.isFinite(target)) return;
+      const spec = readTarget(el);
+      if (!spec) return;
 
       let start = null;
       const frame = (now) => {
         if (start === null) start = now;
         const t = Math.min(1, (now - start) / DURATION);
-        el.textContent = String(Math.round(easeOut(t) * target));
+        el.textContent = spec.fmt(easeOut(t) * spec.value);
         if (t < 1) requestAnimationFrame(frame);
       };
       requestAnimationFrame(frame);
@@ -153,23 +165,28 @@
     // Anton's "1" is a third narrower than its other digits, so a target of 1
     // renders a wider "0" en route.
     numbers.forEach((el) => {
-      const target = parseInt(el.dataset.countTo, 10);
-      if (!Number.isFinite(target)) return;
+      const spec = readTarget(el);
+      if (!spec) return;
 
       el.style.minWidth = "";
       const settled = el.textContent;
       let widest = 0;
 
-      // measured in the DOM so letter-spacing and font features are included
-      for (let v = 0; v <= Math.min(target, 300); v++) {
-        el.textContent = String(v);
+      // Measured in the DOM so letter-spacing and font features are included,
+      // and stepped at the target's own precision — a decimal target has to
+      // measure "0.0" through "4.8", not just the whole numbers between, since
+      // the fractional digit is as likely to be the wide one.
+      const step = 1 / Math.pow(10, spec.decimals);
+      const steps = Math.min(Math.round(spec.value / step), 300);
+      for (let i = 0; i <= steps; i++) {
+        el.textContent = spec.fmt(i * step);
         widest = Math.max(widest, el.getBoundingClientRect().width);
       }
       el.textContent = settled;
       widest = Math.max(widest, el.getBoundingClientRect().width);
 
       el.style.minWidth = widest.toFixed(2) + "px";
-      el.textContent = "0";
+      el.textContent = spec.fmt(0);
     });
 
     const observer = new IntersectionObserver(

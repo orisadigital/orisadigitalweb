@@ -1044,6 +1044,7 @@ body {
 
 /* Sections that carry the grid backdrop. */
 .stats,
+.portfolio,
 .gallery,
 .cta,
 .about-hero,
@@ -1059,6 +1060,7 @@ body {
 /* Grid backdrop. Two 1px gradients make the lines; the mask fades them out
    toward all four edges so the pattern has no hard boundary. */
 .stats::before,
+.portfolio::before,
 .gallery::before,
 .cta::before,
 .about-hero::before,
@@ -3904,6 +3906,7 @@ body {
   max-width: calc(1160px + 48px);
   margin: 0 auto clamp(36px, 5vw, 64px);
   padding: 0 24px;
+  text-align: center;
 }
 
 .services-head .section-title {
@@ -4630,11 +4633,65 @@ body {
 
 /* ---------- Portfolio ---------- */
 
+
+/* The shared mask is an ellipse centred on the section, densest at 50% height.
+   Here that lands squarely behind the card row, which is opaque and covers the
+   middle ~half of the section — so the grid would only ever show through in the
+   faded margins above and below it. Re-aiming the ellipse at the heading band,
+   the one part of this section the cards do not cover, is what makes the
+   backdrop visible at all. The fade stays elliptical so all four edges still
+   dissolve the way every other grid section does. */
+.portfolio::before {
+  /* Two mask layers, intersected. The ellipse aims the grid at the heading band
+     and dissolves it left, right and below; the linear pass takes the top edge
+     to nothing, so the pattern arrives out of the white above rather than
+     butting against it at ~70% ink, which is where the ellipse alone left it.
+
+     A browser with mask layers but no mask-composite falls back to the spec
+     default of `add` — the union, which is the ellipse on its own. That is the
+     behaviour this replaces, so the degradation costs nothing. */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 74% 58% at 50% 22%,
+      #000 14%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.12) 76%,
+      transparent 94%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.28) 10%,
+      rgba(0, 0, 0, 0.75) 20%,
+      #000 32%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(
+      ellipse 74% 58% at 50% 22%,
+      #000 14%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.12) 76%,
+      transparent 94%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.28) 10%,
+      rgba(0, 0, 0, 0.75) 20%,
+      #000 32%
+    );
+  mask-composite: intersect;
+}
+
 .portfolio {
   padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 6vw, 80px);
 }
 
 .portfolio-head {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
   max-width: 1160px;
   margin: 0 auto clamp(28px, 3.6vw, 48px);
   /* the row below is full bleed, so the heading carries the gutter itself */
@@ -4666,6 +4723,9 @@ body {
 /* Full bleed and scrolled by hand. scroll-padding matches the card inset so a
    snapped card never lands under the fixed header when someone tabs to it. */
 .portfolio-row {
+  /* sits above the grid backdrop */
+  position: relative;
+  z-index: 1;
   display: flex;
   margin: 0;
   padding: 0;
@@ -4980,14 +5040,15 @@ body {
   /* sits above the dot backdrop */
   position: relative;
   z-index: 1;
-  /* 1160 of column plus the two 24px gutters. The FAQ hangs its gutter on the
-     section and caps .faq-inner at 1160 inside that; here the strip has to bleed
-     so the section cannot be padded, and the gutter rides on this box instead.
-     Under border-box that would eat 24px a side and push the heading in — adding
-     the gutters back to the cap is what keeps this column flush with the FAQ's. */
+  /* 1160 of column plus the two 24px gutters, so the text column measures the
+     same as the FAQ's. The FAQ hangs its gutter on the section and caps
+     .faq-inner at 1160 inside that; here the strip has to bleed so the section
+     cannot be padded, and the gutter rides on this box instead — under
+     border-box that would otherwise eat 24px a side. */
   max-width: 1208px;
   margin: 0 auto clamp(32px, 4vw, 52px);
   padding: 0 24px;
+  text-align: center;
 }
 
 .testimonials-strip {
