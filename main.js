@@ -790,7 +790,7 @@
 
   const compose = () => {
     /* The label, not the value: "Web App" reads better in a chat than
-       "mobile-app". The placeholder carries no value, which is what keeps
+       "web-app". The placeholder carries no value, which is what keeps
        "Looking for: Choose one" out of an enquiry nobody filled that part of. */
     const select = form.elements.service;
     const chosen = select && select.value && select.options[select.selectedIndex];
