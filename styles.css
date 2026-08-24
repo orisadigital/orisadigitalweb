@@ -1044,7 +1044,6 @@ body {
 
 /* Sections that carry the grid backdrop. */
 .stats,
-.statement,
 .gallery,
 .cta,
 .about-hero,
@@ -1060,7 +1059,6 @@ body {
 /* Grid backdrop. Two 1px gradients make the lines; the mask fades them out
    toward all four edges so the pattern has no hard boundary. */
 .stats::before,
-.statement::before,
 .gallery::before,
 .cta::before,
 .about-hero::before,
@@ -3669,17 +3667,6 @@ body {
   }
 }
 
-/* ---------- Statement ---------- */
-
-.statement {
-  padding: clamp(64px, 10vw, 140px) 24px;
-  /* Characters swing toward the viewer on the drum, and perspective throws the
-     outermost ones past the line box — enough to give the page a horizontal
-     scrollbar. clip contains that without creating a scroll container the way
-     overflow: hidden would. */
-  overflow-x: clip;
-}
-
 /* ---------- Video band ---------- */
 
 /* A full-bleed break between two sections that are both capped at 1160px, the
@@ -4075,52 +4062,6 @@ body {
     transform: none;
   }
 }
-
-.statement-inner {
-  /* sits above the grid backdrop */
-  position: relative;
-  z-index: 1;
-  max-width: 1160px;
-  margin: 0 auto;
-}
-
-.statement-title {
-  margin: 0;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
-  /* nowrap, so the ceiling is set by the line still fitting the column */
-  font-size: clamp(1.2rem, 9.2vw, 8rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.012em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--ink);
-}
-
-/* Each tube holds several stacked copies of the same line. They sit on top of
-   one another and tumble in sequence, so the text rolls round a drum. */
-.tube {
-  position: relative;
-  display: block;
-  /* tall enough to hold a character at the top of its arc — at 1.06em the
-     line rode out of the box and the copies read as separate rows */
-  height: 1.3em;
-}
-
-.tube-line {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* hides each character once it has rotated past edge-on */
-.tube-line .char {
-  backface-visibility: hidden;
-}
-
 
 /* Below this the links crowd the logo, so the bar wraps: logo + actions on the
    top row, the nav on its own row underneath. Same DOM, no duplicate markup.
