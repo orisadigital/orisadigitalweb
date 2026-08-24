@@ -47,6 +47,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* The page scrollbar, in the site's neon.
+
+   Scoped to html rather than left bare: an unqualified ::-webkit-scrollbar
+   would repaint every scrolling box on the site, including the two that hide
+   their bars on purpose — the case-study row and the phone nav strip.
+
+   Two separate paths on purpose. Chromium ignores every ::-webkit-scrollbar
+   rule the moment scrollbar-width or scrollbar-color is set on the same
+   element, and its standard path has no way to express a radius — so setting
+   both together silently cost the 5px. The pseudo-elements are therefore left
+   unqualified for Chromium, and the shorthand is fenced behind a query only
+   Firefox answers: it has no pseudo-elements and draws its own shape. */
+html::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: var(--neon);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-hover);
+}
+
+@supports (scrollbar-color: auto) and (not selector(::-webkit-scrollbar)) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon) transparent;
+  }
+}
+
 /* The <use> sprite. The `hidden` attribute alone isn't enough: the UA rule for
    it only matches HTML elements, so an inline <svg> ignores it and lays out at
    its default 300x150, pushing the page down. Symbols still resolve from a
@@ -131,70 +168,6 @@ body {
   outline: 2px solid var(--ink);
   outline-offset: 6px;
   border-radius: 5px;
-}
-
-/* ---------- Availability badge ---------- */
-
-.availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 0 16px;
-  padding: 7px 13px 7px 11px;
-  border-radius: 5px;
-  background: rgba(34, 197, 94, 0.09);
-  border: 1px solid rgba(34, 197, 94, 0.22);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: rgba(50, 56, 58, 0.78);
-}
-
-/* the phone label, swapped in at the narrow breakpoint */
-.availability-short {
-  display: none;
-}
-
-.availability-dot {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  flex: none;
-  border-radius: 5px;
-  background: var(--live);
-}
-
-/* the halo — a copy of the dot swelling out of it and fading */
-.availability-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 5px;
-  background: var(--live);
-  animation: availability-pulse 2.2s ease-out infinite;
-}
-
-@keyframes availability-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  /* holds at nothing for the tail of the cycle, so the pulses read as
-     separate beats rather than one continuous ripple */
-  70%,
-  100% {
-    transform: scale(2.8);
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .availability-dot::after {
-    animation: none;
-  }
 }
 
 /* ---------- Navigation ---------- */
@@ -3149,8 +3122,8 @@ body {
   box-shadow: 0 2px 10px rgba(16, 20, 24, 0.12);
 }
 
-/* The location pin — the availability dot's twin, so the site's one green
-   reads the same wherever it appears. */
+/* The location pin, carrying the site's one green — --live is now used here
+   and on the nav's leaf mark, the header badge it used to match having gone. */
 .map-pin span {
   display: block;
   width: 14px;
@@ -4250,25 +4223,6 @@ body {
     height: 28px;
   }
 
-  /* The full label cannot fit beside the lockup and the two icon buttons on a
-     phone — it would wrap the bar onto a third row — so the badge trades down
-     to its short label and tighter metrics rather than disappearing. */
-  .availability {
-    gap: 6px;
-    margin-left: 8px;
-    padding: 6px 9px 6px 8px;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-  }
-
-  .availability-full {
-    display: none;
-  }
-
-  .availability-short {
-    display: inline;
-  }
-
   /* Home and About are dropped on a phone so the three service pages fit the
      row without scrolling. Neither is lost: the logo links home, and the drawer
      still lists every page. They are always first and last in the header. */
@@ -4298,15 +4252,6 @@ body {
   .nav-icon {
     width: 15px;
     height: 15px;
-  }
-}
-
-/* Narrower than any current phone but the original SE. Even the short label
-   can't share the row here, and a three-row header on a screen this small
-   costs more than the badge is worth. */
-@media (max-width: 345px) {
-  .availability {
-    display: none;
   }
 }
 
