@@ -91,7 +91,7 @@ body {
      .header-actions is pulled right by exactly that much to make the icon ink
      line up with the logo rather than the button box. */
   padding: 0 30px;
-  border-radius: 22px;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
@@ -130,7 +130,7 @@ body {
 .logo:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 6px;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 /* ---------- Availability badge ---------- */
@@ -141,7 +141,7 @@ body {
   gap: 9px;
   margin: 0 0 0 16px;
   padding: 7px 13px 7px 11px;
-  border-radius: 999px;
+  border-radius: 5px;
   background: rgba(34, 197, 94, 0.09);
   border: 1px solid rgba(34, 197, 94, 0.22);
   font-size: 11.5px;
@@ -163,7 +163,7 @@ body {
   width: 8px;
   height: 8px;
   flex: none;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--live);
 }
 
@@ -172,7 +172,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--live);
   animation: availability-pulse 2.2s ease-out infinite;
 }
@@ -217,7 +217,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 11px 16px;
-  border-radius: 11px;
+  border-radius: 5px;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.005em;
@@ -305,7 +305,7 @@ body {
   height: var(--toggle-size);
   padding: 0;
   border: 0;
-  border-radius: 12px;
+  border-radius: 5px;
   /* Neon box, so the icon inverts with it — the stroke is currentColor, and
      white on this ground is barely 1.2:1 where the ink is past 10:1. */
   background: var(--neon);
@@ -353,13 +353,13 @@ body {
   width: var(--option-size);
   height: var(--option-size);
   margin: calc(var(--option-size) / -2);
+  /* round, unlike the 5px corners elsewhere: these fan out on an arc from
+     the toggle, and a circle is the only shape that reads the same at every
+     angle it lands at */
   border-radius: 50%;
   background: #fff;
   color: var(--ink);
   text-decoration: none;
-  box-shadow:
-    0 2px 6px rgba(16, 20, 24, 0.1),
-    0 10px 24px rgba(16, 20, 24, 0.14);
   transition: color 0.18s ease, background-color 0.18s ease;
   /* hidden until opened — GSAP takes over from here */
   opacity: 0;
@@ -420,7 +420,7 @@ body {
   height: var(--toggle-size);
   padding: 0;
   border: 0;
-  border-radius: 12px;
+  border-radius: 5px;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -488,7 +488,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 26px 26px 24px;
-  border-radius: 20px;
+  border-radius: 5px;
   overflow: hidden;
   text-decoration: none;
 }
@@ -793,7 +793,7 @@ body {
   gap: 7px;
   margin: 0 0 22px;
   padding: 8px 16px;
-  border-radius: 999px;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px) saturate(160%);
   -webkit-backdrop-filter: blur(10px) saturate(160%);
@@ -817,30 +817,16 @@ body {
   color: var(--ink);
 }
 
-/* Gradient fill for the headline. Modifier rather than the base class: only the
-   homepage carries it, and the section pages keep the flat ink above.
-
-   The stops run purple -> violet -> blue. They sit deeper than the same ramp
-   would on a dark ground: the hero veil is white over the video, and stops
-   bright enough to sing against black wash out completely against it. As set
-   they hold 7.1:1, 6.4:1 and 5.1:1 against white where the flat ink held 12:1,
-   so the headline stays well past the 3:1 large text is held to.
-
-   Guarded, because the colour has to go transparent for the clip to show. On a
-   browser without background-clip that would leave transparent text on a
-   transparent background — an invisible headline — so the ink above stays the
-   fallback rather than being overwritten. */
-@supports (-webkit-background-clip: text) or (background-clip: text) {
-  .hero-title--gradient {
-    /* angled rather than flat so the ramp keeps moving across both lines */
-    background-image: linear-gradient(100deg, #7e22ce 0%, #5b45e0 46%, #2563eb 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Safari paints the fill colour ahead of `color` here; without this the
-       headline stays flat ink and the gradient never shows. */
-    -webkit-text-fill-color: transparent;
-  }
+/* The homepage carries the longest of the four hero lines — "That Grow
+   Businesses." measures 12.79em against 11.0em for the next longest — and the
+   shared ramp above overflows it at both ends: clipped by 7px at the 5.25rem
+   ceiling, and running past the column below 430px, where the 1.4rem floor
+   still holds. Solved for this string: 6.5vw is the steepest slope that still
+   fits the gutter at 320px, and 5.1rem the largest cap that fits the 1072px
+   column. Re-solve both if the wording changes; the other three heroes are
+   shorter and keep the shared ramp. */
+.hero-title--long {
+  font-size: clamp(1.3rem, 6.5vw, 5.1rem);
 }
 
 /* Smaller and a touch heavier than the nav's leaf: it sits against 12px type
@@ -873,7 +859,7 @@ body {
   flex: none;
   display: block;
   box-shadow: 0 1px 2px rgba(16, 20, 24, 0.2);
-  border-radius: 50%;
+  border-radius: 5px;
 }
 
 /* Fixed-width cell so a scrambled glyph occupies exactly the space its final
@@ -909,6 +895,84 @@ body {
   margin-top: clamp(26px, 3.4vw, 38px);
 }
 
+
+/* Y Combinator-style bracket around the hero call to action: a hairline box
+   standing off the button, with a small hollow square centred on each of its
+   four corners.
+
+   Square corners on purpose, against the 5px the rest of the site now carries.
+   The marks sit exactly where the two lines meet, and a radius pulls the line
+   away from the mark and leaves it floating in the gap.
+
+   The four marks are one pseudo-element carrying four background layers rather
+   than four elements — ::before and ::after only give two, and the corners are
+   decoration that should not reach the accessibility tree at all. The pseudo is
+   inset by half a mark so each layer straddles the border line instead of
+   sitting inside it. */
+.cta-frame {
+  --frame-gap: 13px;
+  --frame-mark: 7px;
+  --frame-line: 1px;
+  --frame-hole: calc(var(--frame-mark) - var(--frame-line) * 2);
+  position: relative;
+  display: inline-flex;
+  padding: var(--frame-gap);
+  border: 1px solid rgba(50, 56, 58, 0.3);
+  border-radius: 0;
+}
+
+.cta-frame::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--frame-mark) / -2);
+  pointer-events: none;
+  /* Eight layers, holes first: the four ink squares are the marks, and the four
+     smaller squares painted over them in the page colour open the middle, so
+     each corner reads as a hollow ring rather than a filled block. Earlier
+     layers paint on top, which is why the holes are listed first.
+
+     The hole is --page rather than a literal white because that is the token
+     this hero's ground is set from — if the hero ever changes colour the marks
+     follow it instead of showing four white notches. */
+  background-image:
+    linear-gradient(var(--page), var(--page)),
+    linear-gradient(var(--page), var(--page)),
+    linear-gradient(var(--page), var(--page)),
+    linear-gradient(var(--page), var(--page)),
+    linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink));
+  background-size:
+    var(--frame-hole) var(--frame-hole),
+    var(--frame-hole) var(--frame-hole),
+    var(--frame-hole) var(--frame-hole),
+    var(--frame-hole) var(--frame-hole),
+    var(--frame-mark) var(--frame-mark),
+    var(--frame-mark) var(--frame-mark),
+    var(--frame-mark) var(--frame-mark),
+    var(--frame-mark) var(--frame-mark);
+  background-position:
+    left var(--frame-line) top var(--frame-line),
+    right var(--frame-line) top var(--frame-line),
+    left var(--frame-line) bottom var(--frame-line),
+    right var(--frame-line) bottom var(--frame-line),
+    left top,
+    right top,
+    left bottom,
+    right bottom;
+  background-repeat: no-repeat;
+}
+
+/* Tightened on phones: at the full gap the bracket eats width the headline
+   needs, and the marks start to read as bigger than the rule they sit on. */
+@media (max-width: 600px) {
+  .cta-frame {
+    --frame-gap: 9px;
+    --frame-mark: 6px;
+  }
+}
+
 /* Deliberately a step down from .cta-button at the foot of the page: that one
    closes, this one only offers, and at the closer's size the pair would
    compete with the headline above them. The transparent border is on the base
@@ -919,7 +983,7 @@ body {
   justify-content: center;
   padding: 14px 30px;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 5px;
   font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-weight: 900;
   font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
@@ -946,20 +1010,6 @@ body {
 
 .hero-btn--accent:hover {
   background: var(--neon-hover);
-}
-
-/* The quiet half of the pair, borrowing the calculator's outline button: a hair
-   line that firms up on hover rather than a second filled shape shouting
-   alongside the first. */
-.hero-btn--ghost {
-  background: transparent;
-  border-color: rgba(50, 56, 58, 0.22);
-  color: var(--ink);
-}
-
-.hero-btn--ghost:hover {
-  border-color: var(--ink);
-  background: rgba(50, 56, 58, 0.04);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1107,7 +1157,7 @@ body {
 
 .stat-card {
   padding: 34px 24px 30px;
-  border-radius: 18px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
   box-shadow:
@@ -1177,6 +1227,7 @@ body {
 }
 
 /* ---------- Section furniture ---------- */
+
 
 .section-eyebrow {
   display: flex;
@@ -1311,7 +1362,7 @@ body {
   bottom: calc(100% + 10px);
   z-index: 5;
   padding: 7px 11px;
-  border-radius: 8px;
+  border-radius: 5px;
   background: var(--black);
   color: #fff;
   font-family: "Inter", sans-serif;
@@ -1373,7 +1424,7 @@ body {
 
 .about-figure {
   margin: 0;
-  border-radius: 20px;
+  border-radius: 5px;
   overflow: hidden;
   background: var(--black);
 }
@@ -1402,6 +1453,13 @@ body {
         clamp(36px, 5vw, 76px)
     )
     24px clamp(48px, 7vw, 96px);
+}
+
+/* The video sits directly under this hero and is part of the same pitch, so the
+   hero closes tighter here than on the pricing page, where a calculator with
+   its own frame follows. */
+.page-hero--tight {
+  padding-bottom: clamp(24px, 3vw, 40px);
 }
 
 .page-hero-inner {
@@ -1444,7 +1502,7 @@ body {
 
 .calculator-panel {
   padding: clamp(24px, 3vw, 36px);
-  border-radius: 18px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
   box-shadow:
@@ -1465,7 +1523,7 @@ body {
 .calc-breakdown {
   margin: 16px 0 0;
   padding: 14px 16px;
-  border-radius: 12px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.04);
   font-size: 0.85rem;
 }
@@ -1608,7 +1666,6 @@ body {
   border: 1px solid rgba(50, 56, 58, 0.18);
   background: transparent;
   color: var(--ink);
-  box-shadow: none;
   cursor: pointer;
 }
 
@@ -1635,7 +1692,6 @@ body {
 
 .cta-button.calc-estimate-pdf:hover {
   background: rgba(50, 56, 58, 0.05);
-  box-shadow: none;
 }
 
 .calc-estimate-pdf .cta-button-arrow {
@@ -1772,11 +1828,11 @@ body {
   align-items: center;
   gap: 12px;
   padding: 18px 16px;
-  border-radius: 14px;
+  border-radius: 5px;
   border: 1px solid rgba(50, 56, 58, 0.14);
   background: #fff;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 /* Off screen rather than display:none, which would take it out of the tab order
@@ -1790,7 +1846,6 @@ body {
 .calc-option:hover {
   border-color: rgba(50, 56, 58, 0.34);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(16, 20, 24, 0.07);
 }
 
 .calc-option:has(input:checked) {
@@ -1825,7 +1880,7 @@ body {
   display: inline-block;
   margin-left: 8px;
   padding: 3px 8px;
-  border-radius: 999px;
+  border-radius: 5px;
   background: var(--neon);
   color: var(--ink);
   font-size: 0.625rem;
@@ -1876,7 +1931,7 @@ body {
   place-items: center;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
+  border-radius: 5px;
   border: 1px solid rgba(50, 56, 58, 0.22);
   background: #fff;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -1906,7 +1961,7 @@ body {
 /* Squared off, because these stack rather than replace one another. The shape
    is the only thing saying so before anything has been clicked. */
 .calc-option--multi .calc-option-tick {
-  border-radius: 7px;
+  border-radius: 5px;
 }
 
 /* one column before the name and the price start fighting for the same line */
@@ -1967,7 +2022,7 @@ body {
 .calc-subfield {
   margin-top: 14px;
   padding: 18px;
-  border-radius: 14px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.045);
 }
 
@@ -2023,7 +2078,7 @@ body {
   top: 0.65em;
   width: 5px;
   height: 5px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.34);
 }
 
@@ -2040,7 +2095,7 @@ body {
 .calc-chip {
   position: relative;
   padding: 9px 16px;
-  border-radius: 999px;
+  border-radius: 5px;
   border: 1px solid rgba(50, 56, 58, 0.16);
   background: #fff;
   font-size: 0.85rem;
@@ -2125,7 +2180,7 @@ body {
   top: 50%;
   height: var(--bar-h);
   transform: translateY(-50%);
-  border-radius: 999px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.1);
   pointer-events: none;
 }
@@ -2136,7 +2191,7 @@ body {
   top: 0;
   bottom: 0;
   width: calc(var(--pct) * 100%);
-  border-radius: 999px;
+  border-radius: 5px;
   background: var(--ink);
 }
 
@@ -2151,7 +2206,7 @@ body {
   transform: translateY(-50%);
   display: grid;
   place-items: center;
-  border-radius: 999px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.12);
   box-shadow:
@@ -2227,13 +2282,13 @@ body {
   display: flex;
   flex-direction: column;
   /* icon at the top, copy pinned to the bottom, air between */
-  justify-content: space-between;
+  /* the icon that used to sit above the copy is gone; flex-end keeps the
+     copy on the bottom edge where space-between had it */
+  justify-content: flex-end;
   gap: clamp(28px, 4vw, 48px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 16px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.04);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease,
-    transform 0.25s ease;
 }
 
 .value-card--wide,
@@ -2241,9 +2296,11 @@ body {
   grid-column: span 2;
 }
 
-/* Hover lifts the tile clear of the grid — flat grey to white-on-shadow, with
-   the icon inverting to match. Gated on a real pointer, because :hover sticks
-   after a tap on touch and would leave one tile stranded in the lit state. */
+/* Hover swaps the tile from flat grey to white, with the icon inverting to
+   match. No lift and no shadow: the movement and the transition that eased it
+   are gone, so this is a state change rather than an animation. Still gated on
+   a real pointer, because :hover sticks after a tap on touch and would leave
+   one tile stranded in the lit state. */
 @media (hover: hover) {
   .value-card:hover,
   .benefit-card:hover,
@@ -2251,57 +2308,18 @@ body {
   .hosting-card:hover,
   .impact-card:hover {
     background: #fff;
-    box-shadow:
-      0 1px 2px rgba(16, 20, 24, 0.04),
-      0 16px 40px rgba(16, 20, 24, 0.11);
-    transform: translateY(-3px);
   }
 
-  .value-card:hover .icon-chip,
-  .benefit-card:hover .icon-chip,
-  .feature-tile:hover .icon-chip,
-  .impact-card:hover .icon-chip {
-    background: var(--black);
-    border-color: var(--black);
-    color: #fff;
-  }
-
-  /* the dark tiles darken instead of turning white, and keep their own chip */
+  /* the dark tiles darken instead of turning white */
   .value-card--statement:hover,
   .feature-tile--tall:hover,
   .impact-card--accent:hover {
     background: var(--black-hover);
-    box-shadow: 0 18px 44px rgba(16, 20, 24, 0.22);
-  }
-
-  .feature-tile--tall:hover .icon-chip,
-  .impact-card--accent:hover .icon-chip {
-    background: var(--neon);
-    border-color: transparent;
-    color: var(--ink);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .value-card,
-  .benefit-card,
-  .feature-tile,
-  .hosting-card,
-  .impact-card,
-  .icon-chip {
-    transition: none;
-  }
-
-  .value-card:hover,
-  .benefit-card:hover,
-  .feature-tile:hover,
-  .hosting-card:hover,
-  .impact-card:hover {
-    transform: none;
-  }
-}
-
-/* Shared by the core values and the benefits grid. */
+/* Only the pricing calculator carries these now — the cards that used to sit
+   a chip above their copy have had it removed. */
 .icon-chip {
   display: flex;
   align-items: center;
@@ -2309,13 +2327,11 @@ body {
   width: 46px;
   height: 46px;
   flex: none;
-  border-radius: 14px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.08);
   color: var(--ink);
   box-shadow: 0 1px 2px rgba(16, 20, 24, 0.04);
-  transition: background-color 0.25s ease, border-color 0.25s ease,
-    color 0.25s ease;
 }
 
 .icon-chip svg {
@@ -2334,7 +2350,7 @@ body {
 .icon-chip--sm {
   width: 36px;
   height: 36px;
-  border-radius: 11px;
+  border-radius: 5px;
 }
 
 .icon-chip--sm svg {
@@ -2466,7 +2482,7 @@ body {
 .team-photo {
   margin: 0 0 clamp(18px, 2.2vw, 28px);
   aspect-ratio: 1;
-  border-radius: 18px;
+  border-radius: 5px;
   overflow: hidden;
   background: var(--black);
 }
@@ -2566,6 +2582,7 @@ body {
   text-align: center;
 }
 
+
 .tech-eyebrow {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -2614,7 +2631,7 @@ body {
   width: var(--size);
   height: var(--size);
   margin: 0;
-  border-radius: calc(var(--size) * 0.29);
+  border-radius: 5px;
   background: #fff;
   color: var(--ink);
   box-shadow:
@@ -2673,7 +2690,7 @@ body {
        and the sticky section would show through */
     z-index: 1;
     /* reads as a panel sliding over rather than an abutting section */
-    border-radius: 34px 34px 0 0;
+    border-radius: 5px 5px 0 0;
     /* At least as tall as the band it covers. Sticky releases when its
        containing block runs out of room, so a shorter CTA lets the band drift
        upward before the cover completes. */
@@ -2711,7 +2728,7 @@ body {
     position: static;
     width: 62px;
     height: 62px;
-    border-radius: 18px;
+    border-radius: 5px;
     transform: none;
     animation: none;
   }
@@ -2766,13 +2783,13 @@ body {
   display: flex;
   flex-direction: column;
   /* chip at the top, copy pinned to the bottom, air between */
-  justify-content: space-between;
+  /* the icon that used to sit above the copy is gone; flex-end keeps the
+     copy on the bottom edge where space-between had it */
+  justify-content: flex-end;
   gap: clamp(24px, 3.5vw, 44px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 16px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.04);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease,
-    transform 0.25s ease;
 }
 
 .feature-tile--wide {
@@ -2922,7 +2939,7 @@ body {
 .field textarea {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid rgba(50, 56, 58, 0.16);
   background: #fff;
   color: var(--ink);
@@ -2957,7 +2974,7 @@ body {
   grid-column: 1 / -1;
   margin: 0;
   padding: 14px 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: rgba(34, 197, 94, 0.09);
   border: 1px solid rgba(34, 197, 94, 0.28);
   font-size: 0.9375rem;
@@ -3063,7 +3080,7 @@ body {
   display: block;
   width: 14px;
   height: 14px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--live);
   /* a white collar so the dot separates from the map beneath it, whatever
      colour it lands on */
@@ -3076,7 +3093,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 5px;
   background: var(--live);
   animation: map-pin-pulse 2.2s ease-out infinite;
 }
@@ -3129,13 +3146,13 @@ body {
 .impact-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* the icon that used to sit above the copy is gone; flex-end keeps the
+     copy on the bottom edge where space-between had it */
+  justify-content: flex-end;
   gap: clamp(20px, 2.6vw, 32px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 16px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.04);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease,
-    transform 0.25s ease;
 }
 
 .impact-card--wide {
@@ -3262,13 +3279,12 @@ body {
   flex-direction: column;
   gap: clamp(22px, 3vw, 34px);
   padding: clamp(24px, 3vw, 36px);
-  border-radius: 18px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
   box-shadow:
     0 1px 2px rgba(16, 20, 24, 0.04),
     0 10px 28px rgba(16, 20, 24, 0.06);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 /* A fixed slot, so both marks occupy the same band and the copy beneath them
@@ -3353,14 +3369,14 @@ body {
 .benefit-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* the icon that used to sit above the copy is gone; flex-end keeps the
+     copy on the bottom edge where space-between had it */
+  justify-content: flex-end;
   gap: clamp(26px, 3.5vw, 42px);
   min-height: clamp(170px, 17vw, 200px);
   padding: clamp(20px, 2.4vw, 28px);
-  border-radius: 16px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.04);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease,
-    transform 0.25s ease;
 }
 
 .benefit-title {
@@ -3415,6 +3431,7 @@ body {
   align-items: center;
 }
 
+
 .feature .section-eyebrow {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -3436,7 +3453,7 @@ body {
 
 .feature-figure {
   margin: 0;
-  border-radius: 18px;
+  border-radius: 5px;
   overflow: hidden;
   /* the artwork carries its own light panel, so the frame matches it rather
      than the section */
@@ -3650,7 +3667,7 @@ body {
 .portrait-figure {
   margin: 0;
   width: min(420px, 100%);
-  border-radius: 20px;
+  border-radius: 5px;
   overflow: hidden;
   background: var(--black);
 }
@@ -3758,7 +3775,7 @@ body {
 .approach-progress-track {
   position: relative;
   height: 3px;
-  border-radius: 999px;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.12);
 }
 
@@ -3796,7 +3813,7 @@ body {
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: clamp(16px, 2vw, 26px);
   padding: clamp(20px, 2.4vw, 28px);
-  border-radius: 14px;
+  border-radius: 5px;
   background-color: rgba(50, 56, 58, 0.04);
   transition:
     background-color 0.45s ease,
@@ -4151,7 +4168,7 @@ body {
 
   .header-bar {
     padding: 0 18px;
-    border-radius: 15px;
+    border-radius: 5px;
   }
 
   .logo-mark {
@@ -4325,7 +4342,7 @@ body {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 14px;
+  border-radius: 5px;
   border: 1px solid rgba(50, 56, 58, 0.08);
   box-shadow:
     0 2px 6px rgba(16, 20, 24, 0.05),
@@ -4432,207 +4449,7 @@ body {
   border-bottom-width: 2px;
 }
 
-/* ---------- Blog ---------- */
-
-/* An article is one column of prose and nothing else. The measure does the
-   work: ~68 characters, which is where a line stops needing effort to follow. */
-.post-head {
-  padding: calc(var(--header-height) + var(--header-offset) + clamp(48px, 7vw, 96px)) 24px clamp(24px, 3vw, 36px);
-}
-
-.post-inner {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.post-title {
-  /* smaller than a page hero — this is a sentence, not a statement, and it has
-     to stay readable at four or five words a line */
-  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
-  line-height: 1.12;
-  text-transform: none;
-  letter-spacing: -0.015em;
-  margin-bottom: 16px;
-}
-
-.post-back {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.post-back:hover,
-.post-back:focus-visible {
-  border-bottom-color: currentColor;
-}
-
-.post-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  font-size: 14px;
-  color: rgba(50, 56, 58, 0.5);
-}
-
-.post-body {
-  padding: 0 24px clamp(56px, 8vw, 96px);
-}
-
-.post-lede {
-  padding-bottom: 8px;
-  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
-  line-height: 1.7;
-  color: rgba(50, 56, 58, 0.82);
-}
-
-.post-body h2 {
-  margin: clamp(40px, 5vw, 60px) 0 16px;
-  font-size: clamp(1.25rem, 1.9vw, 1.5rem);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-}
-
-.post-body h3 {
-  margin: clamp(28px, 3.5vw, 40px) 0 12px;
-  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.post-body p,
-.post-body li {
-  font-size: clamp(1rem, 1.1vw, 1.0625rem);
-  line-height: 1.78;
-  color: rgba(50, 56, 58, 0.74);
-  text-wrap: pretty;
-}
-
-.post-body p { margin: 0 0 18px; }
-
-.post-body ul {
-  margin: 0 0 18px;
-  padding-left: 22px;
-}
-
-.post-body li { margin-bottom: 12px; }
-.post-body li::marker { color: rgba(50, 56, 58, 0.35); }
-.post-body strong { color: var(--ink); font-weight: 600; }
-.post-body em { font-style: italic; }
-
-.post-body a {
-  color: var(--ink);
-  font-weight: 500;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(50, 56, 58, 0.3);
-  transition: border-color 0.25s ease;
-}
-
-.post-body a:hover,
-.post-body a:focus-visible {
-  border-bottom-color: var(--neon);
-  border-bottom-width: 2px;
-}
-
-/* --- listing --- */
-
-.post-list-section {
-  padding: clamp(8px, 2vw, 20px) 24px clamp(64px, 9vw, 120px);
-}
-
-.post-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid rgba(50, 56, 58, 0.12);
-}
-
-.post-card {
-  border-bottom: 1px solid rgba(50, 56, 58, 0.12);
-}
-
-.post-card-link {
-  display: block;
-  padding: clamp(26px, 3.5vw, 38px) 0;
-  text-decoration: none;
-  color: inherit;
-}
-
-.post-card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 10px;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: rgba(50, 56, 58, 0.5);
-}
-
-.post-card-title {
-  margin: 0 0 10px;
-  font-size: clamp(1.1875rem, 2vw, 1.5rem);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  text-wrap: balance;
-  transition: color 0.25s ease;
-}
-
-.post-card-link:hover .post-card-title {
-  color: rgba(50, 56, 58, 0.62);
-}
-
-.post-card-excerpt {
-  max-width: 62ch;
-  margin: 0 0 16px;
-  font-size: clamp(0.9375rem, 1.05vw, 1rem);
-  line-height: 1.7;
-  color: rgba(50, 56, 58, 0.7);
-  text-wrap: pretty;
-}
-
-.post-card-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-
-.post-card-more svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 0.3s ease;
-}
-
-.post-card-link:hover .post-card-more svg {
-  transform: translateX(4px);
-}
-
-.post-card-link:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .post-card-more svg { transition: none; }
-}
-
 /* ---------- Portfolio ---------- */
-
 
 /* The shared mask is an ellipse centred on the section, densest at 50% height.
    Here that lands squarely behind the card row, which is opaque and covers the
@@ -4767,12 +4584,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.2, 0.6, 0.2, 1);
-}
-
-.portfolio-card:hover .portfolio-img,
-.portfolio-card:focus-visible .portfolio-img {
-  transform: scale(1.04);
 }
 
 /* The scrim. Only over the bottom third, where the title sits — a full-card
@@ -4805,17 +4616,6 @@ body {
   line-height: 1.1;
   letter-spacing: 0.005em;
   text-shadow: 0 1px 12px rgba(16, 20, 24, 0.4);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-img {
-    transition: none;
-  }
-
-  .portfolio-card:hover .portfolio-img,
-  .portfolio-card:focus-visible .portfolio-img {
-    transform: none;
-  }
 }
 
 /* ---------- FAQ ---------- */
@@ -4877,7 +4677,7 @@ body {
 .faq-summary:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 .faq-question {
@@ -4897,7 +4697,7 @@ body {
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: 5px;
   background: rgba(50, 56, 58, 0.06);
   transition: background-color 0.3s ease;
 }
@@ -5092,7 +4892,7 @@ body {
   margin: 0;
   padding: clamp(22px, 2.2vw, 30px);
   border: 1px solid rgba(50, 56, 58, 0.12);
-  border-radius: 14px;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.72);
 }
 
@@ -5126,6 +4926,7 @@ body {
   justify-content: center;
   width: 40px;
   height: 40px;
+  /* the one exception to the 5px corners: a face reads as a portrait */
   border-radius: 50%;
   background: var(--ink);
   color: #fff;
@@ -5167,6 +4968,166 @@ body {
   }
 }
 
+
+
+/* Cards with no icon chip above the title. The bento's 200px floor exists to
+   hold an icon and a title apart with space-between; drop the icon and the
+   title strands at the top of an empty box, 122px of it at desktop. These size
+   to their text instead. The iconed version on /web-design is untouched. */
+
+
+/* The tinted, dotted band the testimonials strip runs on, borrowed for the
+   "what you get" grid. Same tint, same cell and ink tokens, so the two read as
+   one treatment rather than two near-misses.
+
+   Dots rather than the ruled grid the other bands carry: over a set of bordered
+   cards a full grid reads as a second set of card edges. */
+.benefits--dotted {
+  position: relative;
+  overflow: hidden;
+  background: #f4f5f5;
+  --dot-cell: clamp(22px, 2.2vw, 30px);
+  --dot-ink: rgba(50, 56, 58, 0.16);
+}
+
+.benefits--dotted::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at center, var(--dot-ink) 1px, transparent 1.5px);
+  background-size: var(--dot-cell) var(--dot-cell);
+}
+
+.benefits--dotted .benefits-inner {
+  /* sits above the dot backdrop */
+  position: relative;
+  z-index: 1;
+}
+
+/* The cards carry the testimonial card's fill and hairline instead of the flat
+   4% ink they use on a white page — at that tint they would all but vanish
+   against this ground. Hover still resolves to solid white, so the state has
+   somewhere to go. */
+.benefits--dotted .benefit-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(50, 56, 58, 0.12);
+}
+
+/* Heading above the cards rather than beside them, and six cards as 3 x 2.
+   The shared bento pairs a short intro with a 2-up grid in two columns; here
+   the six items are the point and the copy is a caption, so the intro takes
+   the full width and the grid runs three across underneath it.
+
+   The base rule's `align-items: center` is what vertically centres the copy
+   against a grid sitting next to it — with the two stacked that would centre
+   each row's contents against each other instead, so it goes back to stretch. */
+.benefits-inner--stacked {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(28px, 3.6vw, 48px);
+}
+
+.benefits-inner--stacked .benefits-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Three across needs more width than two: below this the titles start breaking
+   onto three lines, so it steps to 2 x 3 and then to a single column, which is
+   where the shared 560px rule takes over. */
+@media (max-width: 860px) {
+  .benefits-inner--stacked .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .benefits-inner--stacked .benefits-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.benefits-grid--plain .benefit-card {
+  min-height: 0;
+  gap: 0;
+}
+
+
+/* ---------- Prototype video ---------- */
+
+/* Contained rather than full-bleed like .video-band. That band is texture, so
+   it runs edge to edge; this is someone talking, and a face stretched across a
+   1600px screen is a poster, not a message. */
+.prototype-video {
+  /* No top padding: the hero above already carries its own bottom padding, and
+     two stacked gaps put 133px between the heading and the video it belongs to. */
+  padding: 0 24px clamp(40px, 5vw, 64px);
+}
+
+.prototype-video-inner {
+  /* Wider than the 900 it started at, but still short of the 1160 the text
+     columns run to: the player should read as the page's centrepiece without
+     out-measuring the copy around it. */
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.prototype-video-media {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* the encodes are both 16:9, so this reserves the right box before the
+     poster decodes and nothing below it jumps */
+  aspect-ratio: 16 / 9;
+  border-radius: 5px;
+  background: var(--ink);
+}
+
+.prototype-video-fallback {
+  margin: 0;
+  padding: clamp(20px, 3vw, 32px);
+  color: #fff;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.prototype-video-fallback a {
+  color: inherit;
+}
+/* ---------- Free prototype intro ---------- */
+
+/* The only new block this page needed — everything else reuses the page hero,
+   the numbered approach steps and the benefits bento. Centred, because it sits
+   between two centred blocks and reads as the page's opening argument rather
+   than as a section with a list beside it. */
+.prototype-intro {
+  padding: clamp(48px, 7vw, 88px) 24px clamp(8px, 2vw, 24px);
+}
+
+.prototype-intro-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.prototype-intro .section-text {
+  /* the shared rule caps at 56ch and hangs left; centred copy needs the box
+     centred too or the last line sits off-axis */
+  max-width: none;
+  margin: 0 auto;
+}
+
+/* The promise, set apart from the paragraph above it. Ink rather than the muted
+   body colour: this is the line that answers "what does it cost me". */
+.prototype-terms {
+  margin: clamp(18px, 2.4vw, 26px) 0 0;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
 /* ---------- Call to action ---------- */
 
 /* The neon band. It closes the white run of sections and hands over to the
@@ -5186,6 +5147,7 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+
 
 /* darker than the default eyebrow, which is washed out against the neon */
 .cta .section-eyebrow {
@@ -5220,7 +5182,7 @@ body {
   align-items: center;
   gap: 16px;
   padding: 12px 12px 12px 30px;
-  border-radius: 999px;
+  border-radius: 5px;
   background: var(--black);
   color: #fff;
   text-decoration: none;
@@ -5230,13 +5192,11 @@ body {
   letter-spacing: 0.045em;
   line-height: 1;
   text-transform: uppercase;
-  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.18);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .cta-button:hover {
   background: var(--black-hover);
-  box-shadow: 0 18px 44px rgba(16, 20, 24, 0.24);
 }
 
 .cta-button:focus-visible {
@@ -5251,7 +5211,7 @@ body {
   width: 44px;
   height: 44px;
   flex: none;
-  border-radius: 50%;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.14);
   transition: background-color 0.2s ease;
 }
@@ -5305,7 +5265,7 @@ body {
 .cta-alt:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5363,7 +5323,7 @@ body {
 .footer-logo:focus-visible {
   outline: 2px solid var(--neon);
   outline-offset: 6px;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .footer-tagline {
@@ -5409,7 +5369,7 @@ body {
 .footer-list a:focus-visible {
   outline: 2px solid var(--neon);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .footer-list--contact span {
@@ -5498,7 +5458,7 @@ body {
   width: 200px;
   max-width: 100%;
   margin: 22px 0 0;
-  border-radius: 6px;
+  border-radius: 5px;
   transition: opacity 0.2s ease;
 }
 
@@ -5532,7 +5492,7 @@ body {
   justify-content: center;
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.8);
   transition: background-color 0.18s ease, color 0.18s ease;
@@ -5575,7 +5535,7 @@ body {
 .footer-top:focus-visible {
   outline: 2px solid var(--neon);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 .footer-top svg {

@@ -24,3 +24,7 @@ wrangler.toml
 
 # _headers is deliberately NOT listed: Cloudflare reads it at deploy time to set
 # the cache rules, so it has to be part of the upload.
+
+# _redirects is deliberately NOT listed either, for the same reason as _headers:
+# Cloudflare reads it at deploy time to serve the 301 from the old /mobile-app
+# URL, so it has to be part of the upload.
