@@ -106,8 +106,20 @@
 
   // Wait for the webfont, otherwise the swap from fallback to Anton resizes the
   // text mid-animation and every measured cell is wrong.
+  // The last character of the last target settles at (N-1) * STAGGER + TAIL,
+  // and the loop runs one TICK past it. Published as a custom property so the
+  // headline's marker stroke can draw itself over exactly that span instead of
+  // guessing at a duration that would drift the moment the copy changes.
+  const finishMs = Math.max(0, charsSoFar - 1) * STAGGER + TAIL + TICK;
+
   const ready = document.fonts ? document.fonts.ready : Promise.resolve();
-  ready.then(() => targets.forEach((el) => scramble(el, offsets.get(el))));
+  ready.then(() => {
+    document.documentElement.style.setProperty("--scramble-ms", finishMs + "ms");
+    // Gates the draw-on. Without it — no JS, or reduced motion, where this
+    // module returns early — the stroke is simply there, already drawn.
+    document.documentElement.classList.add("is-scrambling");
+    targets.forEach((el) => scramble(el, offsets.get(el)));
+  });
 })();
 
 /* Stat counters — count up once, when the block first scrolls into view. */
