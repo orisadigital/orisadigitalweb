@@ -2005,6 +2005,20 @@
     if (video.dataset.loaded) return;
     video.dataset.loaded = "1";
 
+    // Both cuts are appended before load(), so the browser runs its own
+    // resource selection and the media query decides — same as a <source> that
+    // was in the markup all along. Mobile first: selection takes the first match.
+    // The band is 16:9 at every width (styles.css pins aspect-ratio below 600px
+    // so nothing is cropped sideways), so the phone cut is the same frame, just
+    // smaller — not a different crop.
+    if (video.dataset.srcMobile) {
+      const small = document.createElement("source");
+      small.src = video.dataset.srcMobile;
+      small.type = "video/mp4";
+      small.media = "(max-width: 600px)";
+      video.appendChild(small);
+    }
+
     const source = document.createElement("source");
     source.src = video.dataset.src;
     source.type = "video/mp4";

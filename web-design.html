@@ -313,9 +313,15 @@
 
   <main class="page">
     <section class="hero" id="top">
+      <!-- Two cuts of the same footage. autoplay overrides preload, so whichever
+           source is picked is fetched in full before first paint: it is worth the
+           smaller file. The hero is 100vh with object-fit: cover, so a phone only
+           ever sees the middle of a 16:9 frame — the portrait cut is that middle,
+           at a fraction of the bytes. media is read once, at load. -->
       <video class="hero-video" autoplay muted loop playsinline preload="metadata"
              poster="image/poster/webdesign.webp" aria-hidden="true" tabindex="-1">
-        <source src="image/webdesign.mp4" type="video/mp4">
+        <source src="image/webdesign-mobile.mp4" media="(max-width: 600px)" type="video/mp4">
+        <source src="image/webdesign-1280.mp4" type="video/mp4">
       </video>
       <div class="hero-veil" aria-hidden="true"></div>
 

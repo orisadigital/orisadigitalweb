@@ -299,9 +299,15 @@
 
   <main class="page">
     <section class="hero" id="top">
+      <!-- Two cuts of the same footage. autoplay overrides preload, so whichever
+           source is picked is fetched in full before first paint: it is worth the
+           smaller file. The hero is 100vh with object-fit: cover, so a phone only
+           ever sees the middle of a 16:9 frame — the portrait cut is that middle,
+           at a fraction of the bytes. media is read once, at load. -->
       <video class="hero-video" autoplay muted loop playsinline preload="metadata"
              poster="image/poster/mobile-app.webp" aria-hidden="true" tabindex="-1">
-        <source src="image/mobile-app.mp4" type="video/mp4">
+        <source src="image/mobile-app-mobile.mp4" media="(max-width: 600px)" type="video/mp4">
+        <source src="image/mobile-app-1280.mp4" type="video/mp4">
       </video>
       <div class="hero-veil" aria-hidden="true"></div>
 
@@ -466,7 +472,8 @@
            holds the frame in the meantime and main.js swaps the source in. -->
       <video class="video-band-media" muted loop playsinline
              preload="none" poster="image/poster/mobile4.webp" tabindex="-1"
-             data-src="image/mobile4.mp4"></video>
+             data-src="image/mobile4-1280.mp4"
+             data-src-mobile="image/mobile4-854.mp4"></video>
     </section>
 
     <section class="approach" aria-labelledby="approach-title">
