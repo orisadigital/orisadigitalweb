@@ -859,7 +859,9 @@ body {
   flex: none;
   display: block;
   box-shadow: 0 1px 2px rgba(16, 20, 24, 0.2);
-  border-radius: 5px;
+  /* round, not the 5px the rest of the site carries: the artwork is already a
+     circular crop, and square corners would clip its edge */
+  border-radius: 50%;
 }
 
 /* Fixed-width cell so a scrambled glyph occupies exactly the space its final
