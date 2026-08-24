@@ -632,6 +632,47 @@
       </div>
     </section>
 
+    <!-- Three real case studies, each linking out to the live client site in a
+         new tab. Add a card by copying one and swapping the image, name and
+         href — nothing here is generated.
+
+         Native horizontal scroll with snap rather than a fourth [data-loop]
+         marquee: the page already auto-scrolls the logos, the gallery and the
+         testimonials, and one more would be too much motion. This one also has
+         to be readable and clickable, which a moving strip is not. -->
+    <section class="portfolio" aria-labelledby="portfolio-title">
+      <header class="portfolio-head">
+        <p class="section-eyebrow section-eyebrow--center">Case Studies</p>
+        <h2 class="portfolio-title" id="portfolio-title">Success Stories</h2>
+      </header>
+
+      <ul class="portfolio-row">
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/tyleo.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">TY Leo Battery Pro</span>
+          </a>
+        </li>
+
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://astanasarawak.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/astana.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/astana.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">Astana Sarawak</span>
+          </a>
+        </li>
+
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://ecodoliyaorganic.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/ecodoliya.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">Eco Doliya</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
     <section class="statement" aria-label="Digital growth">
       <div class="statement-inner">
         <h2 class="statement-title">
@@ -976,6 +1017,138 @@
             </details>
           </li>
         </ul>
+      </div>
+    </section>
+
+
+    <!-- Runs on the same [data-loop] strip as the client logos and the work
+         gallery: main.js clones the group until it covers the viewport, so the
+         row never shows a seam. Hovering pauses it and reduced-motion stops it,
+         which is what makes a strip of running text readable at all.
+
+         Every quote here is a real one, verbatim. Nothing invented goes in this
+         section. -->
+    <section class="testimonials" aria-labelledby="testimonials-title">
+      <header class="testimonials-head">
+        <p class="section-eyebrow">Testimonials</p>
+        <h2 class="section-title" id="testimonials-title">What Our<br>
+          Clients Say</h2>
+      </header>
+
+      <div class="testimonials-strip">
+        <div class="testimonials-track" data-loop="26">
+          <ul class="testimonials-group">
+            <!-- Real, and the only real one here so far. Verbatim as the client
+                 sent it, "Faruqi Company" and all. The avatar carries the
+                 initials underneath the photo, so a missing or failed image
+                 leaves a monogram rather than a hole. No handle: he did not give
+                 one, and inventing one for a named person is not on. -->
+            <li class="testimonial">
+              <figure class="testimonial-figure">
+                <blockquote class="testimonial-quote">
+                  <p>&ldquo;I had engaged Faruqi Company to design a logo for my
+                    business, and I couldn&rsquo;t be happier with the results. They
+                    delivered incredibly fast without compromising on
+                    quality.&rdquo;</p>
+                </blockquote>
+                <figcaption class="testimonial-by">
+                  <!-- WebP alone, no AVIF sibling: the source is a 36px cutout
+                       with an alpha channel, and an AVIF of a 2KB file saves
+                       nothing while risking a flattened alpha that <picture>
+                       would then prefer over the good WebP. -->
+                  <span class="testimonial-avatar" aria-hidden="true">OT<img
+                        src="image/oracle-tito.webp" width="36" height="36" loading="lazy"
+                        decoding="async" alt=""></span>
+                  <span class="testimonial-who">
+                    <span class="testimonial-name">Oracle Tito</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="testimonial">
+              <figure class="testimonial-figure">
+                <blockquote class="testimonial-quote">
+                  <p>&ldquo;I really recommend Faruqi&rsquo;s company for digital
+                    marketing services. The team is reliable, creative, and very
+                    professional.&rdquo;</p>
+                </blockquote>
+                <figcaption class="testimonial-by">
+                  <!-- Lossy WebP here, unlike Oracle Tito's: this one is a
+                       photograph, where q88 is indistinguishable at 40px and
+                       less than half the size of the lossless encode. -->
+                  <span class="testimonial-avatar" aria-hidden="true">SZ<img
+                        src="image/sabrina-zulkarnain.webp" width="72" height="72" loading="lazy"
+                        decoding="async" alt=""></span>
+                  <span class="testimonial-who">
+                    <span class="testimonial-name">Sabrina Zulkarnain</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+
+            <li class="testimonial">
+              <figure class="testimonial-figure">
+                <blockquote class="testimonial-quote">
+                  <p>&ldquo;His team has been great to work with, professional, clear
+                    in their communication, and always collaborative. They pay
+                    attention to the details and take initiative, which makes the
+                    process smooth and productive.&rdquo;</p>
+                </blockquote>
+                <figcaption class="testimonial-by">
+                  <span class="testimonial-avatar" aria-hidden="true">AH<img
+                        src="image/aliah-hisamudin.webp" width="72" height="72" loading="lazy"
+                        decoding="async" alt=""></span>
+                  <span class="testimonial-who">
+                    <span class="testimonial-name">Aliah Hisamudin</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+
+            <!-- Wording is his, untouched, "kualiti" included. The only edit is a
+                 space after each comma, which was a typing artifact rather than
+                 anything he meant to say. -->
+            <li class="testimonial">
+              <figure class="testimonial-figure">
+                <blockquote class="testimonial-quote">
+                  <p>&ldquo;Service trusted, best kualiti, all the best!
+                    Recommended!&rdquo;</p>
+                </blockquote>
+                <figcaption class="testimonial-by">
+                  <span class="testimonial-avatar" aria-hidden="true">B<img
+                        src="image/bash.webp" width="72" height="72" loading="lazy"
+                        decoding="async" alt=""></span>
+                  <span class="testimonial-who">
+                    <span class="testimonial-name">Bash</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+
+            <!-- Cropped from a group shot of four with ffmpeg crop=96:96:216:34,
+                 then scaled to 80. The original is deliberately not in the repo:
+                 wrangler serves this directory wholesale, so committing it would
+                 publish the three other people in the frame. Ask Faruqi for the
+                 source if these numbers ever need re-deriving. -->
+            <li class="testimonial">
+              <figure class="testimonial-figure">
+                <blockquote class="testimonial-quote">
+                  <p>&ldquo;Easy to deal and patient in handle most of the
+                    demand.&rdquo;</p>
+                </blockquote>
+                <figcaption class="testimonial-by">
+                  <span class="testimonial-avatar" aria-hidden="true">SM<img
+                        src="image/siti-maryam-rusly.webp" width="80" height="80" loading="lazy"
+                        decoding="async" alt=""></span>
+                  <span class="testimonial-who">
+                    <span class="testimonial-name">Siti Maryam Rusly</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 

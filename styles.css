@@ -4687,6 +4687,136 @@ body {
   .post-card-more svg { transition: none; }
 }
 
+/* ---------- Portfolio ---------- */
+
+.portfolio {
+  padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 6vw, 80px);
+}
+
+.portfolio-head {
+  max-width: 1160px;
+  margin: 0 auto clamp(28px, 3.6vw, 48px);
+  /* the row below is full bleed, so the heading carries the gutter itself */
+  padding: 0 24px;
+  text-align: center;
+}
+
+/* Bigger than .section-title, which tops out at 3rem — this section leads with
+   the heading rather than with a paragraph, so it carries the extra scale.
+   Uppercase like every other heading on the site; the sentence case in the
+   reference would read as a mistake next to them.
+
+   Set on one line, so the floor is what has to be solved for, not the ceiling:
+   uppercase "SUCCESS STORIES" measures 9.06em, and the column is the viewport
+   less a 48px gutter. 2rem holds one line down to 338px, which covers every
+   phone in use; the 6.4vw middle term never catches the ceiling before 1375px,
+   so nothing wraps above that either. Re-measure if the wording changes. */
+.portfolio-title {
+  margin: 0;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(2rem, 6.4vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.94;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Full bleed and scrolled by hand. scroll-padding matches the card inset so a
+   snapped card never lands under the fixed header when someone tabs to it. */
+.portfolio-row {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* No visible scrollbar, as in the reference. The row still scrolls by wheel,
+     trackpad, touch and keyboard — only the chrome is gone. The card clipped by
+     the right edge is what signals there is more to see. */
+  scrollbar-width: none;
+}
+
+.portfolio-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* No gap between cards, the way the reference butts them together — the 1px
+   rule is what separates one from the next. */
+.portfolio-item {
+  flex: none;
+  width: clamp(300px, 42vw, 640px);
+  scroll-snap-align: start;
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.portfolio-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.portfolio-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.portfolio-card:hover .portfolio-img,
+.portfolio-card:focus-visible .portfolio-img {
+  transform: scale(1.04);
+}
+
+/* The scrim. Only over the bottom third, where the title sits — a full-card
+   wash would grey out the photograph for nothing. */
+.portfolio-card::after {
+  content: "";
+  position: absolute;
+  inset: 40% 0 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(16, 20, 24, 0.72));
+}
+
+.portfolio-card:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: -3px;
+}
+
+/* Bottom-left over the scrim. Sentence case, unlike the section headings: at
+   this size uppercase 900 would shout over the photograph rather than sit on
+   it. */
+.portfolio-name {
+  position: absolute;
+  z-index: 1;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  text-shadow: 0 1px 12px rgba(16, 20, 24, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-img {
+    transition: none;
+  }
+
+  .portfolio-card:hover .portfolio-img,
+  .portfolio-card:focus-visible .portfolio-img {
+    transform: none;
+  }
+}
+
 /* ---------- FAQ ---------- */
 
 /* Same two-column split as the approach section — a short intro that holds
@@ -4878,6 +5008,163 @@ body {
   }
 }
 
+/* ---------- Testimonials ---------- */
+
+/* A tinted band between the FAQ and the neon call to action, so the last three
+   sections don't run together as one white block.
+
+   The strip inside is full bleed and runs on the same [data-loop] machinery as
+   the client logos and the work gallery. */
+.testimonials {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 120px);
+  background: #f4f5f5;
+  --dot-cell: clamp(22px, 2.2vw, 30px);
+  --dot-ink: rgba(50, 56, 58, 0.16);
+}
+
+/* Dots rather than the ruled backdrop the other bands carry: over a row of
+   bordered cards a full grid reads as a second set of card edges. */
+.testimonials::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at center, var(--dot-ink) 1px, transparent 1.5px);
+  background-size: var(--dot-cell) var(--dot-cell);
+}
+
+.testimonials-head {
+  /* sits above the dot backdrop */
+  position: relative;
+  z-index: 1;
+  /* 1160 of column plus the two 24px gutters. The FAQ hangs its gutter on the
+     section and caps .faq-inner at 1160 inside that; here the strip has to bleed
+     so the section cannot be padded, and the gutter rides on this box instead.
+     Under border-box that would eat 24px a side and push the heading in — adding
+     the gutters back to the cap is what keeps this column flush with the FAQ's. */
+  max-width: 1208px;
+  margin: 0 auto clamp(32px, 4vw, 52px);
+  padding: 0 24px;
+}
+
+.testimonials-strip {
+  position: relative;
+  z-index: 1;
+}
+
+.testimonials-track {
+  display: flex;
+  /* max-content so the shift lands exactly one group along */
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.testimonials-group {
+  display: flex;
+  /* stretch, so a short quote's card still matches the tall one beside it */
+  align-items: stretch;
+  gap: var(--testimonial-gap, 20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* the gap has to carry across the seam between copies too */
+  padding-right: var(--testimonial-gap, 20px);
+}
+
+.testimonial {
+  flex: none;
+  display: flex;
+  width: clamp(280px, 27vw, 380px);
+}
+
+.testimonial-figure {
+  display: flex;
+  flex-direction: column;
+  /* pins the attribution to the bottom edge whatever the quote runs to, which
+     is what lines the avatars up across the row */
+  justify-content: space-between;
+  gap: clamp(28px, 3.4vw, 52px);
+  width: 100%;
+  margin: 0;
+  padding: clamp(22px, 2.2vw, 30px);
+  border: 1px solid rgba(50, 56, 58, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.testimonial-quote {
+  margin: 0;
+}
+
+.testimonial-quote p {
+  margin: 0;
+  font-size: clamp(0.9375rem, 1vw, 1rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.88);
+  text-wrap: pretty;
+}
+
+.testimonial-by {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* The initials always sit in the box and the portrait is laid over them, so an
+   image that is missing or fails to decode falls back to a monogram rather than
+   leaving a broken-image hole. Every card carries a portrait today; the fallback
+   is there for the one that eventually won't. */
+.testimonial-avatar {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+}
+
+.testimonial-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.testimonial-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.testimonial-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.testimonials:hover .testimonials-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-track {
+    animation: none;
+  }
+}
+
 /* ---------- Call to action ---------- */
 
 /* The neon band. It closes the white run of sections and hands over to the
@@ -4885,8 +5172,7 @@ body {
 .cta {
   padding: clamp(72px, 10vw, 132px) 24px;
   background: var(--neon);
-  /* the grid backdrop is masked to a soft edge, so nothing should bleed, but
-     this also contains the button's magnetic travel at the section edge */
+  /* the grid backdrop is masked to a soft edge, so nothing should bleed */
   overflow: hidden;
 }
 
@@ -4944,8 +5230,6 @@ body {
   text-transform: uppercase;
   box-shadow: 0 14px 34px rgba(16, 20, 24, 0.18);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  /* main.js writes x/y here for the magnetic pull */
-  will-change: transform;
 }
 
 .cta-button:hover {

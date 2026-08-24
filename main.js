@@ -186,13 +186,20 @@
   });
 })();
 
-/* Statement — GSAP's rolling-text effect (demos.gsap.com/demo/rolling-text).
+/* Statement — GSAP's rolling-text effect (demos.gsap.com/demo/rolling-text),
+   driven by the scroll position rather than by the clock.
 
    Several copies of a line are stacked on top of each other and their
-   characters rotate continuously from -90 to +90 degrees. The transform origin
-   is pushed back in Z, so each character swings round a drum rather than
-   flipping in place, and the copies are offset in time so one is always facing
-   the viewer as the last turns away. */
+   characters rotate from -90 to +90 degrees. The transform origin is pushed
+   back in Z, so each character swings round a drum rather than flipping in
+   place, and the copies are offset in phase so one is always facing the viewer
+   as the last turns away.
+
+   The tweens are never played. They stay paused and their playhead is written
+   from how far the section has travelled through the viewport, so the drum
+   turns while the page moves, holds still when it stops, and unwinds when the
+   reader scrolls back up. ScrollTrigger would do this with `scrub`, but it is
+   not on the page and one effect does not justify a second GSAP plugin. */
 (() => {
   "use strict";
 
@@ -207,9 +214,13 @@
   gsap.registerPlugin(SplitText);
 
   const COPIES = 4;
-  const SPIN = 0.9; // seconds for one character to travel -90 -> +90
+  const SPIN = 0.9; // playhead seconds for one character to travel -90 -> +90
   const LINE_OFFSET = 0.45; // head start between stacked copies
   const CHAR_STAGGER = 0.05;
+  // Full turns of the drum over one pass of the section through the viewport.
+  // Higher spins faster per pixel scrolled; below about 1 the line never
+  // completes a hand-over and reads as a wobble rather than a roll.
+  const TURNS = 2;
 
   // How far behind the text the rotation axis sits. This is the radius of the
   // drum, so it also decides how far a character travels vertically as it
@@ -221,9 +232,13 @@
   const depthFor = (el) =>
     -DEPTH_RATIO * parseFloat(getComputedStyle(el).fontSize);
 
+  const clamp01 = (n) => (n < 0 ? 0 : n > 1 ? 1 : n);
+
   const ready = document.fonts ? document.fonts.ready : Promise.resolve();
 
   ready.then(() => {
+    const rigs = [];
+
     tubes.forEach((tube) => {
       const original = tube.querySelector(".tube-line");
       if (!original) return;
@@ -243,8 +258,6 @@
       // so spacing the copies by SPIN/2 hands the line over just as the one
       // before it turns edge-on. The whole pattern therefore repeats every
       // COPIES * LINE_OFFSET, and each copy is looped on exactly that period.
-      // Running them on a single timeline instead would stretch the loop to the
-      // last tween's end and leave a long stretch with nothing facing forward.
       const cycle = COPIES * LINE_OFFSET;
 
       const tweens = splits.map((split) => {
@@ -260,45 +273,88 @@
             transformOrigin: `50% 50% ${depthFor(tube)}px`,
             repeat: -1,
             repeatDelay: Math.max(0, cycle - sweep),
+            paused: true,
           }
         );
       });
 
-      // Seed each copy at a different point of the cycle rather than delaying
-      // them. A delay would mean the drum starts empty and takes most of a
-      // cycle to fill; seeding means it is already mid-roll the moment it plays.
-      tweens.forEach((tween, index) =>
-        tween.totalTime(cycle - index * LINE_OFFSET)
-      );
+      // Each copy keeps its own head start; scrolling adds the same amount to
+      // all of them, which turns the whole drum without breaking the hand-over.
+      // The tweens repeat forever, so totalTime wraps on its own and the offset
+      // can grow past one cycle without wrapping it here.
+      const rig = {
+        tube,
+        tweens,
+        seeds: tweens.map((_, i) => cycle - i * LINE_OFFSET),
+        cycle,
+        splits,
+        visible: true,
+        last: -1,
+      };
+      rigs.push(rig);
 
-      // An endless 3D animation is not worth compositing while it is off
-      // screen, so park it until the section is actually in view.
       if ("IntersectionObserver" in window) {
-        tweens.forEach((t) => t.pause());
+        rig.visible = false;
         new IntersectionObserver(
           (entries) => {
-            const visible = entries.some((e) => e.isIntersecting);
-            tweens.forEach((t) => (visible ? t.play() : t.pause()));
+            rig.visible = entries.some((e) => e.isIntersecting);
+            if (rig.visible) apply(rig);
           },
           { threshold: 0 }
         ).observe(tube);
       }
+    });
 
-      // the type scales with the viewport, so the arc has to be refreshed too
-      let lastWidth = window.innerWidth;
-      let timer;
-      window.addEventListener("resize", () => {
-        if (window.innerWidth === lastWidth) return;
-        lastWidth = window.innerWidth;
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          splits.forEach((split) =>
-            gsap.set(split.chars, {
-              transformOrigin: `50% 50% ${depthFor(tube)}px`,
-            })
-          );
-        }, 200);
+    if (!rigs.length) return;
+
+    // 0 as the tube's top reaches the bottom of the viewport, 1 as its bottom
+    // clears the top — the whole span it is on screen for.
+    function progressOf(tube) {
+      const r = tube.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const span = vh + r.height;
+      return span ? clamp01((vh - r.top) / span) : 0;
+    }
+
+    function apply(rig) {
+      const t = progressOf(rig.tube) * rig.cycle * TURNS;
+      if (t === rig.last) return; // nothing moved; don't touch the playheads
+      rig.last = t;
+      for (let i = 0; i < rig.tweens.length; i++) {
+        rig.tweens[i].totalTime(rig.seeds[i] + t);
+      }
+    }
+
+    let queued = false;
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        for (const rig of rigs) if (rig.visible) apply(rig);
       });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    rigs.forEach(apply); // seed the drum at whatever the current position is
+
+    // the type scales with the viewport, so the arc has to be refreshed too
+    let lastWidth = window.innerWidth;
+    let timer;
+    window.addEventListener("resize", () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        rigs.forEach((rig) =>
+          rig.splits.forEach((split) =>
+            gsap.set(split.chars, {
+              transformOrigin: `50% 50% ${depthFor(rig.tube)}px`,
+            })
+          )
+        );
+      }, 200);
     });
   });
 })();
@@ -775,65 +831,6 @@
       }, 120);
     }).observe(document.body);
   }
-})();
-
-/* CTA button — a magnetic pull toward the cursor.
-   Same quickTo approach as the portrait tilt: one live tween per axis, so the
-   easing survives a firehose of pointermove events. The button is tracked from
-   its section rather than from itself, so it starts leaning before the cursor
-   has actually reached it. */
-(() => {
-  "use strict";
-
-  const section = document.querySelector(".cta");
-  const button = section && section.querySelector(".cta-button");
-  if (!button || !window.gsap) return;
-
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-  const hasPointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  if (prefersReduced || !hasPointer) return;
-
-  const RANGE = 170; // px from the button's centre where the pull begins
-  const PULL = 0.32; // fraction of the distance the button travels
-
-  const opts = { duration: 0.5, ease: "power3" };
-  const toX = gsap.quickTo(button, "x", opts);
-  const toY = gsap.quickTo(button, "y", opts);
-  // the label trails the button slightly, which reads as weight
-  const label = button.querySelector(".cta-button-label");
-  const labelX = label ? gsap.quickTo(label, "x", { duration: 0.7, ease: "power3" }) : null;
-  const labelY = label ? gsap.quickTo(label, "y", { duration: 0.7, ease: "power3" }) : null;
-
-  function move(dx, dy) {
-    toX(dx);
-    toY(dy);
-    if (labelX) {
-      labelX(dx * 0.28);
-      labelY(dy * 0.28);
-    }
-  }
-
-  section.addEventListener(
-    "pointermove",
-    (e) => {
-      if (e.pointerType && e.pointerType !== "mouse") return;
-
-      // measured per move: the button is itself being translated, and the
-      // section can reflow under it as the page resizes
-      const r = button.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width / 2);
-      const dy = e.clientY - (r.top + r.height / 2);
-
-      if (Math.hypot(dx, dy) > RANGE) move(0, 0);
-      else move(dx * PULL, dy * PULL);
-    },
-    { passive: true }
-  );
-
-  // leaving the section entirely never produces a far-away pointermove
-  section.addEventListener("pointerleave", () => move(0, 0));
 })();
 
 /* Footer wordmark — the brand line set to exactly the width of the footer
