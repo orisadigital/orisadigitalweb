@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Website Prototype — See It Before You Pay | Orisa Digital</title>
+  <meta name="description" content="Get a free website prototype designed for your business in Kuching, Sarawak. Tell us about your business and see the direction before committing. No upfront payment, no obligation.">
+  <link rel="canonical" href="https://orisadigital.com/start-free">
+  <meta name="theme-color" content="#32383a">
+
+  <!-- Link previews. og:image must be absolute: the scrapers that read it
+       (WhatsApp, Telegram, Facebook, LinkedIn) do not resolve relative paths. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Orisa Digital">
+  <meta property="og:locale" content="en_MY">
+  <meta property="og:url" content="https://orisadigital.com/start-free">
+  <meta property="og:title" content="See Your Website Before You Pay — Orisa Digital">
+  <meta property="og:description" content="A free website prototype designed for your business. See the direction before committing to the full project. No upfront payment, no obligation.">
+  <meta property="og:image" content="https://orisadigital.com/image/og-team.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Orisa Digital team">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
+  <link rel="apple-touch-icon" href="image/favicon.jpeg">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- Self-hosted, so the fonts come off a connection the browser already
+       has rather than two fresh third-party origins. Inter 400 is the body
+       face and Inter Tight 900 every heading, so both are wanted immediately
+       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+  <!-- defer preserves order, so GSAP is ready before main.js runs -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="main.js" defer></script>
+
+  <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
+       just saves the DNS and TLS round trip when it does go out. Cookies this
+       sets are described on /privacy. -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1SVHB9G25"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-W1SVHB9G25");
+  </script>
+
+  <!-- Structured data. The organisation node repeats the @id used on the home
+       page so the two resolve to one entity. The offer is priced at zero
+       because that is the whole proposition — the prototype itself is free. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": "https://orisadigital.com/#organization",
+        "name": "Orisa Digital",
+        "legalName": "Orisa Digital Company",
+        "identifier": "017269150250",
+        "url": "https://orisadigital.com/",
+        "email": "hello@orisadigital.com",
+        "telephone": "+60-13-997-5304",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://orisadigital.com/#logo",
+          "url": "https://orisadigital.com/image/orisa.webp",
+          "width": 254,
+          "height": 92
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kuching",
+          "addressRegion": "Sarawak",
+          "addressCountry": "MY"
+        },
+        "priceRange": "RM999+",
+        "sameAs": [
+          "https://wa.me/60139975304",
+          "https://t.me/faruqijeniri",
+          "https://www.google.com/maps?cid=12610751196808370303",
+          "https://www.facebook.com/orisadigital"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://orisadigital.com/start-free#service",
+        "name": "Free Website Prototype",
+        "serviceType": "Website design prototype",
+        "description": "A custom website prototype designed for your business so you can see the direction before committing to the full project.",
+        "url": "https://orisadigital.com/start-free",
+        "provider": { "@id": "https://orisadigital.com/#organization" },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Sarawak" },
+          { "@type": "Country", "name": "Malaysia" }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "MYR",
+          "description": "No upfront payment and no obligation to continue."
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://orisadigital.com/start-free#webpage",
+        "url": "https://orisadigital.com/start-free",
+        "name": "Free Website Prototype — See It Before You Pay | Orisa Digital",
+        "description": "Get a free website prototype designed for your business in Kuching, Sarawak. See the direction before committing. No upfront payment, no obligation.",
+        "isPartOf": { "@id": "https://orisadigital.com/#website" },
+        "about": { "@id": "https://orisadigital.com/start-free#service" },
+        "breadcrumb": { "@id": "https://orisadigital.com/start-free#breadcrumb" },
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://orisadigital.com/start-free#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://orisadigital.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Free Prototype" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-bar">
+      <!-- The lockup already carries the wordmark, so there is no text beside
+           it; the link's aria-label names the company for assistive tech. -->
+      <a class="logo" href="/" aria-label="Orisa Digital — home">
+        <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92" alt="" aria-hidden="true"></picture>
+      </a>
+
+      <!-- Two labels, one shown per breakpoint: the phone header has no room
+           for the long one. display:none keeps the spare out of the
+           accessibility tree, so it is never announced twice. -->
+      <p class="availability">
+        <span class="availability-dot" aria-hidden="true"></span>
+        <span class="availability-full">Open for New Projects</span>
+        <span class="availability-short">Open for Work</span>
+      </p>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li>
+            <a class="nav-link" href="/web-design">
+              <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="2.75" y="4" width="18.5" height="12.5" rx="2"/>
+                <path d="M12 16.5v3.5M8.75 20h6.5"/>
+              </svg>
+              Web Design
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="/web-app">
+              <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="7" y="2.75" width="10" height="18.5" rx="2.5"/>
+                <path d="M10.75 18.25h2.5"/>
+              </svg>
+              Web App
+            </a>
+          </li>
+          <li>
+            <a class="nav-link nav-link--green" href="/green-energy">
+              <svg class="nav-icon nav-icon--leaf" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6"/>
+              </svg>
+              Green Energy
+            </a>
+          </li>
+          <li class="nav-item--wide-only">
+            <a class="nav-link" href="/website-pricing">
+              <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="5" y="2.75" width="14" height="18.5" rx="2.5"/>
+                <path d="M8.5 7h7"/>
+                <path d="M9 12h1.5M13.5 12h1.5M9 16h1.5M13.5 16h1.5"/>
+              </svg>
+              Website Pricing
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <span class="header-divider" aria-hidden="true"></span>
+
+      <div class="header-actions">
+        <div class="chat-menu">
+          <button class="chat-toggle" type="button" aria-expanded="false" aria-haspopup="true"
+                  aria-controls="chat-options" aria-label="Contact us">
+            <svg class="chat-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20.5 11.3c0 3.98-3.8 7.2-8.5 7.2-.86 0-1.7-.11-2.48-.31L4.5 19.8l1.2-3.44C4.2 15.1 3.5 13.3 3.5 11.3c0-3.98 3.8-7.2 8.5-7.2s8.5 3.22 8.5 7.2Z"/>
+            </svg>
+          </button>
+
+          <ul class="chat-options" id="chat-options">
+            <li>
+              <a class="chat-option chat-option--whatsapp" data-angle="78" href="https://wa.me/60139975304"
+                 target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <use href="#icon-whatsapp"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="chat-option chat-option--telegram" data-angle="112" href="https://t.me/faruqijeniri"
+                 target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <use href="#icon-telegram"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="chat-option chat-option--phone" data-angle="146" href="tel:+60139975304" aria-label="Call us">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02l-2.2 2.2Z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-panel">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 7h18M3 12h18M3 17h18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer-backdrop" hidden></div>
+
+  <aside class="drawer" id="menu-panel" aria-hidden="true" aria-label="Menu">
+    <div class="drawer-card drawer-card--glass">
+      <p class="drawer-eyebrow">Menu</p>
+      <ul class="drawer-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/web-design">Web Design</a></li>
+        <li><a href="/web-app">Web App</a></li>
+        <li><a class="drawer-link--green" href="/green-energy">Green Energy<svg class="drawer-leaf" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></a></li>
+        <li><a href="/website-pricing">Website Pricing</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+
+    <a class="drawer-card drawer-card--neon" href="/contact">
+      <span class="drawer-eyebrow">Got a project?</span>
+      <span class="drawer-cta">
+        Start a project
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </span>
+    </a>
+
+    <div class="drawer-card drawer-card--black">
+      <p class="drawer-eyebrow">Say hello</p>
+      <p class="drawer-contact">hello@orisadigital.com</p>
+      <p class="drawer-place">Kuching, Sarawak</p>
+    </div>
+  </aside>
+
+  <main class="page">
+    <section class="page-hero page-hero--tight" aria-labelledby="prototype-title">
+      <div class="page-hero-inner">
+        <p class="section-eyebrow section-eyebrow--center">Free Website Prototype</p>
+        <h1 class="section-title page-hero-title" id="prototype-title">See Your Website<br>
+          Before You Pay</h1>
+
+        <p class="section-text page-hero-text">
+          Get a free website prototype designed for your business.
+        </p>
+      </div>
+    </section>
+
+    <!-- Not the decorative .video-band the other pages use. That component is
+         muted, looping, aria-hidden and has no controls, which is right for
+         abstract footage and wrong for this: the clip is Faruqi speaking to
+         camera, making the same offer the page makes. Muting it or
+         hiding it from assistive tech would throw the content away.
+
+         So: real controls, audio intact, no autoplay, and preload="none" so
+         the 5MB only leaves the server for a visitor who actually presses
+         play. The poster carries the frame until then.
+
+         The clip has its subtitles burned into the picture, which serves deaf
+         viewers but not screen readers — a <track> caption file is still worth
+         adding when there is a transcript. -->
+    <section class="prototype-video" aria-label="Video: how the free prototype works">
+      <div class="prototype-video-inner">
+        <video class="prototype-video-media" controls playsinline preload="none"
+               poster="image/poster/startfree.webp" width="1280" height="720"
+               aria-label="Faruqi explains the free website prototype offer">
+          <source src="video/startfree-854.mp4" media="(max-width: 600px)" type="video/mp4">
+          <source src="video/startfree-1280.mp4" type="video/mp4">
+          <p class="prototype-video-fallback">
+            Your browser cannot play this video.
+            <a href="video/startfree-1280.mp4">Download it instead</a>.
+          </p>
+        </video>
+      </div>
+    </section>
+
+    <section class="prototype-intro" aria-labelledby="prototype-intro-title">
+      <div class="prototype-intro-inner">
+        <h2 class="section-title" id="prototype-intro-title">Not Sure What Your<br>
+          New Website Should Look Like?</h2>
+        <p class="section-text">
+          Tell us about your business, and we&rsquo;ll create a custom website prototype
+          so you can see the direction before committing to the full project.
+        </p>
+        <p class="prototype-terms">No upfront payment. No obligation.</p>
+      </div>
+    </section>
+
+    <!-- The homepage's case studies, repeated here as the proof behind the
+         offer above: the promise, then the work that backs it, then how it
+         runs. The cards are duplicated markup rather than shared, so a change
+         to one has to be made in both places.
+
+         Native horizontal scroll with snap, no marquee: this row has to be
+         readable and clickable, which a moving strip is not. -->
+    <section class="portfolio" aria-labelledby="portfolio-title">
+      <header class="portfolio-head">
+        <p class="section-eyebrow section-eyebrow--center">Case Studies</p>
+        <h2 class="portfolio-title" id="portfolio-title">Success Stories</h2>
+      </header>
+
+      <ul class="portfolio-row">
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/tyleo.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">TY Leo Battery Pro</span>
+          </a>
+        </li>
+
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://astanasarawak.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/astana.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/astana.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">Astana Sarawak</span>
+          </a>
+        </li>
+
+        <li class="portfolio-item">
+          <a class="portfolio-card" href="https://ecodoliyaorganic.com" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="portfolio-img"
+                 src="image/ecodoliya.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+            <span class="portfolio-name">Eco Doliya</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- The same three-step block the homepage runs, so the numbering, the
+         pinned intro and the card that lights as you reach it all come for
+         free. main.js reads the step count off the cards, so the counter says
+         01 / 03 here without being told. -->
+    <section class="approach" aria-labelledby="how-title">
+      <div class="approach-inner">
+        <div class="approach-intro">
+          <p class="section-eyebrow">How It Works</p>
+          <h2 class="section-title" id="how-title">Three Steps,<br>
+            No Commitment</h2>
+          <p class="section-text">
+            From the first message to a design you can actually look at. You only
+            decide whether to go ahead once there is something in front of you.
+          </p>
+
+          <!-- Tracks whichever step is lit. Decorative: the steps themselves are
+               a numbered list, so this repeats nothing for assistive tech. -->
+          <div class="approach-progress" aria-hidden="true">
+            <p class="approach-progress-count">
+              <span data-step>01</span> / <span data-total>03</span>
+            </p>
+            <div class="approach-progress-track">
+              <span class="approach-progress-fill"></span>
+            </div>
+          </div>
+        </div>
+
+        <ol class="approach-steps">
+          <li class="approach-card">
+            <h3 class="approach-card-title">Tell Us About Your Business</h3>
+            <p class="approach-card-text">
+              Share your business details, goals, and what you want your website
+              to achieve.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">We Design Your Prototype</h3>
+            <p class="approach-card-text">
+              Our team creates a custom homepage concept based on your brand and
+              business.
+            </p>
+          </li>
+          <li class="approach-card">
+            <h3 class="approach-card-title">Review &amp; Decide</h3>
+            <p class="approach-card-text">
+              See the prototype, give us feedback, and decide whether you want us
+              to build it.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="benefits benefits--dotted" aria-labelledby="get-title">
+      <div class="benefits-inner benefits-inner--stacked">
+        <div class="benefits-copy">
+          <p class="section-eyebrow">What You Get</p>
+          <h2 class="section-title benefits-title" id="get-title">A Real Design,<br>
+            Not a Description</h2>
+          <p class="section-text">
+            Enough of a website to judge it by &mdash; the layout, the type, the
+            colour, and how it holds up on a phone.
+          </p>
+        </div>
+
+        <ul class="benefits-grid benefits-grid--plain">
+          <li class="benefit-card">
+            <h3 class="benefit-title">Custom Homepage Design</h3>
+          </li>
+
+          <li class="benefit-card">
+            <h3 class="benefit-title">Mobile-Friendly Design Direction</h3>
+          </li>
+
+          <li class="benefit-card">
+            <h3 class="benefit-title">Your Branding &amp; Content</h3>
+          </li>
+
+          <li class="benefit-card">
+            <h3 class="benefit-title">Modern UI/UX</h3>
+          </li>
+
+          <li class="benefit-card">
+            <h3 class="benefit-title">Clear Call-to-Action</h3>
+          </li>
+
+          <li class="benefit-card">
+            <h3 class="benefit-title">No Payment Required to Start</h3>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="cta-inner">
+        <p class="section-eyebrow section-eyebrow--center">Ready to See Your Website?</p>
+        <h2 class="section-title cta-title" id="cta-title">Start Your<br>
+          Free Prototype</h2>
+        <p class="section-text cta-text">
+          No credit card. No obligation. Just a prototype of what your website
+          could look like.
+        </p>
+
+        <div class="cta-actions">
+          <a class="cta-button" href="/contact">
+            <span class="cta-button-label">Start your free prototype</span>
+            <span class="cta-button-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+          <a class="cta-alt" href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="footer-logo" href="/" aria-label="Orisa Digital — home">
+          <picture><source srcset="image/orisa.avif" type="image/avif"><img class="logo-mark" src="image/orisa.webp" width="254" height="92"
+               loading="lazy" decoding="async" alt="" aria-hidden="true"></picture>
+        </a>
+        <p class="footer-tagline">
+          Websites, web apps, and digital solutions — built in Kuching,
+          for Sarawak.
+        </p>
+
+        <!-- Live from The Green Web Foundation, so it shows the current
+             greencheck result for this domain rather than a claim of our own.
+             Their API has the site as hosted by Cloudflare and listed green. -->
+        <a class="footer-green-link"
+           href="https://www.thegreenwebfoundation.org/green-web-check/?url=orisadigital.com"
+           target="_blank" rel="noopener noreferrer">
+          <img class="footer-green"
+               src="https://app.greenweb.org/api/v3/greencheckimage/orisadigital.com?nocache=true"
+               alt="This website runs on green hosting - verified by thegreenwebfoundation.org"
+               width="200" height="95" loading="lazy" decoding="async">
+        </a>
+
+        <ul class="footer-social">
+          <li>
+            <a href="https://wa.me/60139975304" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <use href="#icon-whatsapp"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/faruqijeniri" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <use href="#icon-telegram"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/orisadigital" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <use href="#icon-facebook"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <h2 class="footer-heading">Explore</h2>
+        <ul class="footer-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/website-pricing">Website Pricing</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Services</h2>
+        <ul class="footer-list">
+          <li><a href="/web-design">Web Design</a></li>
+          <li><a href="/web-app">Web App</a></li>
+          <li><a href="/green-energy">Green Energy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Say hello</h2>
+        <ul class="footer-list footer-list--contact">
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="2.75" y="5" width="18.5" height="14" rx="2.5"/>
+              <path d="M3.5 7.5 12 13.2 20.5 7.5"/>
+            </svg>
+            <a href="mailto:hello@orisadigital.com">hello@orisadigital.com</a>
+          </li>
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.58.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.58 1 1 0 0 1-.25 1.02l-2.2 2.2Z"/>
+            </svg>
+            <a href="tel:+60139975304">+60 13 997 5304</a>
+          </li>
+          <li>
+            <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 21.3s6.75-5.4 6.75-10.55a6.75 6.75 0 1 0-13.5 0C5.25 15.9 12 21.3 12 21.3Z"/>
+              <circle cx="12" cy="10.4" r="2.5"/>
+            </svg>
+            <span>Kuching, Sarawak</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-base">
+      <p class="footer-copy">
+        &copy; <span data-year>2026</span> Orisa Digital Company (017269150250). All rights reserved.
+      </p>
+
+      <nav class="footer-legal" aria-label="Legal">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms &amp; Conditions</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </nav>
+
+      <a class="footer-top" href="#top">
+        Back to top
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 19V5M6 11l6-6 6 6"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Oversized brand line closing the page. Decorative — the footer already
+         names the company in the logo above — and main.js sets the size that
+         fills the column exactly. -->
+    <div class="footer-wordmark" aria-hidden="true">
+      <span class="footer-wordmark-text">Orisa Digital</span>
+    </div>
+  </footer>
+
+</body>
+</html>
