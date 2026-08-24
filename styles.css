@@ -1030,6 +1030,24 @@ body {
   }
 }
 
+/* The same bracket around the prototype video. Block rather than inline-flex,
+   because the video is a full-width media element, not a button sitting on a
+   text line; and a slightly heavier mark, because 7px reads as a speck against
+   a frame this size.
+
+   Declared after the narrow-screen override above so its figures survive there
+   — a modifier at equal specificity only wins by coming later. */
+.cta-frame--media {
+  --frame-gap: clamp(9px, 1.1vw, 14px);
+  --frame-mark: clamp(8px, 0.85vw, 11px);
+  display: block;
+}
+
+/* The video fills the frame's content box; the frame's padding is the gap. */
+.cta-frame--media .prototype-video-media {
+  width: 100%;
+}
+
 /* Deliberately a step down from .cta-button at the foot of the page: that one
    closes, this one only offers, and at the closer's size the pair would
    compete with the headline above them. The transparent border is on the base

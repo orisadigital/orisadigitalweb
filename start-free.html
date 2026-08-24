@@ -314,16 +314,21 @@
          adding when there is a transcript. -->
     <section class="prototype-video" aria-label="Video: how the free prototype works">
       <div class="prototype-video-inner">
-        <video class="prototype-video-media" controls playsinline preload="none"
-               poster="image/poster/startfree.webp" width="1280" height="720"
-               aria-label="Faruqi explains the free website prototype offer">
-          <source src="video/startfree-854.mp4" media="(max-width: 600px)" type="video/mp4">
-          <source src="video/startfree-1280.mp4" type="video/mp4">
-          <p class="prototype-video-fallback">
-            Your browser cannot play this video.
-            <a href="video/startfree-1280.mp4">Download it instead</a>.
-          </p>
-        </video>
+        <!-- Same bracket as the hero button on the homepage: .cta-frame, with a
+             modifier for block layout and a slightly larger mark, since this
+             frame is a thousand pixels wide rather than a hundred and fifty. -->
+        <div class="cta-frame cta-frame--media">
+          <video class="prototype-video-media" controls playsinline preload="none"
+                 poster="image/poster/startfree.webp" width="1280" height="720"
+                 aria-label="Faruqi explains the free website prototype offer">
+            <source src="video/startfree-854.mp4" media="(max-width: 600px)" type="video/mp4">
+            <source src="video/startfree-1280.mp4" type="video/mp4">
+            <p class="prototype-video-fallback">
+              Your browser cannot play this video.
+              <a href="video/startfree-1280.mp4">Download it instead</a>.
+            </p>
+          </video>
+        </div>
       </div>
     </section>
 
