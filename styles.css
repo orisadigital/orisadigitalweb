@@ -4711,32 +4711,6 @@ body {
   top: calc(var(--header-height) + var(--header-offset) + 24px);
 }
 
-.faq-intro .section-text {
-  margin-bottom: 28px;
-}
-
-/* Same neon underline the inline document link uses, so a text link in a body
-   column reads the same way wherever it turns up. */
-.faq-link {
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 2px solid var(--neon);
-  padding-bottom: 2px;
-  transition: background-size 0.35s ease;
-  background-image: linear-gradient(var(--neon), var(--neon));
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 0;
-}
-
-.faq-link:hover,
-.faq-link:focus-visible {
-  background-size: 100% 100%;
-}
-
 .faq-list {
   margin: 0;
   padding: 0;
