@@ -637,6 +637,14 @@ body {
   background: var(--ink);
 }
 
+/* The homepage hero carries no footage, so there is nothing for the veil to
+   soften and nothing to keep the ink ground for. It goes to paper white, which
+   is the ground the gradient headline's stops were picked against. The section
+   pages below still run video and keep the dark base. */
+.hero--plain {
+  background: var(--page);
+}
+
 .hero-video {
   position: absolute;
   inset: 0;
@@ -885,6 +893,79 @@ body {
   line-height: 1.6;
   color: var(--ink);
   text-wrap: pretty;
+}
+
+/* ---------- Hero actions ---------- */
+
+/* Centred under the description like the rest of the hero, and allowed to wrap:
+   the two pills need about 360px side by side and the narrowest phone hands the
+   content box 327. */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(26px, 3.4vw, 38px);
+}
+
+/* Deliberately a step down from .cta-button at the foot of the page: that one
+   closes, this one only offers, and at the closer's size the pair would
+   compete with the headline above them. The transparent border is on the base
+   so both variants stand the same height. */
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* Ink on neon, never white — the pairing the marquee and the drawer already
+   use, for the reason they give: white on this ground is barely 1.2:1 where
+   the ink is past 12:1. */
+.hero-btn--accent {
+  background: var(--neon);
+  color: var(--ink);
+}
+
+.hero-btn--accent:hover {
+  background: var(--neon-hover);
+}
+
+/* The quiet half of the pair, borrowing the calculator's outline button: a hair
+   line that firms up on hover rather than a second filled shape shouting
+   alongside the first. */
+.hero-btn--ghost {
+  background: transparent;
+  border-color: rgba(50, 56, 58, 0.22);
+  color: var(--ink);
+}
+
+.hero-btn--ghost:hover {
+  border-color: var(--ink);
+  background: rgba(50, 56, 58, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-btn {
+    transition: none;
+  }
 }
 
 /* ---------- Marquee ---------- */

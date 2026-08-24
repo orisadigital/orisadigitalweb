@@ -407,17 +407,7 @@
   </aside>
 
   <main class="page">
-    <section class="hero" id="top">
-      <!-- The poster is the first thing that can paint here: without it the hero
-           holds an empty box until enough of the video has arrived, and that wait
-           is what the largest-contentful-paint measurement lands on. Frame is
-           pulled from the video itself, so the swap is invisible. -->
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata"
-             poster="image/poster/loom-mac.webp" aria-hidden="true" tabindex="-1">
-        <source src="video/loom-mac.mp4" type="video/mp4">
-      </video>
-      <div class="hero-veil" aria-hidden="true"></div>
-
+    <section class="hero hero--plain" id="top">
       <div class="hero-content">
         <p class="hero-eyebrow">
           <img class="hero-flag" src="image/sarawak-flag.svg" width="123" height="123"
@@ -432,6 +422,14 @@
           Premium web design, mobile apps, and digital experiences built in
           Kuching for businesses across Sarawak.
         </p>
+
+        <!-- Two ways on from the hero. The neon one goes to the calculator,
+             where a number actually gets worked out, and the quiet one to the
+             work itself. -->
+        <div class="hero-actions">
+          <a class="hero-btn hero-btn--accent" href="/website-pricing">Get Quote</a>
+          <a class="hero-btn hero-btn--ghost" href="/web-design">Learn More</a>
+        </div>
       </div>
 
       <!-- A cue, not a control: there is nothing here a keyboard or screen
