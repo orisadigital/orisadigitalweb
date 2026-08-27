@@ -5349,30 +5349,21 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* the quiet option next to the button — an underline that grows on hover */
+/* No rule under it at rest. It used to carry a third-width one that grew to
+   full on hover, which read as a broken underline rather than as a flourish
+   sitting still. */
 .cta-alt {
-  position: relative;
   font-size: clamp(1rem, 1.3vw, 1.125rem);
   font-weight: 500;
   color: #fff;
   text-decoration: none;
 }
 
-.cta-alt::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1.5px;
-  background: currentColor;
-  transform: scaleX(0.35);
-  transform-origin: left;
-  transition: transform 0.28s ease;
-}
-
-.cta-alt:hover::after,
-.cta-alt:focus-visible::after {
-  transform: scaleX(1);
+/* Underlined on hover, so it still answers a pointer the way a link should —
+   it sits beside a filled button and would otherwise look inert. */
+.cta-alt:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .cta-alt:focus-visible {
@@ -5382,8 +5373,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta-button-arrow svg,
-  .cta-alt::after {
+  .cta-button-arrow svg {
     transition: none;
   }
 }
