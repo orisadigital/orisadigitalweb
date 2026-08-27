@@ -4580,83 +4580,17 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Looping gallery ---------- */
 
+/* No padding of its own. It carried a tall, symmetric band of it so the giant
+   wordmark that used to sit behind the strip had room to scale — that word is
+   gone, and the band was outliving it: .feature-gallery already sets padding: 0
+   and is declared earlier, so this was quietly winning on order and adding
+   102px above the strip that nothing asked for. */
 .gallery {
-  /* position: relative comes from the grid-backdrop rule this section is listed
-     in; the wordmark below is positioned against it. */
   /* full bleed — the strip runs off both edges of the page */
   overflow: hidden;
-  /* More than the strip needs, and deliberately equal top and bottom. The
-     wordmark is centred on the section and keeps scaling after the cards hit
-     their 420px cap, so the section has to stay taller than the word; matching
-     the two figures is also what puts the strip on the word's centre line
-     rather than a little below it. */
-  padding: clamp(40px, 8vw, 190px) 0;
-}
-
-/* The word sitting behind the strip. Grey enough to read as texture rather than
-   a heading — it is set well below the 4.5:1 the real copy holds to, which is
-   the point, and why it is aria-hidden rather than a real heading.
-
-   It sits whole inside the section at every width, centred. The section's
-   padding is equal top and bottom, so the strip is centred too and the two
-   share a centre line — the marquee runs through the middle of the letters
-   rather than the word being anchored to an edge.
-
-   line-height is pulled to 0.75 so the box hugs Inter Tight's caps — on a
-   default line box the empty space under the baseline would throw the optical
-   centre well above the real one. */
-.gallery-wordmark {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  height: 0.75em;
-  margin: auto;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
-  /* Sized to run the full width of the viewport rather than to a type scale.
-     The vw figure is the measured width of the word, so it has to be remeasured
-     if the wording or the face changes. The cap only engages on very wide
-     screens, where the section runs out of height to hold the letters. */
-  font-size: clamp(3rem, 18.4vw, 26rem);
-  font-weight: 900;
-  line-height: 0.75;
-  letter-spacing: -0.015em;
-  text-transform: uppercase;
-  text-align: center;
-  white-space: nowrap;
-  /* A flat value rather than --ink at a low alpha. It is roughly --ink at 21%
-     over the white page, mixed down so the glyphs cover what is behind them
-     rather than letting it read through. */
-  color: #d4d6d7;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* On a phone "Our Work" has to shrink to fit the width, which throws away the
-   scale that makes it work. Dropping "Our" buys back the room: "Work" alone is
-   3.068em against 5.299em, so at 32vw it fills the same 98% of the screen with
-   letters nearly twice the size. */
-@media (max-width: 600px) {
-  .gallery-wordmark-our {
-    display: none;
-  }
-
-  .gallery-wordmark {
-    font-size: 32vw;
-  }
-
-  /* The strip's own height stops growing here — the cards hit their 230px floor
-     — while the word keeps scaling with the viewport, so at the top of this
-     range it ran out of section to sit in. The line box is a flat 0.75 x 32vw,
-     so this is what keeps the section taller than the word at 600px. */
-  .gallery {
-    padding: max(40px, 11.5vw) 0;
-  }
 }
 
 .gallery-track {
-  /* lifts the strip clear of the wordmark behind it */
-  position: relative;
-  z-index: 1;
   display: flex;
   /* max-content so the shift lands exactly one group along */
   width: max-content;
