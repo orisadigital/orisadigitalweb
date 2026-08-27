@@ -479,15 +479,17 @@
     el.style.fontSize = ((PROBE * available) / width).toFixed(2) + "px";
   }
 
-  // Anton has to be loaded first, or the fit is solved against the fallback face.
+  // The webfont has to be loaded first, or the fit is solved against whatever
+  // face the browser fell back to.
   const ready = document.fonts ? document.fonts.ready : Promise.resolve();
   ready.then(() => {
     fit();
 
-    // The column is capped at 1160px, so this fires on viewport changes below
+    // The column is capped at 1560px, so this fires on viewport changes below
     // that. Measuring the box rather than the window also covers the scrollbar
-    // appearing or disappearing. fit() only writes to the child, so it cannot
-    // feed back into the observed element.
+    // appearing or disappearing, and means the box's own measure can change
+    // without this having to know the formula. fit() only writes to the child,
+    // so it cannot feed back into the observed element.
     if (window.ResizeObserver) new ResizeObserver(fit).observe(box);
     else window.addEventListener("resize", fit);
   });

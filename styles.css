@@ -5793,7 +5793,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* ---------- Footer wordmark ---------- */
 
 .footer-wordmark {
-  max-width: 1160px;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: clamp(36px, 5vw, 72px) auto 0;
   /* The line is measured at a probe size before it is fitted, so it is briefly
      far wider than the column — this keeps that out of the page's scroll width.
@@ -5812,9 +5812,10 @@ html::-webkit-scrollbar-thumb:hover {
   font-weight: 900;
   /* Fallback for no-JS. 0.1416 is the measured ratio of fitted size to column
      width for this string in Inter Tight Black — remeasure it if the wording or
-     the face changes. The column is the footer's, capped at its max-width;
-     main.js replaces this with a measured fit. */
-  font-size: calc(min(100vw - 48px, 1160px) * 0.1416);
+     the face changes. The column is the footer's own measure, which is why the
+     two figures here track --panel-gutter and the 1560 cap; main.js replaces
+     this with a measured fit either way. */
+  font-size: calc(min(100vw - var(--panel-gutter), 1560px) * 0.1416);
   /* Inter Tight leaves air above its caps too, though less than Anton did. Its
      ink runs from 0.065em to 0.805em, so 0.82 is the tightest crop that still
      clears the cap height and lets the line sit flush in its box. */
