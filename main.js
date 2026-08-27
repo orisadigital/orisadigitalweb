@@ -1768,6 +1768,13 @@
     for (let i = 1; i < copies; i++) {
       const clone = original.cloneNode(true);
       clone.setAttribute("aria-hidden", "true");
+      // A copy is hidden from assistive tech, so nothing inside it may take
+      // focus: tabbing into aria-hidden content lands a keyboard user somewhere
+      // their screen reader says does not exist. Only matters where a group
+      // holds links — the case-study strip does.
+      clone
+        .querySelectorAll("a[href], button, input, select, textarea, [tabindex]")
+        .forEach((el) => el.setAttribute("tabindex", "-1"));
       track.append(clone);
     }
 

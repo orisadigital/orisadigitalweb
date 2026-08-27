@@ -384,47 +384,54 @@
          it used to be duplicated on the homepage, which carries the same four
          projects as a panel under the hero instead.
 
-         Native horizontal scroll with snap, no marquee: this row has to be
-         readable and clickable, which a moving strip is not. -->
+         It runs as an endless strip on the same [data-loop] machinery as the
+         client logos: main.js clones the group until it covers the box, so
+         there is no seam to reach. The cards are links, which a moving row
+         normally makes hard to hit — the strip stops while a pointer is over
+         it, and reduced motion stops it outright. -->
     <section class="portfolio" aria-labelledby="portfolio-title">
       <header class="portfolio-head">
         <p class="section-eyebrow section-eyebrow--center">Case Studies</p>
         <h2 class="portfolio-title" id="portfolio-title">Success Stories</h2>
       </header>
 
-      <ul class="portfolio-row">
-        <li class="portfolio-item">
-          <a class="portfolio-card" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">
-            <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="portfolio-img"
-                 src="image/tyleo.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
-            <span class="portfolio-name">TY Leo Battery Pro</span>
-          </a>
-        </li>
+      <div class="portfolio-strip">
+        <div class="portfolio-track" data-loop="45">
+          <ul class="portfolio-group">
+            <li class="portfolio-item">
+              <a class="portfolio-card" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">
+                <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="portfolio-img"
+                     src="image/tyleo.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+                <span class="portfolio-name">TY Leo Battery Pro</span>
+              </a>
+            </li>
 
-        <li class="portfolio-item">
-          <a class="portfolio-card" href="https://astanasarawak.com" target="_blank" rel="noopener noreferrer">
-            <picture><source srcset="image/astana.avif" type="image/avif"><img class="portfolio-img"
-                 src="image/astana.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
-            <span class="portfolio-name">Astana Sarawak</span>
-          </a>
-        </li>
+            <li class="portfolio-item">
+              <a class="portfolio-card" href="https://astanasarawak.com" target="_blank" rel="noopener noreferrer">
+                <picture><source srcset="image/astana.avif" type="image/avif"><img class="portfolio-img"
+                     src="image/astana.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+                <span class="portfolio-name">Astana Sarawak</span>
+              </a>
+            </li>
 
-        <li class="portfolio-item">
-          <a class="portfolio-card" href="https://ecodoliyaorganic.com" target="_blank" rel="noopener noreferrer">
-            <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="portfolio-img"
-                 src="image/ecodoliya.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
-            <span class="portfolio-name">Eco Doliya</span>
-          </a>
-        </li>
+            <li class="portfolio-item">
+              <a class="portfolio-card" href="https://ecodoliyaorganic.com" target="_blank" rel="noopener noreferrer">
+                <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="portfolio-img"
+                     src="image/ecodoliya.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+                <span class="portfolio-name">Eco Doliya</span>
+              </a>
+            </li>
 
-        <li class="portfolio-item">
-          <a class="portfolio-card" href="https://wijapharma.com" target="_blank" rel="noopener noreferrer">
-            <picture><source srcset="image/wijapharma.avif" type="image/avif"><img class="portfolio-img"
-                 src="image/wijapharma.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
-            <span class="portfolio-name">Wija Pharmacy</span>
-          </a>
-        </li>
-      </ul>
+            <li class="portfolio-item">
+              <a class="portfolio-card" href="https://wijapharma.com" target="_blank" rel="noopener noreferrer">
+                <picture><source srcset="image/wijapharma.avif" type="image/avif"><img class="portfolio-img"
+                     src="image/wijapharma.webp" width="840" height="410" loading="lazy" decoding="async" alt=""></picture>
+                <span class="portfolio-name">Wija Pharmacy</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- The same three-step block the homepage runs, so the numbering, the

@@ -4744,35 +4744,48 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--ink);
 }
 
-/* Full bleed and scrolled by hand. scroll-padding matches the card inset so a
-   snapped card never lands under the fixed header when someone tabs to it. */
-.portfolio-row {
+/* Full bleed, and running rather than scrolled by hand. Same machinery as the
+   client logos: main.js clones the group until the track covers this box, then
+   shifts by exactly one group, so there is no seam and no end to reach. */
+.portfolio-strip {
   /* the backdrop it used to stack above is gone; descendants still position
      against it */
   position: relative;
+  overflow: hidden;
+}
+
+.portfolio-track {
+  display: flex;
+  /* max-content so the shift lands exactly one group along */
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.portfolio-group {
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  /* No visible scrollbar, as in the reference. The row still scrolls by wheel,
-     trackpad, touch and keyboard — only the chrome is gone. The card clipped by
-     the right edge is what signals there is more to see. */
-  scrollbar-width: none;
 }
 
-.portfolio-row::-webkit-scrollbar {
-  display: none;
+/* The cards are links, and a link that is moving is a link that is hard to
+   hit — so the strip stops while a pointer is anywhere over it. */
+.portfolio-strip:hover .portfolio-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-track {
+    animation: none;
+  }
 }
 
 /* No gap between cards, the way the reference butts them together — the 1px
-   rule is what separates one from the next. */
+   rule is what separates one from the next, across the seam between copies as
+   much as within a group. */
 .portfolio-item {
   flex: none;
   width: clamp(300px, 42vw, 640px);
-  scroll-snap-align: start;
   border-right: 1px solid rgba(255, 255, 255, 0.22);
 }
 
