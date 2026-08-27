@@ -5515,14 +5515,16 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Footer ---------- */
 
+/* No side padding: the two blocks inside carry the page measure themselves, the
+   same one the homepage's sections run to. */
 .site-footer {
   background: var(--black);
   color: #fff;
-  padding: clamp(56px, 7vw, 88px) 24px clamp(24px, 3vw, 34px);
+  padding: clamp(56px, 7vw, 88px) 0 clamp(24px, 3vw, 34px);
 }
 
 .footer-inner {
-  max-width: 1160px;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: 0 auto;
   display: grid;
   /* the brand column takes the slack; the three link columns stay even */
@@ -5621,7 +5623,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-base {
-  max-width: 1160px;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: clamp(44px, 6vw, 72px) auto 0;
   padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
