@@ -487,9 +487,9 @@
     </section>
 
     <!-- One row here, where about.html runs the same logos as two. main.js
-         clones the group until the strip covers the viewport, the same way the
-         testimonial strip below works — so one line of logos still fills it
-         however few of them there are.
+         finds it by data-loop and clones the group until it covers the
+         viewport, so one line of logos still fills the strip however few of
+         them there are. It is the only [data-loop] strip left on this page.
 
          The label is a real heading rather than the section's aria-label it
          replaces: it is on the page now, so it belongs in the outline too. -->
@@ -554,12 +554,12 @@
     <section class="pitch" aria-labelledby="pitch-title">
       <div class="pitch-inner">
         <div class="pitch-copy">
-          <!-- Three real clients, the same three the testimonials further down
-               quote, overlapping the way the reference's discs did. Out of the
-               accessibility tree: three faces with no names beside them say
-               nothing to a screen reader that the testimonials do not say
-               properly. The initials behind each one are what shows if an
-               image does not arrive, exactly as .testimonial-avatar does it. -->
+          <!-- Three real clients, all three of them quoted in the section
+               directly below, overlapping the way the reference's discs did.
+               Out of the accessibility tree: three faces with no names beside
+               them say nothing to a screen reader that those quotes do not say
+               properly. The initials behind each one are what shows if an image
+               does not arrive. -->
           <span class="pitch-mark" aria-hidden="true">
             <span class="pitch-face">OT<img
                   src="image/oracle-tito.webp" width="36" height="36" loading="lazy"
@@ -591,11 +591,11 @@
           </ul>
         </div>
 
-        <!-- The icons are 80x80 PNGs with an alpha channel, drawn at 26. No
+        <!-- The icons are 80x80 PNGs with an alpha channel, drawn at 20. No
              AVIF or WebP sibling: they are under 2KB each, where a second
              encode saves nothing and risks a flattened alpha that <picture>
-             would then prefer — the same call the testimonial avatars make.
-             Empty alt: each one repeats the title directly under it. -->
+             would then prefer over the good PNG. Empty alt: each one repeats
+             the title directly under it. -->
         <ul class="pitch-grid">
           <li class="pitch-card">
             <img class="pitch-card-icon" src="image/Brush2.png" width="80" height="80"
@@ -969,137 +969,6 @@
             </details>
           </li>
         </ul>
-      </div>
-    </section>
-
-
-    <!-- Runs on the same [data-loop] strip as the client logos: main.js clones
-         the group until it covers the viewport, so the row never shows a seam. Hovering pauses it and reduced-motion stops it,
-         which is what makes a strip of running text readable at all.
-
-         Every quote here is a real one, verbatim. Nothing invented goes in this
-         section. -->
-    <section class="testimonials" aria-labelledby="testimonials-title">
-      <header class="testimonials-head">
-        <p class="section-eyebrow section-eyebrow--center">Testimonials</p>
-        <h2 class="section-title" id="testimonials-title">What Our<br>
-          Clients Say</h2>
-      </header>
-
-      <div class="testimonials-strip">
-        <div class="testimonials-track" data-loop="26">
-          <ul class="testimonials-group">
-            <!-- Real, and the only real one here so far. Verbatim as the client
-                 sent it, "Faruqi Company" and all. The avatar carries the
-                 initials underneath the photo, so a missing or failed image
-                 leaves a monogram rather than a hole. No handle: he did not give
-                 one, and inventing one for a named person is not on. -->
-            <li class="testimonial">
-              <figure class="testimonial-figure">
-                <blockquote class="testimonial-quote">
-                  <p>&ldquo;I had engaged Faruqi Company to design a logo for my
-                    business, and I couldn&rsquo;t be happier with the results. They
-                    delivered incredibly fast without compromising on
-                    quality.&rdquo;</p>
-                </blockquote>
-                <figcaption class="testimonial-by">
-                  <!-- WebP alone, no AVIF sibling: the source is a 36px cutout
-                       with an alpha channel, and an AVIF of a 2KB file saves
-                       nothing while risking a flattened alpha that <picture>
-                       would then prefer over the good WebP. -->
-                  <span class="testimonial-avatar" aria-hidden="true">OT<img
-                        src="image/oracle-tito.webp" width="36" height="36" loading="lazy"
-                        decoding="async" alt=""></span>
-                  <span class="testimonial-who">
-                    <span class="testimonial-name">Oracle Tito</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-
-            <li class="testimonial">
-              <figure class="testimonial-figure">
-                <blockquote class="testimonial-quote">
-                  <p>&ldquo;I really recommend Faruqi&rsquo;s company for digital
-                    marketing services. The team is reliable, creative, and very
-                    professional.&rdquo;</p>
-                </blockquote>
-                <figcaption class="testimonial-by">
-                  <!-- Lossy WebP here, unlike Oracle Tito's: this one is a
-                       photograph, where q88 is indistinguishable at 40px and
-                       less than half the size of the lossless encode. -->
-                  <span class="testimonial-avatar" aria-hidden="true">SZ<img
-                        src="image/sabrina-zulkarnain.webp" width="72" height="72" loading="lazy"
-                        decoding="async" alt=""></span>
-                  <span class="testimonial-who">
-                    <span class="testimonial-name">Sabrina Zulkarnain</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-
-            <li class="testimonial">
-              <figure class="testimonial-figure">
-                <blockquote class="testimonial-quote">
-                  <p>&ldquo;His team has been great to work with, professional, clear
-                    in their communication, and always collaborative. They pay
-                    attention to the details and take initiative, which makes the
-                    process smooth and productive.&rdquo;</p>
-                </blockquote>
-                <figcaption class="testimonial-by">
-                  <span class="testimonial-avatar" aria-hidden="true">AH<img
-                        src="image/aliah-hisamudin.webp" width="72" height="72" loading="lazy"
-                        decoding="async" alt=""></span>
-                  <span class="testimonial-who">
-                    <span class="testimonial-name">Aliah Hisamudin</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-
-            <!-- Wording is his, untouched, "kualiti" included. The only edit is a
-                 space after each comma, which was a typing artifact rather than
-                 anything he meant to say. -->
-            <li class="testimonial">
-              <figure class="testimonial-figure">
-                <blockquote class="testimonial-quote">
-                  <p>&ldquo;Service trusted, best kualiti, all the best!
-                    Recommended!&rdquo;</p>
-                </blockquote>
-                <figcaption class="testimonial-by">
-                  <span class="testimonial-avatar" aria-hidden="true">B<img
-                        src="image/bash.webp" width="72" height="72" loading="lazy"
-                        decoding="async" alt=""></span>
-                  <span class="testimonial-who">
-                    <span class="testimonial-name">Bash</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-
-            <!-- Cropped from a group shot of four with ffmpeg crop=96:96:216:34,
-                 then scaled to 80. The original is deliberately not in the repo:
-                 wrangler serves this directory wholesale, so committing it would
-                 publish the three other people in the frame. Ask Faruqi for the
-                 source if these numbers ever need re-deriving. -->
-            <li class="testimonial">
-              <figure class="testimonial-figure">
-                <blockquote class="testimonial-quote">
-                  <p>&ldquo;Easy to deal and patient in handle most of the
-                    demand.&rdquo;</p>
-                </blockquote>
-                <figcaption class="testimonial-by">
-                  <span class="testimonial-avatar" aria-hidden="true">SM<img
-                        src="image/siti-maryam-rusly.webp" width="80" height="80" loading="lazy"
-                        decoding="async" alt=""></span>
-                  <span class="testimonial-who">
-                    <span class="testimonial-name">Siti Maryam Rusly</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-          </ul>
-        </div>
       </div>
     </section>
 

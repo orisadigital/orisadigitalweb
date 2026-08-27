@@ -3853,15 +3853,14 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: clamp(22px, 2.6vw, 32px);
 }
 
-/* .testimonial-avatar's treatment at a larger size, with one difference: no
-   ground behind the image.
+/* An image clipped round, with the initials behind it as the fallback if it
+   never arrives — and nothing else behind it.
 
-   Two of the three sources are circular cutouts with an alpha channel. The
-   avatars in the testimonials sit on ink, which the antialiased edge of a
-   cutout lets through as a dark rim — invisible at 40px against a dark
-   portrait, a drawn-on border at 44px against a light one. Nothing behind them
-   here, so the edge fades into the page instead. The initials keep their job,
-   in ink rather than white: they are what shows if an image never arrives.
+   Two of the three sources are circular cutouts with an alpha channel, and a
+   dark fill behind one of those shows through its antialiased edge as a rim.
+   It passes unnoticed at 40px against a dark portrait; at this size against a
+   light one it reads as a drawn-on border. So the ground goes and the initials
+   take the ink instead of white. .voices-avatar does the same, larger.
 
    44px rather than the reference's 50: the smallest of the three sources is a
    36px cutout, and this is as far as it can be pushed before it softens. */
@@ -3873,7 +3872,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   width: 44px;
   height: 44px;
-  /* the same exception the testimonial avatars take: a face reads as a portrait */
+  /* the one exception to the 5px corners the site carries: a face is a portrait */
   border-radius: 50%;
   background: transparent;
   color: rgba(50, 56, 58, 0.6);
@@ -4101,10 +4100,10 @@ html::-webkit-scrollbar-thumb:hover {
   margin-top: clamp(28px, 3.6vw, 44px);
 }
 
-/* .testimonial-avatar at feature size, and with no ground behind it for the
-   same reason .pitch-face has none: these sources are circular cutouts whose
-   antialiased edge lets a dark fill through as a rim. The initials are the
-   fallback if the image never arrives, so they take the ink instead. */
+/* .pitch-face at feature size, and with no ground behind it for the same
+   reason: these sources are circular cutouts whose antialiased edge lets a dark
+   fill through as a rim. The initials are the fallback if the image never
+   arrives, so they take the ink instead. */
 .voices-avatar {
   position: relative;
   flex: none;
@@ -5384,176 +5383,8 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* ---------- Testimonials ---------- */
-
-/* A tinted band between the FAQ and the neon call to action, so the last three
-   sections don't run together as one white block.
-
-   The strip inside is full bleed and runs on the same [data-loop] machinery as
-   the client logos and the work gallery. */
-.testimonials {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 120px);
-  background: #f4f5f5;
-  --dot-cell: clamp(22px, 2.2vw, 30px);
-  --dot-ink: rgba(50, 56, 58, 0.16);
-}
-
-/* Dots rather than the ruled backdrop the other bands carry: over a row of
-   bordered cards a full grid reads as a second set of card edges. */
-.testimonials::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle at center, var(--dot-ink) 1px, transparent 1.5px);
-  background-size: var(--dot-cell) var(--dot-cell);
-}
-
-.testimonials-head {
-  /* sits above the dot backdrop */
-  position: relative;
-  z-index: 1;
-  /* 1160 of column plus the two 24px gutters, so the text column measures the
-     same as the FAQ's. The FAQ hangs its gutter on the section and caps
-     .faq-inner at 1160 inside that; here the strip has to bleed so the section
-     cannot be padded, and the gutter rides on this box instead — under
-     border-box that would otherwise eat 24px a side. */
-  max-width: 1208px;
-  margin: 0 auto clamp(32px, 4vw, 52px);
-  padding: 0 24px;
-  text-align: center;
-}
-
-.testimonials-strip {
-  position: relative;
-  z-index: 1;
-}
-
-.testimonials-track {
-  display: flex;
-  /* max-content so the shift lands exactly one group along */
-  width: max-content;
-  animation: marquee-scroll 32s linear infinite;
-}
-
-.testimonials-group {
-  display: flex;
-  /* stretch, so a short quote's card still matches the tall one beside it */
-  align-items: stretch;
-  gap: var(--testimonial-gap, 20px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  /* the gap has to carry across the seam between copies too */
-  padding-right: var(--testimonial-gap, 20px);
-}
-
-.testimonial {
-  flex: none;
-  display: flex;
-  width: clamp(280px, 27vw, 380px);
-}
-
-.testimonial-figure {
-  display: flex;
-  flex-direction: column;
-  /* pins the attribution to the bottom edge whatever the quote runs to, which
-     is what lines the avatars up across the row */
-  justify-content: space-between;
-  gap: clamp(28px, 3.4vw, 52px);
-  width: 100%;
-  margin: 0;
-  padding: clamp(22px, 2.2vw, 30px);
-  border: 1px solid rgba(50, 56, 58, 0.12);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.72);
-}
-
-.testimonial-quote {
-  margin: 0;
-}
-
-.testimonial-quote p {
-  margin: 0;
-  font-size: clamp(0.9375rem, 1vw, 1rem);
-  line-height: 1.65;
-  color: rgba(50, 56, 58, 0.88);
-  text-wrap: pretty;
-}
-
-.testimonial-by {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* The initials always sit in the box and the portrait is laid over them, so an
-   image that is missing or fails to decode falls back to a monogram rather than
-   leaving a broken-image hole. Every card carries a portrait today; the fallback
-   is there for the one that eventually won't. */
-.testimonial-avatar {
-  position: relative;
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  /* the one exception to the 5px corners: a face reads as a portrait */
-  border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  overflow: hidden;
-}
-
-.testimonial-avatar img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.testimonial-who {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.testimonial-name {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.testimonials:hover .testimonials-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .testimonials-track {
-    animation: none;
-  }
-}
-
-
-
-/* Cards with no icon chip above the title. The bento's 200px floor exists to
-   hold an icon and a title apart with space-between; drop the icon and the
-   title strands at the top of an empty box, 122px of it at desktop. These size
-   to their text instead. The iconed version on /web-design is untouched. */
-
-
-/* The tinted, dotted band the testimonials strip runs on, borrowed for the
-   "what you get" grid. Same tint, same cell and ink tokens, so the two read as
-   one treatment rather than two near-misses.
+/* A tinted, dotted band behind the "what you get" grid, so it does not run
+   together with the white sections either side of it.
 
    Dots rather than the ruled grid the other bands carry: over a set of bordered
    cards a full grid reads as a second set of card edges. */
@@ -5580,10 +5411,10 @@ html::-webkit-scrollbar-thumb:hover {
   z-index: 1;
 }
 
-/* The cards carry the testimonial card's fill and hairline instead of the flat
-   4% ink they use on a white page — at that tint they would all but vanish
-   against this ground. Hover still resolves to solid white, so the state has
-   somewhere to go. */
+/* A near-white fill and a hairline instead of the flat 4% ink these cards use
+   on a white page — at that tint they would all but vanish against this
+   ground. Hover still resolves to solid white, so the state has somewhere to
+   go. */
 .benefits--dotted .benefit-card {
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(50, 56, 58, 0.12);
