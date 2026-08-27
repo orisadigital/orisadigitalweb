@@ -3827,6 +3827,193 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 
+/* ---------- Pitch ---------- */
+
+.pitch {
+  padding: clamp(56px, 8vw, 104px) 24px;
+}
+
+/* Copy on the left, the four cards on the right, top-aligned: the left column
+   is the shorter of the two and centring it would leave the first card
+   floating opposite nothing. */
+.pitch-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+/* Three discs, lightest first, each sitting a third over the one before it.
+   Drawn here rather than fetched — it is three circles. */
+.pitch-mark {
+  display: flex;
+  margin-bottom: clamp(22px, 2.6vw, 32px);
+}
+
+.pitch-mark span {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(50, 56, 58, 0.14);
+}
+
+.pitch-mark span + span {
+  margin-left: -16px;
+  background: rgba(50, 56, 58, 0.32);
+}
+
+.pitch-mark span + span + span {
+  background: rgba(50, 56, 58, 0.62);
+}
+
+/* Sentence case and a shade tighter than .section-title, which is uppercase.
+   Deliberate: this section is built to a reference that reads this way. */
+.pitch-title {
+  margin: 0 0 18px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.pitch-text {
+  max-width: 46ch;
+  margin: 0 0 clamp(26px, 3vw, 34px);
+  font-size: clamp(1rem, 1.1vw, 1.0625rem);
+  line-height: 1.65;
+  color: rgba(50, 56, 58, 0.72);
+  text-wrap: pretty;
+}
+
+/* Outlined, not filled: the closing button at the foot of the page is the
+   filled one, and this offers where that one closes. */
+.pitch-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border: 1px solid rgba(50, 56, 58, 0.28);
+  border-radius: 5px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.pitch-button:hover {
+  border-color: rgba(50, 56, 58, 0.45);
+  background: rgba(50, 56, 58, 0.05);
+}
+
+.pitch-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.pitch-stats {
+  display: flex;
+  gap: clamp(36px, 5vw, 72px);
+  margin: clamp(38px, 4.5vw, 58px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pitch-stat-value {
+  margin: 0 0 6px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(2.25rem, 3.4vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.pitch-stat-suffix {
+  color: rgba(50, 56, 58, 0.45);
+}
+
+.pitch-stat-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgba(50, 56, 58, 0.6);
+}
+
+.pitch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The reference carried an icon above each title. Without one the copy sits on
+   the card's bottom edge rather than at the top of a box that is mostly empty
+   — the same thing .feature-tile does, for the same reason. The rows stretch
+   to match each other, so the min-height only has to carry the shorter row. */
+.pitch-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(168px, 15vw, 210px);
+  padding: clamp(20px, 2.2vw, 28px);
+  border: 1px solid rgba(50, 56, 58, 0.12);
+  border-radius: 5px;
+  background: var(--page);
+}
+
+.pitch-card-title {
+  margin: 0 0 10px;
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  color: var(--ink);
+}
+
+.pitch-card-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(50, 56, 58, 0.68);
+  text-wrap: pretty;
+}
+
+/* One column below this: the two-up cards are down to about 200px each beside
+   a headline that still wants its own measure, and neither survives it. */
+@media (max-width: 900px) {
+  .pitch-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(36px, 6vw, 56px);
+  }
+}
+
+@media (max-width: 520px) {
+  .pitch-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* nothing below it to match, so the card is only as tall as its copy */
+  .pitch-card {
+    min-height: 0;
+  }
+
+  .pitch-mark span {
+    width: 42px;
+    height: 42px;
+  }
+}
+
 /* ---------- Leadership ---------- */
 
 .leadership {
