@@ -4748,6 +4748,14 @@ html::-webkit-scrollbar-thumb:hover {
   user-select: none;
 }
 
+/* The other half of refusing the browser's own drag. main.js cancels dragstart,
+   which is what actually does it; this stops WebKit showing the ghost of the
+   image or the link before the event ever fires. */
+.portfolio-strip a,
+.portfolio-strip img {
+  -webkit-user-drag: none;
+}
+
 .portfolio-track {
   display: flex;
   /* max-content so the copies sit in one row rather than wrapping */

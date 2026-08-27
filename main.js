@@ -469,6 +469,13 @@
   strip.addEventListener("pointerenter", () => { hovered = true; });
   strip.addEventListener("pointerleave", () => { hovered = false; });
 
+  /* Every card is a link wrapping an image, and a browser treats both as
+     something to drag out of the page. That native drag starts on the first
+     move, takes the pointer with it, and the strip is left holding a pointerdown
+     that never moves again — which is exactly what "cannot be dragged" looked
+     like. Refusing it here hands the gesture back. */
+  strip.addEventListener("dragstart", (event) => event.preventDefault());
+
   let startX = 0;
   let startScroll = 0;
   let travelled = 0;
