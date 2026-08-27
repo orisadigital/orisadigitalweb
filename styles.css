@@ -15,7 +15,7 @@
   --blue-lift: #7ba5ff;
   /* status green — the only green on the site, reserved for "we're available" */
   --live: #22c55e;
-  --page: #ffffff;
+  --page: #fafafa;
   --header-height: 76px;
   /* The header is flush with the top of the viewport. Kept as a variable, and
      at zero, because every block that clears the fixed bar measures itself
@@ -297,7 +297,7 @@ html::-webkit-scrollbar-thumb:hover {
      on this blue white is 3.9:1 against the ink's 3.1:1, and the stroke is
      currentColor so the whole mark follows the one declaration. */
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   cursor: pointer;
   transition: background-color 0.18s ease;
 }
@@ -345,7 +345,7 @@ html::-webkit-scrollbar-thumb:hover {
      the toggle, and a circle is the only shape that reads the same at every
      angle it lands at */
   border-radius: 50%;
-  background: #fff;
+  background: #fafafa;
   color: var(--ink);
   text-decoration: none;
   transition: color 0.18s ease, background-color 0.18s ease;
@@ -368,17 +368,17 @@ html::-webkit-scrollbar-thumb:hover {
 
 .chat-option--whatsapp:hover {
   background: #25d366;
-  color: #fff;
+  color: #fafafa;
 }
 
 .chat-option--telegram:hover {
   background: #29a9eb;
-  color: #fff;
+  color: #fafafa;
 }
 
 .chat-option--phone:hover {
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
 }
 
 /* Catches clicks outside the menu; invisible but present while open. */
@@ -489,7 +489,7 @@ html::-webkit-scrollbar-thumb:hover {
    other two are dark on a dimmed page and read as their own edge; this is white
    on white and would not. */
 .drawer-card--glass {
-  background: #fff;
+  background: #fafafa;
   border: 1px solid rgba(50, 56, 58, 0.09);
   color: var(--ink);
 }
@@ -498,7 +498,7 @@ html::-webkit-scrollbar-thumb:hover {
    renaming it would touch every page's markup for nothing. */
 .drawer-card--neon {
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   transition: filter 0.2s ease;
 }
 
@@ -508,7 +508,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .drawer-card--black {
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
 }
 
 .drawer-eyebrow {
@@ -661,7 +661,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* White, not an off-white: the ground is flat and there is nothing behind the
    type to soften it against. 15.9:1. */
 .hero--plain .hero-title {
-  color: #fff;
+  color: #fafafa;
 }
 
 /* A step back from the headline so the two do not read as one weight. Lands
@@ -687,11 +687,11 @@ html::-webkit-scrollbar-thumb:hover {
    this would put white type on the accent. */
 .hero--plain .cta-frame::before {
   --page: var(--hero-ground);
-  --ink: #fff;
+  --ink: #fafafa;
 }
 
 .hero--plain .hero-btn:focus-visible {
-  outline-color: #fff;
+  outline-color: #fafafa;
 }
 
 /* Lifted clear of the showcase panel, which is pulled up over this corner of
@@ -711,7 +711,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .hero--plain .hero-scroll-line::after {
-  background: #fff;
+  background: #fafafa;
 }
 
 .hero-video {
@@ -1139,7 +1139,7 @@ html::-webkit-scrollbar-thumb:hover {
    or a larger label, not a swap back to ink. */
 .hero-btn--accent {
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
 }
 
 .hero-btn--accent:hover {
@@ -1201,7 +1201,7 @@ html::-webkit-scrollbar-thumb:hover {
   aspect-ratio: 840 / 410;
   overflow: hidden;
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
 }
 
 .showcase-img {
@@ -1222,7 +1222,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .showcase-link:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid #fafafa;
   outline-offset: 4px;
   border-radius: 0;
 }
@@ -1242,7 +1242,7 @@ html::-webkit-scrollbar-thumb:hover {
    are photographs and anything laid over one reads as damage rather than as a
    response. */
 .showcase-link:hover .showcase-name {
-  color: #fff;
+  color: #fafafa;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1274,7 +1274,7 @@ html::-webkit-scrollbar-thumb:hover {
      ink drops to 3.1:1 and white is the better of the two at 3.9:1. The star
      inherits currentColor, so it follows without a rule of its own. */
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   padding: 20px 0;
 }
 
@@ -1482,7 +1482,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 7px 11px;
   border-radius: 0;
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 500;
@@ -1623,7 +1623,7 @@ html::-webkit-scrollbar-thumb:hover {
 .calculator-panel {
   padding: clamp(24px, 3vw, 36px);
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
   border: 1px solid rgba(50, 56, 58, 0.09);
 }
 
@@ -1947,7 +1947,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 18px 16px;
   border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.14);
-  background: #fff;
+  background: #fafafa;
   cursor: pointer;
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
@@ -1999,7 +1999,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 3px 8px;
   border-radius: 0;
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -2050,7 +2050,7 @@ html::-webkit-scrollbar-thumb:hover {
   height: 22px;
   border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.22);
-  background: #fff;
+  background: #fafafa;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2058,7 +2058,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: 13px;
   height: 13px;
   fill: none;
-  stroke: #fff;
+  stroke: #fafafa;
   stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -2214,7 +2214,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 9px 16px;
   border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.16);
-  background: #fff;
+  background: #fafafa;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--ink);
@@ -2236,7 +2236,7 @@ html::-webkit-scrollbar-thumb:hover {
 .calc-chip:has(input:checked) {
   background: var(--ink);
   border-color: var(--ink);
-  color: #fff;
+  color: #fafafa;
 }
 
 .calc-chip:has(input:focus-visible) {
@@ -2328,7 +2328,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: grid;
   place-items: center;
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
   border: 1px solid rgba(50, 56, 58, 0.12);
   pointer-events: none;
 }
@@ -2425,7 +2425,7 @@ html::-webkit-scrollbar-thumb:hover {
   .feature-tile:hover,
   .hosting-card:hover,
   .impact-card:hover {
-    background: #fff;
+    background: #fafafa;
   }
 
   /* the dark tiles darken instead of turning white */
@@ -2446,7 +2446,7 @@ html::-webkit-scrollbar-thumb:hover {
   height: 46px;
   flex: none;
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
   border: 1px solid rgba(50, 56, 58, 0.08);
   color: var(--ink);
   box-shadow: 0 1px 2px rgba(16, 20, 24, 0.04);
@@ -2521,7 +2521,7 @@ html::-webkit-scrollbar-thumb:hover {
   line-height: 1.24;
   letter-spacing: 0.015em;
   text-transform: uppercase;
-  color: #fff;
+  color: #fafafa;
 }
 
 .value-accent {
@@ -2651,7 +2651,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 6px 10px;
   border-radius: 0;
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -2694,7 +2694,7 @@ html::-webkit-scrollbar-thumb:hover {
   /* The accent, not the black it was. It also puts something between this band
      and the footer, which is --black and sits directly under it. */
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   /* chips sit close to the edges, and the float carries them a little further */
   overflow: hidden;
 }
@@ -2724,7 +2724,7 @@ html::-webkit-scrollbar-thumb:hover {
   line-height: 1.04;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: #fff;
+  color: #fafafa;
 }
 
 .tech-text {
@@ -2732,7 +2732,7 @@ html::-webkit-scrollbar-thumb:hover {
   max-width: 52ch;
   font-size: clamp(1rem, 1.1vw, 1.0625rem);
   line-height: 1.7;
-  color: #fff;
+  color: #fafafa;
   text-wrap: pretty;
 }
 
@@ -2761,7 +2761,7 @@ html::-webkit-scrollbar-thumb:hover {
   height: var(--size);
   margin: 0;
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
   color: var(--ink);
   /* The two black drop shadows these carried went with the black ground. They
      were all but invisible on it and would have read as grey haloes on the
@@ -2906,18 +2906,18 @@ html::-webkit-scrollbar-thumb:hover {
 .feature-tile--tall {
   grid-row: span 2;
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
 }
 
 /* the one accent in the grid — the accent on black, the pairing the drawer uses */
 .feature-tile--tall .icon-chip {
   background: var(--blue);
   border-color: transparent;
-  color: #fff;
+  color: #fafafa;
 }
 
 .feature-tile--tall .feature-tile-title {
-  color: #fff;
+  color: #fafafa;
 }
 
 .feature-tile--tall .feature-tile-text {
@@ -3046,7 +3046,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 12px 14px;
   border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.16);
-  background: #fff;
+  background: #fafafa;
   color: var(--ink);
   /* form controls do not inherit type by default */
   font-family: inherit;
@@ -3165,7 +3165,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* Leaflet's own chrome, brought onto the site's palette. */
 .leaflet-bar a,
 .leaflet-bar a:hover {
-  background: #fff;
+  background: #fafafa;
   color: var(--ink);
   border-bottom-color: rgba(50, 56, 58, 0.12);
 }
@@ -3190,7 +3190,7 @@ html::-webkit-scrollbar-thumb:hover {
   /* a white collar so the dot separates from the map beneath it, whatever
      colour it lands on */
   box-shadow:
-    0 0 0 3px #fff,
+    0 0 0 3px #fafafa,
     0 1px 4px rgba(16, 20, 24, 0.35);
 }
 
@@ -3273,7 +3273,7 @@ html::-webkit-scrollbar-thumb:hover {
 .impact-card--accent .icon-chip {
   background: var(--blue);
   border-color: transparent;
-  color: #fff;
+  color: #fafafa;
 }
 
 .impact-card--accent .impact-label {
@@ -3281,7 +3281,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .impact-card--accent .impact-title {
-  color: #fff;
+  color: #fafafa;
 }
 
 .impact-card--accent .impact-text {
@@ -3385,7 +3385,7 @@ html::-webkit-scrollbar-thumb:hover {
   gap: clamp(22px, 3vw, 34px);
   padding: clamp(24px, 3vw, 36px);
   border-radius: 0;
-  background: #fff;
+  background: #fafafa;
   border: 1px solid rgba(50, 56, 58, 0.09);
 }
 
@@ -3514,7 +3514,7 @@ html::-webkit-scrollbar-thumb:hover {
 .feature {
   padding: clamp(56px, 8vw, 104px) 24px;
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
   overflow: hidden;
 }
 
@@ -3539,7 +3539,7 @@ html::-webkit-scrollbar-thumb:hover {
 .feature-title {
   margin-bottom: 22px;
   font-size: clamp(1.9rem, 3.6vw, 3rem);
-  color: #fff;
+  color: #fafafa;
 }
 
 .feature-text {
@@ -3548,7 +3548,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .feature-text strong {
   font-weight: 600;
-  color: #fff;
+  color: #fafafa;
 }
 
 .feature-figure {
@@ -4366,7 +4366,7 @@ html::-webkit-scrollbar-thumb:hover {
    the tint the site uses for type on black; the number reads as part of the
    card now rather than as the one accent in it. */
 .approach-card.is-active::before {
-  color: #fff;
+  color: #fafafa;
 }
 
 /* The copy inverts with the panel it is sitting on. */
@@ -4376,7 +4376,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .approach-card.is-active .approach-card-title {
-  color: #fff;
+  color: #fafafa;
 }
 
 .approach-card.is-active .approach-card-text {
@@ -4788,7 +4788,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: block;
   aspect-ratio: 3 / 2;
   overflow: hidden;
-  color: #fff;
+  color: #fafafa;
   text-decoration: none;
   isolation: isolate;
 }
@@ -5081,7 +5081,7 @@ html::-webkit-scrollbar-thumb:hover {
 .prototype-video-fallback {
   margin: 0;
   padding: clamp(20px, 3vw, 32px);
-  color: #fff;
+  color: #fafafa;
   font-size: 0.9375rem;
   line-height: 1.6;
 }
@@ -5136,13 +5136,13 @@ html::-webkit-scrollbar-thumb:hover {
 .cta {
   padding: clamp(72px, 10vw, 132px) 24px;
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
   /* clips the rounded top corners this takes when it covers a sticky band */
   overflow: hidden;
 }
 
 .cta-title {
-  color: #fff;
+  color: #fafafa;
 }
 
 .cta-inner {
@@ -5417,7 +5417,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 12px 12px 12px 30px;
   border-radius: 0;
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
   text-decoration: none;
   font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-weight: 900;
@@ -5494,7 +5494,7 @@ html::-webkit-scrollbar-thumb:hover {
    same one the homepage's sections run to. */
 .site-footer {
   background: var(--black);
-  color: #fff;
+  color: #fafafa;
   padding: clamp(56px, 7vw, 88px) 0 clamp(24px, 3vw, 34px);
 }
 
@@ -5701,7 +5701,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .footer-social a:hover {
   background: var(--blue);
-  color: #fff;
+  color: #fafafa;
 }
 
 .footer-social a:focus-visible {
