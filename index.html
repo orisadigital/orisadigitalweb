@@ -411,43 +411,51 @@
          ties the two grounds together and shows there is more page without
          asking anyone to scroll first.
 
-         Not links. This was decided when the case-study row further down was
-         still here and carried the same three projects as linked cards; that
-         row has since gone, so these four are now the only place the work
-         appears on this page and could reasonably become links themselves.
-         Three have a live site to point at; Wija does not. -->
+         Each card links out to the live client site, the way the case-study row
+         on /start-free does — new tab, and noreferrer alongside noopener so the
+         client's analytics do not see this page as the source of the visit. The
+         whole card is the link, shot and name together, so the target is the
+         size of the thing being pointed at rather than a line of type. -->
     <section class="showcase" aria-label="Selected work">
       <ul class="showcase-grid">
         <li class="showcase-item">
-          <span class="showcase-shot">
-            <picture><source srcset="image/astana.avif" type="image/avif"><img class="showcase-img"
-                 src="image/astana.webp" width="840" height="410" decoding="async" alt=""></picture>
-          </span>
-          <p class="showcase-name">Astana Sarawak</p>
+          <a class="showcase-link" href="https://astanasarawak.com" target="_blank" rel="noopener noreferrer">
+            <span class="showcase-shot">
+              <picture><source srcset="image/astana.avif" type="image/avif"><img class="showcase-img"
+                   src="image/astana.webp" width="840" height="410" decoding="async" alt=""></picture>
+            </span>
+            <span class="showcase-name">Astana Sarawak</span>
+          </a>
         </li>
 
         <li class="showcase-item">
-          <span class="showcase-shot">
-            <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="showcase-img"
-                 src="image/tyleo.webp" width="840" height="410" decoding="async" alt=""></picture>
-          </span>
-          <p class="showcase-name">TY Leo Battery Pro</p>
+          <a class="showcase-link" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">
+            <span class="showcase-shot">
+              <picture><source srcset="image/tyleo.avif" type="image/avif"><img class="showcase-img"
+                   src="image/tyleo.webp" width="840" height="410" decoding="async" alt=""></picture>
+            </span>
+            <span class="showcase-name">TY Leo Battery Pro</span>
+          </a>
         </li>
 
         <li class="showcase-item">
-          <span class="showcase-shot">
-            <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="showcase-img"
-                 src="image/ecodoliya.webp" width="840" height="410" decoding="async" alt=""></picture>
-          </span>
-          <p class="showcase-name">Eco Doliya Organic</p>
+          <a class="showcase-link" href="https://ecodoliyaorganic.com" target="_blank" rel="noopener noreferrer">
+            <span class="showcase-shot">
+              <picture><source srcset="image/ecodoliya.avif" type="image/avif"><img class="showcase-img"
+                   src="image/ecodoliya.webp" width="840" height="410" decoding="async" alt=""></picture>
+            </span>
+            <span class="showcase-name">Eco Doliya Organic</span>
+          </a>
         </li>
 
         <li class="showcase-item">
-          <span class="showcase-shot">
-            <picture><source srcset="image/wijapharma.avif" type="image/avif"><img class="showcase-img"
-                 src="image/wijapharma.webp" width="840" height="410" decoding="async" alt=""></picture>
-          </span>
-          <p class="showcase-name">Wija Pharmacy</p>
+          <a class="showcase-link" href="https://wijapharma.com" target="_blank" rel="noopener noreferrer">
+            <span class="showcase-shot">
+              <picture><source srcset="image/wijapharma.avif" type="image/avif"><img class="showcase-img"
+                   src="image/wijapharma.webp" width="840" height="410" decoding="async" alt=""></picture>
+            </span>
+            <span class="showcase-name">Wija Pharmacy</span>
+          </a>
         </li>
       </ul>
     </section>

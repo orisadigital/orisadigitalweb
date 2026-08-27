@@ -1235,13 +1235,42 @@ html::-webkit-scrollbar-thumb:hover {
   object-fit: contain;
 }
 
+/* The whole card is the link, so the target is the shot and the name together
+   rather than a line of type under a picture. */
+.showcase-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.showcase-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 5px;
+}
+
 .showcase-name {
+  display: block;
   margin: 12px 0 0;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.005em;
   line-height: 1.35;
   color: rgba(255, 255, 255, 0.9);
+  transition: color 0.18s ease;
+}
+
+/* The name comes to full white. It is the only state these carry — the shots
+   are photographs and anything laid over one reads as damage rather than as a
+   response. */
+.showcase-link:hover .showcase-name {
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-name {
+    transition: none;
+  }
 }
 
 /* Two up. Four across below this leaves each shot too small to read as a
