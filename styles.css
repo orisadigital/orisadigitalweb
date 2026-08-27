@@ -4529,7 +4529,9 @@ html::-webkit-scrollbar-thumb:hover {
   text-align: center;
 }
 
-.services-head .section-title {
+/* The eyebrow is the only thing in the head, so the gap under the head is the
+   one that should show — its own 20px would sit on top of it. */
+.services-head .section-eyebrow {
   margin-bottom: 0;
 }
 
