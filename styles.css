@@ -115,9 +115,10 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Header ---------- */
 
-/* A plain bar pinned to the top of the page. The background and the hairline
-   run the full width of the viewport; the contents are held to the same 1400px
-   measure everything else on the page uses. */
+/* A plain bar pinned to the top of the page, running the full width of the
+   viewport — the contents are not held to the 1400px measure the page body
+   uses, so the logo and the icon buttons sit against the window's own gutters
+   however wide the screen gets. */
 .site-header {
   position: fixed;
   top: 0;
@@ -129,8 +130,6 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .header-bar {
-  max-width: 1400px;
-  margin: 0 auto;
   height: var(--header-height);
   display: flex;
   align-items: center;
