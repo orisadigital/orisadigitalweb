@@ -1,9 +1,10 @@
 /* Menu drawer — three cards sliding in from the right.
 
-   One timeline, built once and left paused: play() to enter, reverse() to exit.
-   Because both directions are the same tween, interrupting mid-flight simply
-   changes direction from wherever it is — no queueing, no snapping, no
-   competing tweens. */
+   The travel, the stagger and the fade are all in styles.css now. This only
+   flips classes: .is-open on the panel, .is-visible on the backdrop. Because
+   CSS transitions animate from wherever an element currently is, interrupting
+   mid-flight still reverses cleanly, which is the one thing the GSAP timeline
+   was here for. */
 (() => {
   "use strict";
 
@@ -12,11 +13,13 @@
   const trigger = document.querySelector(".menu-toggle");
   if (!drawer || !backdrop || !trigger) return;
 
-  const cards = Array.from(drawer.querySelectorAll(".drawer-card"));
   const bar = document.querySelector(".header-bar");
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+
+  /* The backdrop carries [hidden] so it is out of the accessibility tree and
+     out of the layout while closed. That has to come off before it can fade in
+     and go back on only once it has faded out — 0.35s, matching its rule. */
+  const BACKDROP_FADE = 350;
+  let hideTimer;
 
   let isOpen = false;
 
@@ -41,67 +44,27 @@
     drawer.setAttribute("aria-hidden", String(!next));
   }
 
-  // No GSAP: fall back to a plain show/hide so the menu still works.
-  if (!window.gsap) {
-    const show = () => {
-      drawer.classList.add("is-open");
-      backdrop.hidden = false;
-      backdrop.style.opacity = "1";
-      setOpenState(true);
-    };
-    const hide = () => {
-      drawer.classList.remove("is-open");
-      backdrop.hidden = true;
-      backdrop.style.opacity = "";
-      setOpenState(false);
-    };
-    trigger.addEventListener("click", () => (isOpen ? hide() : show()));
-    backdrop.addEventListener("click", hide);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) hide();
-    });
-    return;
-  }
-
-  const D = prefersReduced ? 0.001 : 1;
-
-  gsap.set(cards, { xPercent: 115 });
-  gsap.set(backdrop, { opacity: 0 });
-
-  const tl = gsap.timeline({
-    paused: true,
-    onStart() {
-      backdrop.hidden = false;
-      drawer.classList.add("is-open");
-    },
-    onReverseComplete() {
-      backdrop.hidden = true;
-      drawer.classList.remove("is-open");
-    },
-  });
-
-  tl.to(backdrop, { opacity: 1, duration: 0.35 * D, ease: "power2.out" }, 0).to(
-    cards,
-    {
-      xPercent: 0,
-      duration: 0.62 * D,
-      ease: "power3.out",
-      stagger: 0.07 * D,
-    },
-    0.04 * D
-  );
-
   function open() {
+    clearTimeout(hideTimer);
     placeDrawer();
     setOpenState(true);
     backdrop.hidden = false;
+    /* The backdrop has just come off display:none, so it has no style to
+       transition from until the browser has laid it out. Reading offsetWidth
+       forces that now; a requestAnimationFrame would do the same job, but
+       only where the frame loop is actually running. */
+    void backdrop.offsetWidth;
     drawer.classList.add("is-open");
-    tl.play();
+    backdrop.classList.add("is-visible");
   }
 
   function close() {
     setOpenState(false);
-    tl.reverse();
+    drawer.classList.remove("is-open");
+    backdrop.classList.remove("is-visible");
+    hideTimer = setTimeout(() => {
+      backdrop.hidden = true;
+    }, BACKDROP_FADE);
   }
 
   trigger.addEventListener("click", () => (isOpen ? close() : open()));
@@ -116,7 +79,6 @@
     }
   });
 })();
-
 /* Chat radial menu — the options fan out from the toggle on an arc.
    Angles are degrees clockwise from the 3 o'clock position, so 90 is straight
    down and 180 is straight left; the arc stays left of the button and can't
@@ -131,10 +93,6 @@
   const options = Array.from(menu.querySelectorAll(".chat-option"));
   if (!toggle || !options.length) return;
 
-
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
 
   let open = false;
   let backdrop = null;
@@ -193,63 +151,33 @@
     backdrop = null;
   }
 
+  /* Writes the arc the CSS then animates along: --x and --y are where this
+     option lands, --delay is its place in the stagger. */
+  function place(points, delayFor) {
+    points.forEach((p, i) => {
+      p.el.style.setProperty("--x", p.x + "px");
+      p.el.style.setProperty("--y", p.y + "px");
+      if (delayFor) p.el.style.setProperty("--delay", delayFor(i) + "ms");
+    });
+  }
+
   function open_() {
     open = true;
-    menu.classList.add("is-open");
     toggle.setAttribute("aria-expanded", "true");
     addBackdrop();
-
-    const points = positions();
-
-    if (!window.gsap || prefersReduced) {
-      points.forEach((p) => {
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) scale(1)`;
-        p.el.style.opacity = "1";
-      });
-      return;
-    }
-
-    gsap.killTweensOf(options);
-    points.forEach((p, i) => {
-      gsap.to(p.el, {
-        x: p.x,
-        y: p.y,
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "back.out(1.7)",
-        delay: i * 0.055,
-      });
-    });
+    place(positions(), (i) => i * 55);
+    menu.classList.add("is-open");
   }
 
   function close() {
     open = false;
-    menu.classList.remove("is-open");
     toggle.setAttribute("aria-expanded", "false");
     removeBackdrop();
-
-    if (!window.gsap || prefersReduced) {
-      options.forEach((el) => {
-        el.style.transform = "";
-        el.style.opacity = "";
-      });
-      return;
-    }
-
-    gsap.killTweensOf(options);
-    options.forEach((el, i) => {
-      gsap.to(el, {
-        x: 0,
-        y: 0,
-        scale: 0.4,
-        opacity: 0,
-        duration: 0.28,
-        ease: "power2.in",
-        // collapse from the outside in
-        delay: (options.length - 1 - i) * 0.035,
-      });
-    });
+    // collapse from the outside in
+    options.forEach((el, i) =>
+      el.style.setProperty("--delay", (options.length - 1 - i) * 35 + "ms")
+    );
+    menu.classList.remove("is-open");
   }
 
   toggle.addEventListener("click", () => (open ? close() : open_()));
@@ -270,10 +198,16 @@
       if (!open) return;
       clearTimeout(timer);
       timer = setTimeout(() => {
-        positions().forEach((p) => {
-          if (window.gsap) gsap.set(p.el, { x: p.x, y: p.y });
-          else p.el.style.transform = `translate(${p.x}px, ${p.y}px) scale(1)`;
-        });
+        /* .is-placing suspends the transition for this write, so the options
+           land on the new arc rather than gliding to it — which is what
+           gsap.set did here. Reading offsetWidth between the two class changes
+           forces the new positions to be committed while the rule is still
+           off; without it both changes collapse into one style pass and the
+           glide comes back. */
+        menu.classList.add("is-placing");
+        place(positions());
+        void menu.offsetWidth;
+        menu.classList.remove("is-placing");
       }, 120);
     }).observe(document.body);
   }

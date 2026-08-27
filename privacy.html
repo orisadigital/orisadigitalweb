@@ -24,7 +24,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="image/favicon.jpeg" type="image/jpeg" sizes="1067x1067">
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <!-- Self-hosted, so the fonts come off a connection the browser already
        has rather than a fresh third-party origin. Three faces are wanted before
        the first paint and so are preloaded: Inter 400 for the body, Playfair
@@ -36,8 +35,6 @@
   <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="styles.css">
-  <!-- defer preserves order, so GSAP is ready before main.js runs -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="main.js" defer></script>
 
   <!-- Google Analytics 4. async, so it never blocks rendering; the preconnect
@@ -342,7 +339,10 @@
             above, under Google's own privacy policy.
           </li>
           <li>
-            <strong>jsDelivr</strong> — serves the GSAP animation library.
+            <strong>jsDelivr</strong> — serves the PDF library the website
+            pricing calculator uses to build a quote. It is fetched only when the
+            download button is pressed, so it is never contacted unless you ask
+            for a PDF.
           </li>
           <li>
             <strong>unpkg</strong> — serves the Leaflet mapping library on the

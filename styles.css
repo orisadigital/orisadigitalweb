@@ -317,7 +317,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* Origin sits at the centre of the toggle; each option is centred on it and
-   then thrown outwards by GSAP. */
+   then thrown outwards along the arc main.js solves for it. */
 .chat-options {
   position: absolute;
   /* the arc pivots on the centre of the toggle, whatever size it is */
@@ -348,15 +348,43 @@ html::-webkit-scrollbar-thumb:hover {
   background: #fafafa;
   color: var(--ink);
   text-decoration: none;
-  transition: color 0.18s ease, background-color 0.18s ease;
-  /* hidden until opened — GSAP takes over from here */
+  /* Closed: back at the toggle, small and invisible. The x/y the JS solves
+     for each option live in --x and --y and only matter once it is open;
+     --delay is the stagger, rewritten on every open and close. */
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.28s cubic-bezier(0.55, 0.085, 0.68, 0.53) var(--delay, 0ms),
+    opacity 0.28s ease var(--delay, 0ms);
+  /* hidden until opened */
   opacity: 0;
-  transform: scale(0.4);
+  transform: translate(0, 0) scale(0.4);
   pointer-events: none;
 }
 
 .chat-menu.is-open .chat-option {
   pointer-events: auto;
+  opacity: 1;
+  transform: translate(var(--x, 0px), var(--y, 0px)) scale(1);
+  /* 0.5s and an overshoot on the way out — back.out(1.7) is this bezier. */
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0ms),
+    opacity 0.5s ease var(--delay, 0ms);
+}
+
+/* A resize re-solves the arc; the options should land, not glide. */
+.chat-menu.is-placing .chat-option {
+  transition: none;
+}
+
+/* Straight there and straight back. */
+@media (prefers-reduced-motion: reduce) {
+  .chat-option,
+  .chat-menu.is-open .chat-option {
+    transition: color 0.18s ease, background-color 0.18s ease;
+  }
 }
 
 .chat-option svg {
@@ -438,19 +466,36 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Menu drawer ---------- */
 
+/* Backdrop and cards are animated by CSS now, not by a GSAP timeline. The
+   visibility line is the trick that lets a hidden element still animate out:
+   it flips to visible instantly on open, and waits the full close (0s delay
+   under .is-open, 0.35s without it) before hiding again. */
 .drawer-backdrop {
   position: fixed;
   inset: 0;
   z-index: 80;
   background: rgba(20, 24, 26, 0.28);
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   cursor: pointer;
+  transition:
+    opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    visibility 0s linear 0.35s;
+}
+
+.drawer-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    visibility 0s;
 }
 
 .drawer-backdrop[hidden] {
   display: none;
 }
-
 .drawer {
   position: fixed;
   /* Fallback only — main.js measures the real bar and overrides this. The bar
@@ -465,10 +510,46 @@ html::-webkit-scrollbar-thumb:hover {
   grid-template-rows: 3fr 1fr 1fr;
   gap: 12px;
   visibility: hidden;
+  /* Longest close is the first card: 0.62s of travel behind a 0.14s delay,
+     so the panel holds its visibility for 0.76s after .is-open goes. */
+  transition: visibility 0s linear 0.76s;
 }
+
 
 .drawer.is-open {
   visibility: visible;
+  transition-delay: 0s;
+}
+
+/* The cards. GSAP set xPercent 115 and staggered them 0.07s apart behind a
+   0.04s lead; these are the same numbers as transition-delay, and power3.out
+   is this bezier. */
+.drawer-card {
+  transform: translateX(115%);
+  transition: transform 0.62s cubic-bezier(0.215, 0.61, 0.355, 1) var(--card-delay, 0ms);
+}
+
+.drawer.is-open .drawer-card {
+  transform: translateX(0);
+}
+
+/* Opening runs top to bottom. Closing runs the other way, which is what
+   reversing the timeline used to do for free — the bottom card leaves first. */
+.drawer.is-open .drawer-card:nth-child(1) { --card-delay: 40ms; }
+.drawer.is-open .drawer-card:nth-child(2) { --card-delay: 110ms; }
+.drawer.is-open .drawer-card:nth-child(3) { --card-delay: 180ms; }
+.drawer-card:nth-child(1) { --card-delay: 140ms; }
+.drawer-card:nth-child(2) { --card-delay: 70ms; }
+.drawer-card:nth-child(3) { --card-delay: 0ms; }
+
+/* No travel, no fade, no wait — the drawer simply is or is not there. */
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer-backdrop,
+  .drawer-backdrop.is-visible,
+  .drawer-card {
+    transition: none;
+  }
 }
 
 .drawer-card {
