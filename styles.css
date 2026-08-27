@@ -27,6 +27,10 @@
   --header-nav-row: 0px;
   --toggle-size: 44px;
   --menu-icon-size: 24px;
+  /* How far the homepage showcase panel is pulled up over the foot of the hero.
+     Read by the panel's own top margin and by the hero's scroll cue, which
+     clears it by the same figure. */
+  --showcase-lift: clamp(110px, 13vw, 172px);
 }
 
 *,
@@ -659,6 +663,13 @@ html::-webkit-scrollbar-thumb:hover {
   outline-color: #fff;
 }
 
+/* Lifted clear of the showcase panel, which is pulled up over this corner of
+   the hero. Same figure the panel is lifted by, plus the gap the cue would
+   otherwise keep from the section edge. */
+.hero--plain .hero-scroll {
+  bottom: calc(var(--showcase-lift) + clamp(14px, 2vh, 26px));
+}
+
 .hero--plain .hero-scroll-label {
   color: rgba(255, 255, 255, 0.55);
 }
@@ -1130,6 +1141,92 @@ html::-webkit-scrollbar-thumb:hover {
 @media (prefers-reduced-motion: reduce) {
   .hero-btn {
     transition: none;
+  }
+}
+
+/* ---------- Homepage showcase ---------- */
+
+/* Four pieces of work on a panel that overlaps the foot of the hero.
+
+   The fill is opaque, and has to be: the panel straddles the hero's black and
+   the white page below it, so a tint would read as two different colours down
+   its own length. It is a step off the hero ground rather than a match, which
+   is what separates the panel from the black behind it without a border. */
+.showcase {
+  position: relative;
+  /* over the hero it is pulled into, and over the strip that follows */
+  z-index: 2;
+  /* The panel is the only section that carries the page gutter itself — it has
+     a visible edge, where every other section is just type on the ground. */
+  width: min(1160px, calc(100% - clamp(32px, 4vw, 48px)));
+  /* The lift is the overlap. It comes off the top margin here and is added to
+     the hero's scroll cue below, so the two move together and the cue is never
+     covered. */
+  margin: calc(var(--showcase-lift) * -1) auto clamp(36px, 5vw, 64px);
+  padding: clamp(18px, 2.2vw, 30px);
+  border-radius: 5px;
+  background: #2c2c2c;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 3:2, the ratio the case-study cards further down already crop to, so the two
+   sets of the same screenshots agree. */
+.showcase-shot {
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.showcase-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* screenshots: the masthead is the part worth keeping when the crop bites */
+  object-position: center top;
+}
+
+/* For a logo rather than a screenshot. Contained on white, because filling a
+   wordmark into this box would crop away everything but its middle. */
+.showcase-shot--plate {
+  background: #fff;
+}
+
+.showcase-shot--plate .showcase-img {
+  object-fit: contain;
+  padding: 12%;
+}
+
+.showcase-name {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Two up. Four across below this leaves each shot too small to read as a
+   website, and the row of captions starts wrapping to two lines. */
+@media (max-width: 900px) {
+  .showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .showcase-name {
+    font-size: 13px;
   }
 }
 
@@ -3511,15 +3608,16 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Client logos ---------- */
 
-/* The stats block above carries its own generous bottom padding, so this only
-   needs enough of a top gap to read as a separate band. */
+/* Whatever sits above carries its own bottom spacing — the showcase panel on
+   the homepage, the clip on /start-free — so this only needs enough of a top
+   gap to read as a separate band. */
 .clients {
   padding: clamp(8px, 2vw, 28px) 24px clamp(48px, 6vw, 88px);
 }
 
 /* Pulled up under the video on /start-free. The shared rule opens with enough
-   room to separate the strip from the stats block above it on the homepage;
-   here it belongs to the clip directly above, so it closes the gap instead.
+   room to read as a band of its own; here the strip belongs to the clip
+   directly above, so it closes that gap instead.
 
    The track margin has to go too, not just the section padding: .clients-track
    carries a top margin that spaces the two rows apart, and it lands before the
