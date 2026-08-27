@@ -5162,16 +5162,19 @@ html::-webkit-scrollbar-thumb:hover {
 .page--outlined .benefit-card,
 .page--outlined .feature-tile,
 .page--outlined .approach-card,
-.page--outlined .impact-card {
+.page--outlined .impact-card,
+.page--outlined .value-card {
   background: transparent;
   border: 1px solid rgba(50, 56, 58, 0.14);
 }
 
 /* Not part of the set: the black tile the features grid is built around
    ("User Experience"), the one black card in the impact grid ("What You Can
-   Do"), and the approach card the scroll lights up. */
+   Do"), the statement card in the values grid, and the approach card the
+   scroll lights up. */
 .page--outlined .feature-tile--tall,
 .page--outlined .impact-card--accent,
+.page--outlined .value-card--statement,
 .page--outlined .approach-card.is-active {
   background-color: var(--black);
   border-color: transparent;
