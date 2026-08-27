@@ -600,12 +600,64 @@ html::-webkit-scrollbar-thumb:hover {
   background: var(--ink);
 }
 
-/* The homepage hero carries no footage, so there is nothing for the veil to
-   soften and nothing to keep the ink ground for. It goes to paper white, which
-   is the ground the gradient headline's stops were picked against. The section
-   pages below still run video and keep the dark base. */
+/* The homepage hero carries no footage — it is the flat logo black on its own,
+   with everything on it inverted. The section pages below run video and keep
+   the same dark base under their veil. */
 .hero--plain {
-  background: var(--page);
+  background: var(--black);
+}
+
+/* White, not an off-white: the ground is flat and there is nothing behind the
+   type to soften it against. 11.9:1. */
+.hero--plain .hero-title {
+  color: #fff;
+}
+
+/* A step back from the headline so the two do not read as one weight. Lands
+   near 7.5:1 once blended against the ground. */
+.hero--plain .hero-desc {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* The pill was a white wash blurring whatever sat behind it. There is nothing
+   behind it now, so the blur only costs a compositing layer: it becomes a plain
+   hairline outline holding a lit face. */
+.hero--plain .hero-eyebrow {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero--plain .cta-frame {
+  border-color: rgba(255, 255, 255, 0.34);
+}
+
+/* The bracket's marks are built from --ink and its corner holes from --page, so
+   the pair only has to be swapped for the whole thing to invert. The override
+   sits on the pseudo-element rather than on .cta-frame because the button is a
+   child of the frame and takes its own ink from that token — moved a level up,
+   this would put white type on the neon. */
+.hero--plain .cta-frame::before {
+  --page: var(--black);
+  --ink: #fff;
+}
+
+.hero--plain .hero-btn:focus-visible {
+  outline-color: #fff;
+}
+
+.hero--plain .hero-scroll-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hero--plain .hero-scroll-line {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.hero--plain .hero-scroll-line::after {
+  background: #fff;
 }
 
 .hero-video {
