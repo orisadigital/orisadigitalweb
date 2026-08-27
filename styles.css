@@ -5298,6 +5298,9 @@ html::-webkit-scrollbar-thumb:hover {
 .grid--ruled {
   gap: 1px;
   background: rgba(50, 56, 58, 0.14);
+  /* Clips the 1px the filled cell below reaches out by, so it only covers
+     the gaps it shares with a neighbour and never overhangs the block. */
+  overflow: hidden;
 }
 
 .grid--ruled .feature-tile,
@@ -5319,6 +5322,21 @@ html::-webkit-scrollbar-thumb:hover {
 .grid--ruled .impact-card--accent,
 .grid--ruled .value-card--statement {
   background-color: var(--black);
+  /* Reaches 1px past its cell on every side, so the hairlines it touches are
+     painted over rather than run alongside it.
+
+     Those hairlines were landing badly. Four 1fr tracks in a 1208px block
+     give 301.25px each, so the gaps sit at x = 301.25, 603.5 and 905.75 and
+     the row gap at y = 212.125 — every one of them on a half or third of a
+     pixel. At dpr 1 a 1px rule from 633.5 to 634.5 paints half of one device
+     pixel and half of the next: the half against the page ground washes out
+     and the half against the black is swallowed by it, so the line reads as
+     stopping short of the block rather than meeting it.
+
+     A black block is its own edge — the drawer cards make the same argument
+     — so there is nothing to lose by covering the rule there, and it is the
+     one fix that does not depend on where the tracks happen to fall. */
+  margin: -1px;
 }
 
 /* Only the features bento leaves a hole: at two columns its last tile sits
