@@ -5,13 +5,14 @@
   --ink: var(--logo-black); /* type */
   --black: var(--logo-black); /* solid fills */
   --black-hover: #262b2d;
-  --neon: #ccff00;
-  --neon-hover: #bcee00;
-  /* The accent: the contact button in the header, and on the homepage the hero
-     button and the brush stroke under "Grow". The neon is still the page's own
-     call-to-action colour further down. */
+  /* The accent, and the site's only one — it took over from the neon green
+     everywhere that carried it. */
   --blue: #3c7aff;
   --blue-hover: #2f6ae8;
+  /* The same accent for text on a dark ground. --blue on --black is 3.4:1,
+     which is under the bar for type; this is 4.9:1. Only the footer links, the
+     back-to-top and the two accents on black sections need it. */
+  --blue-lift: #7ba5ff;
   /* status green — the only green on the site, reserved for "we're available" */
   --live: #22c55e;
   --page: #ffffff;
@@ -289,11 +290,9 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 0;
   border: 0;
   border-radius: 5px;
-  /* The one filled button in the bar. Blue rather than the site neon: the neon
-     is the page's call-to-action colour and reading it up here as well made the
-     header compete with the hero. White icon, not ink — on this blue white is
-     3.9:1 against the ink's 3.1:1, and the stroke is currentColor so the whole
-     mark follows the one declaration. */
+  /* The one filled button in the bar, in the site accent. White icon, not ink —
+     on this blue white is 3.9:1 against the ink's 3.1:1, and the stroke is
+     currentColor so the whole mark follows the one declaration. */
   background: var(--blue);
   color: #fff;
   cursor: pointer;
@@ -490,9 +489,11 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--ink);
 }
 
+/* Kept its class name: it is still the one filled card in the drawer, and
+   renaming it would touch every page's markup for nothing. */
 .drawer-card--neon {
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--blue);
+  color: #fff;
   box-shadow: 0 14px 34px rgba(16, 20, 24, 0.14);
   transition: filter 0.2s ease;
 }
@@ -689,7 +690,7 @@ html::-webkit-scrollbar-thumb:hover {
    the pair only has to be swapped for the whole thing to invert. The override
    sits on the pseudo-element rather than on .cta-frame because the button is a
    child of the frame and takes its own ink from that token — moved a level up,
-   this would put white type on the neon. */
+   this would put white type on the accent. */
 .hero--plain .cta-frame::before {
   --page: var(--hero-ground);
   --ink: #fff;
@@ -946,7 +947,7 @@ html::-webkit-scrollbar-thumb:hover {
   right: -0.06em;
   /* Clear of the baseline. Measured rather than guessed: at 81.6px the caps
      bottom out at the baseline and this puts the stroke's top edge just under
-     it, so the neon never crosses a letterform. */
+     it, so the stroke never crosses a letterform. */
   bottom: -0.20em;
   height: 0.30em;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='4 11 294 28' preserveAspectRatio='none'%3E%3Cpath fill='%233c7aff' d='M4 33.5c14-4.2 33-8.4 58-12.1 30-4.4 68-7.6 118-8.9 46-1.2 84-1 118 .4-1 1.6-2 3.2-3 4.8-33-1-70-1-114 .3-49 1.4-86 4.6-115 8.9-24 3.6-42 7.6-55 11.6-2.4-1.6-4.7-3.3-7-5z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
@@ -1271,11 +1272,12 @@ html::-webkit-scrollbar-thumb:hover {
 
 .marquee {
   overflow: hidden;
-  /* The band is neon rather than black, so the type inverts with it — white on
-     this ground is barely 1.2:1, where the ink is past 12:1. The star inherits
-     currentColor, so it follows without a rule of its own. */
-  background: var(--neon);
-  color: var(--ink);
+  /* White on this band, not ink. It read the other way round when the band was
+     neon, where white was barely 1.2:1 and the ink past 12:1; on the blue the
+     ink drops to 3.1:1 and white is the better of the two at 3.9:1. The star
+     inherits currentColor, so it follows without a rule of its own. */
+  background: var(--blue);
+  color: #fff;
   padding: 20px 0;
 }
 
@@ -1469,7 +1471,7 @@ html::-webkit-scrollbar-thumb:hover {
   text-wrap: pretty;
 }
 
-/* Inline document link — a neon rule under the text that sweeps up into a
+/* Inline document link — an accent rule under the text that sweeps up into a
    full marker highlight on hover. */
 .doc-link {
   position: relative;
@@ -2037,8 +2039,8 @@ html::-webkit-scrollbar-thumb:hover {
   margin-left: 8px;
   padding: 3px 8px;
   border-radius: 5px;
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--blue);
+  color: #fff;
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -2559,7 +2561,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .value-accent {
-  color: var(--neon);
+  color: var(--blue-lift);
 }
 
 /* Stands in for the colon. vertical-align lifts it off the baseline to the
@@ -2677,15 +2679,15 @@ html::-webkit-scrollbar-thumb:hover {
   text-transform: uppercase;
 }
 
-/* A marker-pen highlight rather than coloured text: neon is far too light to
-   read as type on white, but carries fine as a fill behind the ink. clone keeps
-   the padding on both fragments if the role wraps. */
+/* A marker-pen highlight rather than coloured text: the accent does not clear
+   the bar as type on white, but carries fine as a fill with white on it. clone
+   keeps the padding on both fragments if the role wraps. */
 .team-role span {
   display: inline;
   padding: 6px 10px;
   border-radius: 5px;
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--blue);
+  color: #fff;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -2800,7 +2802,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* Simple Icons ships one-colour marks, which suits the site's palette — a row
-   of full-colour brand logos would fight the neon. */
+   of full-colour brand logos would fight the accent. */
 .tech-logo {
   display: block;
   /* a fraction of the chip, so a bigger chip carries a bigger mark rather than
@@ -2960,11 +2962,11 @@ html::-webkit-scrollbar-thumb:hover {
   color: #fff;
 }
 
-/* the one accent in the grid — neon on black, the pairing the drawer uses */
+/* the one accent in the grid — the accent on black, the pairing the drawer uses */
 .feature-tile--tall .icon-chip {
-  background: var(--neon);
+  background: var(--blue);
   border-color: transparent;
-  color: var(--ink);
+  color: #fff;
 }
 
 .feature-tile--tall .feature-tile-title {
@@ -3322,9 +3324,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .impact-card--accent .icon-chip {
-  background: var(--neon);
+  background: var(--blue);
   border-color: transparent;
-  color: var(--ink);
+  color: #fff;
 }
 
 .impact-card--accent .impact-label {
@@ -4464,9 +4466,9 @@ html::-webkit-scrollbar-thumb:hover {
   transition: color 0.35s ease;
 }
 
-/* Neon only on the lit card, where it has the black behind it to carry it. */
+/* The accent only on the lit card, in the lifted tint: it is type on black. */
 .approach-card.is-active::before {
-  color: var(--neon);
+  color: var(--blue-lift);
 }
 
 /* The copy inverts with the panel it is sitting on. */
@@ -4855,7 +4857,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .legal-body a:hover,
 .legal-body a:focus-visible {
-  border-bottom-color: var(--neon);
+  border-bottom-color: var(--blue);
   border-bottom-width: 2px;
 }
 
@@ -5166,7 +5168,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .faq-answer a:hover,
 .faq-answer a:focus-visible {
-  border-bottom-color: var(--neon);
+  border-bottom-color: var(--blue);
   border-bottom-width: 2px;
 }
 
@@ -5366,13 +5368,23 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Call to action ---------- */
 
-/* The neon band. It closes the white run of sections and hands over to the
-   black footer — the same neon/black pairing the drawer cards use. */
+/* The accent band. It closes the white run of sections and hands over to the
+   black footer — the same accent/black pairing the drawer cards use.
+
+   Everything on it is white now. On the neon this band carried ink, which was
+   past 12:1 there; on the blue the ink falls to 3.1:1 and white is the better
+   of the two. The heading and the link take it by inheritance, the paragraph
+   restates it because it carries its own muted value. */
 .cta {
   padding: clamp(72px, 10vw, 132px) 24px;
-  background: var(--neon);
+  background: var(--blue);
+  color: #fff;
   /* the grid backdrop is masked to a soft edge, so nothing should bleed */
   overflow: hidden;
+}
+
+.cta-title {
+  color: #fff;
 }
 
 .cta-inner {
@@ -5385,9 +5397,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 
-/* darker than the default eyebrow, which is washed out against the neon */
+/* White at a lower strength, like the paragraph. It was dark ink at 62% when
+   the band was neon; against the blue that is the one thing on here that
+   would have been left unreadable. */
 .cta .section-eyebrow {
-  color: rgba(50, 56, 58, 0.62);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .cta-title {
@@ -5401,7 +5415,7 @@ html::-webkit-scrollbar-thumb:hover {
   /* .section-text is left-aligned and capped at 56ch; centre it here */
   margin: 0 auto;
   max-width: 52ch;
-  color: rgba(50, 56, 58, 0.78);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .cta-actions {
@@ -5476,7 +5490,7 @@ html::-webkit-scrollbar-thumb:hover {
   position: relative;
   font-size: clamp(1rem, 1.3vw, 1.125rem);
   font-weight: 500;
-  color: var(--ink);
+  color: #fff;
   text-decoration: none;
 }
 
@@ -5559,7 +5573,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-logo:focus-visible {
-  outline: 2px solid var(--neon);
+  outline: 2px solid var(--blue);
   outline-offset: 6px;
   border-radius: 5px;
 }
@@ -5601,11 +5615,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-list a:hover {
-  color: var(--neon);
+  color: var(--blue-lift);
 }
 
 .footer-list a:focus-visible {
-  outline: 2px solid var(--neon);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
   border-radius: 5px;
 }
@@ -5705,7 +5719,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-green-link:focus-visible {
-  outline: 2px solid var(--neon);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
 }
 
@@ -5737,12 +5751,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-social a:hover {
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--blue);
+  color: #fff;
 }
 
 .footer-social a:focus-visible {
-  outline: 2px solid var(--neon);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
 }
 
@@ -5767,11 +5781,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-top:hover {
-  color: var(--neon);
+  color: var(--blue-lift);
 }
 
 .footer-top:focus-visible {
-  outline: 2px solid var(--neon);
+  outline: 2px solid var(--blue);
   outline-offset: 4px;
   border-radius: 5px;
 }
