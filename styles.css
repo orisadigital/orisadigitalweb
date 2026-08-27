@@ -5410,6 +5410,44 @@ html::-webkit-scrollbar-thumb:hover {
   text-align: center;
 }
 
+/* ---------- Outlined cards ---------- */
+
+/* /web-design draws its cards rather than filling them: a hairline where the
+   4% grey used to be, and nothing behind it. Carried by a class on <main> so it
+   stays on the one page — the same card classes are filled on the others.
+
+   Declared after the rules it overrides, which is also why the two lit states
+   below have to be restated: they sit at the same specificity as the rule
+   above and would otherwise lose on order. */
+.page--outlined .benefit-card,
+.page--outlined .feature-tile,
+.page--outlined .approach-card {
+  background: transparent;
+  border: 1px solid rgba(50, 56, 58, 0.14);
+}
+
+/* Not part of the set. This is the black tile the features grid is built
+   around — "User Experience" — and the approach card the scroll lights up. */
+.page--outlined .feature-tile--tall,
+.page--outlined .approach-card.is-active {
+  background-color: var(--black);
+  border-color: transparent;
+}
+
+@media (hover: hover) {
+  /* The fill the card gave up, put to work as the hover state. These turn white
+     on the other pages, which on an outlined card over a white page would have
+     been no change at all. */
+  .page--outlined .benefit-card:hover,
+  .page--outlined .feature-tile:hover {
+    background: rgba(50, 56, 58, 0.04);
+  }
+
+  .page--outlined .feature-tile--tall:hover {
+    background: var(--black-hover);
+  }
+}
+
 /* ---------- The page measure ---------- */
 
 /* One width for every section on the site, the one the homepage was rebuilt to.
