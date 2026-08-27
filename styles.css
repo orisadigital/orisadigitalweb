@@ -875,23 +875,26 @@ html::-webkit-scrollbar-thumb:hover {
 
 .hero-title {
   margin: 0;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(1.4rem, 7vw, 5.25rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 0.98;
   letter-spacing: 0.005em;
   text-transform: uppercase;
   color: var(--ink);
 }
 
-/* The homepage carries the longest of the four hero lines — "That Grow
-   Businesses." measures 12.79em against 11.0em for the next longest — and the
-   shared ramp above overflows it at both ends: clipped by 7px at the 5.25rem
-   ceiling, and running past the column below 430px, where the 1.4rem floor
-   still holds. Solved for this string: 6.5vw is the steepest slope that still
-   fits the gutter at 320px, and 5.1rem the largest cap that fits the 1072px
-   column. Re-solve both if the wording changes; the other three heroes are
-   shorter and keep the shared ramp. */
+/* The homepage carries the longest hero line — "That Grow Businesses." — and
+   the shared ramp above overflows it at both ends, so both figures are solved
+   for this one string: 6.5vw is the steepest slope that still fits the gutter
+   at 320px, and 5.1rem the largest cap that fits the column.
+
+   They were solved against Inter Tight and survived the move to Playfair
+   Display, but only just. Measured after it: 266px of text in 272 at 320 wide,
+   312 in 327 at 375, and 1044 in 1043 at 1280 — the desktop cap is now exactly
+   at the line, with the last pixel bought back by .hero-line's nowrap rather
+   than by any slack. Re-solve both if the wording or the face changes; the
+   other heroes are shorter and keep the shared ramp. */
 .hero-title--long {
   font-size: clamp(1.3rem, 6.5vw, 5.1rem);
 }
@@ -1405,9 +1408,9 @@ html::-webkit-scrollbar-thumb:hover {
 
 .section-title {
   margin: 0 0 22px;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(1.9rem, 3.4vw, 3rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -2710,9 +2713,9 @@ html::-webkit-scrollbar-thumb:hover {
 
 .tech-title {
   margin: 0 0 20px;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 4.4vw, 3.5rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -3850,9 +3853,9 @@ html::-webkit-scrollbar-thumb:hover {
    Deliberate: this section is built to a reference that reads this way. */
 .pitch-title {
   margin: 0 0 18px;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 3.6vw, 3.25rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.005em;
   color: var(--ink);
@@ -4707,9 +4710,9 @@ html::-webkit-scrollbar-thumb:hover {
    so nothing wraps above that either. Re-measure if the wording changes. */
 .portfolio-title {
   margin: 0;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 6.4vw, 5.5rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 0.94;
   letter-spacing: -0.005em;
   text-transform: uppercase;
@@ -4849,9 +4852,9 @@ html::-webkit-scrollbar-thumb:hover {
    full-width list rather than beside it. */
 .faq-title {
   margin: 0 0 clamp(28px, 3.6vw, 48px);
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(1.9rem, 3.4vw, 3rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.005em;
   text-align: center;

@@ -26,10 +26,13 @@
   <link rel="apple-touch-icon" href="image/favicon.jpeg">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <!-- Self-hosted, so the fonts come off a connection the browser already
-       has rather than two fresh third-party origins. Inter 400 is the body
-       face and Inter Tight 900 every heading, so both are wanted immediately
-       and are preloaded; the rest of the sheet resolves by unicode-range. -->
+       has rather than a fresh third-party origin. Three faces are wanted before
+       the first paint and so are preloaded: Inter 400 for the body, Playfair
+       Display 700 for every heading, and Inter Tight 900, which the buttons and
+       figures use and which sits above the fold on every page. The rest of the
+       sheet resolves by unicode-range. -->
   <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/playfair-display-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-tight-900-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
