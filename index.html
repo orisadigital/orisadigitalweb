@@ -543,10 +543,9 @@
     <!-- The pitch, built to a supplied reference: copy and the two figures on
          the left, four things you get on the right.
 
-         The reference put an icon at the top of each card. They are not here —
-         asked for without them — so the cards' copy sits on their bottom edge
-         rather than leaving the space the icon would have filled. The same
-         call .feature-tile made when its icon came out.
+         Icon, title, copy, and the three of them sit on the card's bottom
+         edge with the space above them — the composition the reference has,
+         rather than a block starting at the top.
 
          Sentence case, unlike every other heading on the site, which is
          .section-title and uppercase. That is the reference's own voice and it
@@ -592,26 +591,39 @@
           </ul>
         </div>
 
+        <!-- The icons are 80x80 PNGs with an alpha channel, drawn at 26. No
+             AVIF or WebP sibling: they are under 2KB each, where a second
+             encode saves nothing and risks a flattened alpha that <picture>
+             would then prefer — the same call the testimonial avatars make.
+             Empty alt: each one repeats the title directly under it. -->
         <ul class="pitch-grid">
           <li class="pitch-card">
+            <img class="pitch-card-icon" src="image/Brush2.png" width="80" height="80"
+                 loading="lazy" decoding="async" alt="">
             <h3 class="pitch-card-title">Modern Design</h3>
             <p class="pitch-card-text">
               Designed around your business, brand, and customers — not a generic template.
             </p>
           </li>
           <li class="pitch-card">
+            <img class="pitch-card-icon" src="image/Phone.png" width="80" height="80"
+                 loading="lazy" decoding="async" alt="">
             <h3 class="pitch-card-title">Mobile-First</h3>
             <p class="pitch-card-text">
               Looks great and works smoothly on phones, tablets, and desktops.
             </p>
           </li>
           <li class="pitch-card">
+            <img class="pitch-card-icon" src="image/CloudBolt1.png" width="80" height="80"
+                 loading="lazy" decoding="async" alt="">
             <h3 class="pitch-card-title">Fast &amp; SEO-Ready</h3>
             <p class="pitch-card-text">
               Built for speed, search visibility, and a better experience for your visitors.
             </p>
           </li>
           <li class="pitch-card">
+            <img class="pitch-card-icon" src="image/Crop2.png" width="80" height="80"
+                 loading="lazy" decoding="async" alt="">
             <h3 class="pitch-card-title">Free Website Prototype</h3>
             <p class="pitch-card-text">
               See how your website could look before you commit. No upfront cost.

@@ -3986,10 +3986,9 @@ html::-webkit-scrollbar-thumb:hover {
   list-style: none;
 }
 
-/* The reference carried an icon above each title. Without one the copy sits on
-   the card's bottom edge rather than at the top of a box that is mostly empty
-   — the same thing .feature-tile does, for the same reason. The rows stretch
-   to match each other, so the min-height only has to carry the shorter row. */
+/* Icon, then title, then copy, the group pinned to the card's bottom edge with
+   the air above it — the reference's own composition. The rows stretch to match
+   each other, so the min-height only has to carry the shorter row. */
 .pitch-card {
   display: flex;
   flex-direction: column;
@@ -3999,6 +3998,16 @@ html::-webkit-scrollbar-thumb:hover {
   border: 1px solid rgba(50, 56, 58, 0.12);
   border-radius: 5px;
   background: var(--page);
+}
+
+/* Drawn well under its 80px source, so it stays crisp at any pixel ratio. The
+   gap under it is wider than the one under the title: it separates a mark from
+   type, where that one separates two lines of type. */
+.pitch-card-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin-bottom: 18px;
 }
 
 .pitch-card-title {
