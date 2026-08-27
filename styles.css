@@ -5132,8 +5132,8 @@ html::-webkit-scrollbar-thumb:hover {
 /* The pages that draw their cards rather than filling them: a hairline where
    the 4% grey used to be, and nothing behind it. Carried by a class on <main>,
    so a page opts in. Every page with cards is on it now — /web-design,
-   /green-energy, /web-app and /start-free — which is worth revisiting if a
-   fifth ever joins: at that point the hook is the default and the fill is the
+   /green-energy, /start-free and /about — which is worth revisiting if a fifth
+   ever joins: at that point the hook is the default and the fill is the
    exception.
 
    Declared after the rules it overrides, which is also why the lit and accent

@@ -557,9 +557,9 @@
   };
 
   const compose = () => {
-    /* The label, not the value: "Web App" reads better in a chat than
-       "web-app". The placeholder carries no value, which is what keeps
-       "Looking for: Choose one" out of an enquiry nobody filled that part of. */
+    /* The label, not the value: "Free Website Prototype" reads better in a chat
+       than "free-prototype". The placeholder carries no value, which is what
+       keeps "Looking for: Choose one" out of an enquiry nobody filled in. */
     const select = form.elements.service;
     const chosen = select && select.value && select.options[select.selectedIndex];
     const need = chosen ? chosen.text : "";

@@ -1,6 +1,12 @@
 # Cloudflare reads this at deploy time, the same way it reads _headers.
 #
-# /mobile-app was a live, indexed URL until the service was renamed to Web App.
-# A 301 rather than a 302: the move is permanent, so search engines should pass
-# the old URL's standing to the new one instead of holding both.
-/mobile-app  /web-app  301
+# Both of these were live, indexed URLs for the web app service, which the site
+# no longer offers: /mobile-app was the original, renamed to /web-app, and
+# /web-app has now gone with the service. They point at /web-design, the nearest
+# page that still exists — a redirect to the home page from a service URL reads
+# as a soft 404 to a crawler, where this passes the standing on to something
+# related.
+#
+# 301 rather than 302 on both: the moves are permanent.
+/mobile-app  /web-design  301
+/web-app     /web-design  301
