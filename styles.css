@@ -670,18 +670,9 @@ html::-webkit-scrollbar-thumb:hover {
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* No box at all: the pill's wash, blur and hairline were there to lift the
-   label off moving footage, and this hero has none — the flag and the words on
-   a flat ground are enough. The bottom margin absorbs the padding it loses so
-   the gap to the headline does not close up. */
+/* Only the colour now: the box this used to undo is gone from the base rule,
+   which every hero shares. */
 .hero--plain .hero-eyebrow {
-  margin-bottom: 26px;
-  padding: 0;
-  background: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: 0;
-  border-radius: 0;
   color: rgba(255, 255, 255, 0.88);
 }
 
@@ -863,19 +854,17 @@ html::-webkit-scrollbar-thumb:hover {
   text-align: center;
 }
 
+/* No box. It used to sit in a pill — white at 50% over a blur, with a hairline
+   — which lifted the label off the footage behind the video heroes. The veil
+   over that footage already carries this area to around 7:1, which is what it
+   was put there to do, so the pill was doing the job twice. */
 .hero-eyebrow {
   /* flex rather than inline-block so an icon can sit beside the label without
      baseline guesswork; with text alone it still hugs its content the same */
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin: 0 0 22px;
-  padding: 8px 16px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  border: 1px solid rgba(50, 56, 58, 0.1);
+  margin: 0 0 26px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
