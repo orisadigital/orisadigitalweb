@@ -4513,13 +4513,6 @@ html::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
-  /* Below this width the header carries two menus: this row, which has wrapped
-     under the bar and scrolls sideways, and the drawer behind the hamburger.
-     The pricing link is in the drawer, so dropping it here costs nothing and
-     takes one item off a row that is already running off the screen. */
-  .nav-item--wide-only {
-    display: none;
-  }
 }
 
 @media (max-width: 600px) {
@@ -4541,34 +4534,31 @@ html::-webkit-scrollbar-thumb:hover {
     height: 28px;
   }
 
-  /* First and last go on a phone, so what is left fits the row without
-     scrolling: Home, which the logo already links, and Website Pricing, which
-     is .nav-item--wide-only and hidden from 960 down anyway. The drawer still
-     lists every page. Two links stand here now that Web App has gone from the
-     bar — they are grouped rather than spread, since two items pushed to
-     opposite edges read as a gap rather than as a pair. */
-  .nav-list li:first-child,
-  .nav-list li:last-child {
+  /* Only Home goes on a phone, and only because the logo beside it already
+     links there. Everything else in the bar stands: Web Design, Green Energy
+     and Website Pricing. The drawer still lists every page either way. */
+  .nav-list li:first-child {
     display: none;
   }
 
-  /* Grouped from the left, not spread. With three links edge-to-edge filled the
-     row; with the two that are left it would have parked one at each end with a
-     third of the bar empty between them. The negative inline margin cancels the
-     first link's own padding so its label lines up with the logo above it,
-     not with its invisible box edge. */
+  /* Centred. The three links very nearly fill the row, so this only shows on
+     the wider phones — but where there is slack it is split either side rather
+     than left at one end. The negative inline margin is buying width, not
+     alignment: it cancels the outer links' own padding, which is 10px the row
+     does not have to find. */
   .nav-list {
-    justify-content: flex-start;
-    gap: 4px;
+    justify-content: center;
+    gap: 3px;
     padding: 5px 0 7px;
     margin-inline: -5px;
   }
 
-  /* 5px of side padding rather than 7: three links with icons need 334px of the
-     327px row at 7, and the last one would sit under a scroll. */
+  /* Tight, because the row is: three links with icons come to 333px, against
+     334 on a 360px phone and 364 on a 390. Below 360 the row scrolls, which is
+     what the overflow on .nav-list is there for. */
   .nav-link {
     font-size: 12.5px;
-    padding: 8px 5px;
+    padding: 8px 3px;
     gap: 5px;
   }
 
