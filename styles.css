@@ -1661,14 +1661,13 @@ html::-webkit-scrollbar-thumb:hover {
   align-items: start;
 }
 
+/* Flat: the hairline is what separates the panel from the page, with no drop
+   shadow lifting it off. */
 .calculator-panel {
   padding: clamp(24px, 3vw, 36px);
   border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
-  box-shadow:
-    0 1px 2px rgba(16, 20, 24, 0.04),
-    0 10px 28px rgba(16, 20, 24, 0.06);
 }
 
 .calculator-estimate {
@@ -2508,10 +2507,14 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* For a list rather than a card: the full-size chip would set the row height
    and leave the six of them looking like six cards stacked up. */
+/* The small chips only appear on the calculator, which is flat, so this is
+   where the base chip's drop shadow comes off. The full-size ones on the other
+   pages keep theirs. */
 .icon-chip--sm {
   width: 36px;
   height: 36px;
   border-radius: 5px;
+  box-shadow: none;
 }
 
 .icon-chip--sm svg {
