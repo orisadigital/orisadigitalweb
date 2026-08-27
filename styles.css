@@ -1156,9 +1156,15 @@ html::-webkit-scrollbar-thumb:hover {
   position: relative;
   /* over the hero it is pulled into, and over the strip that follows */
   z-index: 2;
-  /* The panel is the only section that carries the page gutter itself — it has
-     a visible edge, where every other section is just type on the ground. */
-  width: min(1160px, calc(100% - clamp(32px, 4vw, 48px)));
+  /* Wider than the 1160px the sections below it run to — the header is full
+     bleed now, and a narrow panel under it read as the odd one out.
+
+     The panel is the only section carrying the page gutter itself, since it has
+     a visible edge where the others are just type on the ground. 30px each
+     side, which is the header's own padding, so the panel's edges land under
+     the logo and the icon buttons rather than near them. The two narrow
+     breakpoints below follow the header's figures for the same reason. */
+  width: min(1560px, calc(100% - 60px));
   /* The lift is the overlap. It comes off the top margin here and is added to
      the hero's scroll cue below, so the two move together and the cue is never
      covered. */
@@ -1224,7 +1230,19 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
+/* Both of these track the header's padding at the same width, so the panel's
+   edges stay under the logo and the icon buttons. */
+@media (max-width: 960px) {
+  .showcase {
+    width: min(1560px, calc(100% - 40px));
+  }
+}
+
 @media (max-width: 600px) {
+  .showcase {
+    width: min(1560px, calc(100% - 36px));
+  }
+
   .showcase-name {
     font-size: 13px;
   }
