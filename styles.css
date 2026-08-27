@@ -3829,16 +3829,18 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Pitch ---------- */
 
+/* No side padding of its own: the block below carries the homepage measure, the
+   same one the showcase panel and the logo strip run to. */
 .pitch {
-  padding: clamp(56px, 8vw, 104px) 24px;
+  padding: clamp(56px, 8vw, 104px) 0;
 }
 
 /* Copy on the left, the four cards on the right, top-aligned: the left column
    is the shorter of the two and centring it would leave the first card
    floating opposite nothing. */
 .pitch-inner {
-  max-width: 1160px;
-  margin: 0 auto;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
+  margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
   gap: clamp(32px, 5vw, 80px);
