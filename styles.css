@@ -2685,7 +2685,9 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   min-height: clamp(460px, 52vw, 620px);
   padding: clamp(64px, 8vw, 104px) 24px;
-  background: var(--black);
+  /* The accent, not the black it was. It also puts something between this band
+     and the footer, which is --black and sits directly under it. */
+  background: var(--blue);
   color: #fff;
   /* chips sit close to the edges, and the float carries them a little further */
   overflow: hidden;
@@ -2699,8 +2701,13 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 
+/* Both of these were half-strength and 62% white, which held up over the black
+   this band used to be — 7.4:1 and 5.7:1. The blue is a much lighter ground and
+   took them to about 2:1, so they come up to nearly full white. That is as far
+   as they go: white on this blue is 3.9:1, which the heading clears as large
+   type and these two do not. See the note by --blue-lift. */
 .tech-eyebrow {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .tech-title {
@@ -2719,7 +2726,7 @@ html::-webkit-scrollbar-thumb:hover {
   max-width: 52ch;
   font-size: clamp(1rem, 1.1vw, 1.0625rem);
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.62);
+  color: #fff;
   text-wrap: pretty;
 }
 
@@ -2750,9 +2757,9 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: 5px;
   background: #fff;
   color: var(--ink);
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.25),
-    0 18px 40px rgba(0, 0, 0, 0.35);
+  /* The two black drop shadows these carried went with the black ground. They
+     were all but invisible on it and would have read as grey haloes on the
+     blue. */
   /* the translate centres the chip on its coordinates; the float rides on top
      of it, which is why the keyframes repeat it */
   transform: translate(-50%, -50%);
