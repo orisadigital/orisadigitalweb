@@ -1202,17 +1202,6 @@ html::-webkit-scrollbar-thumb:hover {
   object-position: center top;
 }
 
-/* For a logo rather than a screenshot. Contained on white, because filling a
-   wordmark into this box would crop away everything but its middle. */
-.showcase-shot--plate {
-  background: #fff;
-}
-
-.showcase-shot--plate .showcase-img {
-  object-fit: contain;
-  padding: 12%;
-}
-
 .showcase-name {
   margin: 12px 0 0;
   font-size: 14px;
