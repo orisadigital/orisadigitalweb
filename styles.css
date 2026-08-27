@@ -3847,27 +3847,48 @@ html::-webkit-scrollbar-thumb:hover {
   align-items: start;
 }
 
-/* Three discs, lightest first, each sitting a third over the one before it.
-   Drawn here rather than fetched — it is three circles. */
+/* Three client faces, each sitting a quarter over the one before it. */
 .pitch-mark {
   display: flex;
   margin-bottom: clamp(22px, 2.6vw, 32px);
 }
 
-.pitch-mark span {
-  width: 50px;
-  height: 50px;
+/* .testimonial-avatar's treatment at a larger size: ink ground carrying the
+   initials, image over the top, both clipped round.
+
+   44px rather than the reference's 50: the smallest of the three sources is a
+   36px cutout, and this is as far as it can be pushed before it softens. */
+.pitch-face {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  /* the same exception the testimonial avatars take: a face reads as a portrait */
   border-radius: 50%;
-  background: rgba(50, 56, 58, 0.14);
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  overflow: hidden;
 }
 
-.pitch-mark span + span {
-  margin-left: -16px;
-  background: rgba(50, 56, 58, 0.32);
+/* No ring between them — they butt straight into each other, the way the
+   reference's discs did. */
+.pitch-face + .pitch-face {
+  margin-left: -12px;
 }
 
-.pitch-mark span + span + span {
-  background: rgba(50, 56, 58, 0.62);
+.pitch-face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Sentence case and a shade tighter than .section-title, which is uppercase.
@@ -4010,9 +4031,9 @@ html::-webkit-scrollbar-thumb:hover {
     min-height: 0;
   }
 
-  .pitch-mark span {
-    width: 42px;
-    height: 42px;
+  .pitch-face {
+    width: 40px;
+    height: 40px;
   }
 }
 

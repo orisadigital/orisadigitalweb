@@ -555,11 +555,22 @@
     <section class="pitch" aria-labelledby="pitch-title">
       <div class="pitch-inner">
         <div class="pitch-copy">
-          <!-- Three discs, lightest to darkest, overlapping. Decoration, drawn
-               in CSS rather than fetched — it carries no meaning and is out of
-               the accessibility tree. -->
+          <!-- Three real clients, the same three the testimonials further down
+               quote, overlapping the way the reference's discs did. Out of the
+               accessibility tree: three faces with no names beside them say
+               nothing to a screen reader that the testimonials do not say
+               properly. The initials behind each one are what shows if an
+               image does not arrive, exactly as .testimonial-avatar does it. -->
           <span class="pitch-mark" aria-hidden="true">
-            <span></span><span></span><span></span>
+            <span class="pitch-face">OT<img
+                  src="image/oracle-tito.webp" width="36" height="36" loading="lazy"
+                  decoding="async" alt=""></span>
+            <span class="pitch-face">SM<img
+                  src="image/siti-maryam-rusly.webp" width="80" height="80" loading="lazy"
+                  decoding="async" alt=""></span>
+            <span class="pitch-face">SZ<img
+                  src="image/sabrina-zulkarnain.webp" width="72" height="72" loading="lazy"
+                  decoding="async" alt=""></span>
           </span>
 
           <h2 class="pitch-title" id="pitch-title">Elevate your brand with guidance</h2>
