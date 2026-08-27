@@ -10,14 +10,3 @@
 # 301 rather than 302 on both: the moves are permanent.
 /mobile-app  /web-design  301
 /web-app     /web-design  301
-
-# A dead URL was answering 404 with an empty body — no content-type, no
-# CF-Cache-Status, nothing to render — so a mistyped address showed a blank
-# white page instead of 404.html, which deploys fine and serves at /404.
-#
-# This hands Pages the file explicitly and keeps the 404 status, so crawlers
-# still read it as gone rather than as a soft 404. It sits last because
-# _redirects matches top-down and the two 301s above must win first; a splat
-# does not shadow real files, which is the same reason an SPA fallback still
-# serves its own CSS.
-/*           /404.html    404
