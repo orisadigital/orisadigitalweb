@@ -5291,6 +5291,7 @@ html::-webkit-scrollbar-thumb:hover {
 .grid--ruled .feature-tile,
 .grid--ruled .impact-card,
 .grid--ruled .value-card,
+.grid--ruled .pitch-card,
 .grid--ruled .benefit-card {
   /* opaque rather than transparent: these cells are what hide the container's
      colour everywhere except the gaps */
