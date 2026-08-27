@@ -1213,13 +1213,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* The screenshots' own 840x410, so that contained they fill the box exactly:
-   whole shot, no crop, and no bars either. The case-study cards below crop the
-   same images to 3:2, but they are twice the size there and can afford it.
+   whole shot, no crop, and no bars either. All four are on that ratio now.
 
-   White, because it is the mat the odd one out sits on. Three of the four fill
-   the box and never show it; the Wija wordmark is wider than this ratio, is
-   transparent, and is half black — on the panel's own grey that half would
-   disappear. */
+   The white behind them is the ground a shot sits on while it loads, and the
+   mat anything off this ratio would be letterboxed against — which is what the
+   fourth card needed before it had a screenshot of its own. */
 .showcase-shot {
   display: block;
   aspect-ratio: 840 / 410;
