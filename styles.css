@@ -101,7 +101,7 @@ html::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar-thumb {
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--ink);
 }
 
@@ -184,7 +184,7 @@ html::-webkit-scrollbar-thumb:hover {
 .logo:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 6px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 /* ---------- Navigation ---------- */
@@ -209,7 +209,7 @@ html::-webkit-scrollbar-thumb:hover {
   align-items: center;
   gap: 8px;
   padding: 11px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.005em;
@@ -292,7 +292,7 @@ html::-webkit-scrollbar-thumb:hover {
   height: var(--toggle-size);
   padding: 0;
   border: 0;
-  border-radius: 4px;
+  border-radius: 0;
   /* The one filled button in the bar, in the site accent. White icon, not ink —
      on this blue white is 3.9:1 against the ink's 3.1:1, and the stroke is
      currentColor so the whole mark follows the one declaration. */
@@ -408,7 +408,7 @@ html::-webkit-scrollbar-thumb:hover {
   height: var(--toggle-size);
   padding: 0;
   border: 0;
-  border-radius: 4px;
+  border-radius: 0;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -476,7 +476,7 @@ html::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   justify-content: space-between;
   padding: 26px 26px 24px;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   text-decoration: none;
 }
@@ -1110,7 +1110,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   padding: 14px 30px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 0;
   /* Inter, not Inter Tight, because Inter Tight is self-hosted at one static
      weight — Black — so asking it for 700 would have handed back the same 900
      face and changed nothing. Inter is the variable file already loaded on
@@ -1177,7 +1177,7 @@ html::-webkit-scrollbar-thumb:hover {
      covered. */
   margin: calc(var(--showcase-lift) * -1) auto clamp(36px, 5vw, 64px);
   padding: clamp(18px, 2.2vw, 30px);
-  border-radius: 4px;
+  border-radius: 0;
   background: #2c2c2c;
 }
 
@@ -1200,7 +1200,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: block;
   aspect-ratio: 840 / 410;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
 }
 
@@ -1224,7 +1224,7 @@ html::-webkit-scrollbar-thumb:hover {
 .showcase-link:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .showcase-name {
@@ -1480,7 +1480,7 @@ html::-webkit-scrollbar-thumb:hover {
   bottom: calc(100% + 10px);
   z-index: 5;
   padding: 7px 11px;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--black);
   color: #fff;
   font-family: "Inter", sans-serif;
@@ -1542,7 +1542,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .about-figure {
   margin: 0;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   background: var(--black);
 }
@@ -1622,7 +1622,7 @@ html::-webkit-scrollbar-thumb:hover {
    shadow lifting it off. */
 .calculator-panel {
   padding: clamp(24px, 3vw, 36px);
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
 }
@@ -1640,7 +1640,7 @@ html::-webkit-scrollbar-thumb:hover {
 .calc-breakdown {
   margin: 16px 0 0;
   padding: 14px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.04);
   font-size: 0.85rem;
 }
@@ -1945,7 +1945,7 @@ html::-webkit-scrollbar-thumb:hover {
   align-items: center;
   gap: 12px;
   padding: 18px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.14);
   background: #fff;
   cursor: pointer;
@@ -1997,7 +1997,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: inline-block;
   margin-left: 8px;
   padding: 3px 8px;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--blue);
   color: #fff;
   font-size: 0.625rem;
@@ -2048,7 +2048,7 @@ html::-webkit-scrollbar-thumb:hover {
   place-items: center;
   width: 22px;
   height: 22px;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.22);
   background: #fff;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -2078,7 +2078,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* Squared off, because these stack rather than replace one another. The shape
    is the only thing saying so before anything has been clicked. */
 .calc-option--multi .calc-option-tick {
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 /* one column before the name and the price start fighting for the same line */
@@ -2139,7 +2139,7 @@ html::-webkit-scrollbar-thumb:hover {
 .calc-subfield {
   margin-top: 14px;
   padding: 18px;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.045);
 }
 
@@ -2195,7 +2195,7 @@ html::-webkit-scrollbar-thumb:hover {
   top: 0.65em;
   width: 5px;
   height: 5px;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.34);
 }
 
@@ -2212,7 +2212,7 @@ html::-webkit-scrollbar-thumb:hover {
 .calc-chip {
   position: relative;
   padding: 9px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.16);
   background: #fff;
   font-size: 0.85rem;
@@ -2297,7 +2297,7 @@ html::-webkit-scrollbar-thumb:hover {
   top: 50%;
   height: var(--bar-h);
   transform: translateY(-50%);
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.1);
   pointer-events: none;
 }
@@ -2308,7 +2308,7 @@ html::-webkit-scrollbar-thumb:hover {
   top: 0;
   bottom: 0;
   width: calc(var(--pct) * 100%);
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--ink);
 }
 
@@ -2327,7 +2327,7 @@ html::-webkit-scrollbar-thumb:hover {
   transform: translateY(-50%);
   display: grid;
   place-items: center;
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.12);
   pointer-events: none;
@@ -2405,7 +2405,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: flex-end;
   gap: clamp(28px, 4vw, 48px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.04);
 }
 
@@ -2445,7 +2445,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: 46px;
   height: 46px;
   flex: none;
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.08);
   color: var(--ink);
@@ -2471,7 +2471,7 @@ html::-webkit-scrollbar-thumb:hover {
 .icon-chip--sm {
   width: 36px;
   height: 36px;
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: none;
 }
 
@@ -2604,7 +2604,7 @@ html::-webkit-scrollbar-thumb:hover {
 .team-photo {
   margin: 0 0 clamp(18px, 2.2vw, 28px);
   aspect-ratio: 1;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   background: var(--black);
 }
@@ -2649,7 +2649,7 @@ html::-webkit-scrollbar-thumb:hover {
 .team-role span {
   display: inline;
   padding: 6px 10px;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--blue);
   color: #fff;
   -webkit-box-decoration-break: clone;
@@ -2760,7 +2760,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: var(--size);
   height: var(--size);
   margin: 0;
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
   color: var(--ink);
   /* The two black drop shadows these carried went with the black ground. They
@@ -2832,7 +2832,7 @@ html::-webkit-scrollbar-thumb:hover {
     position: static;
     width: 62px;
     height: 62px;
-    border-radius: 4px;
+    border-radius: 0;
     transform: none;
     animation: none;
   }
@@ -2893,7 +2893,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: flex-end;
   gap: clamp(24px, 3.5vw, 44px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.04);
 }
 
@@ -3044,7 +3044,7 @@ html::-webkit-scrollbar-thumb:hover {
 .field textarea {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.16);
   background: #fff;
   color: var(--ink);
@@ -3079,7 +3079,7 @@ html::-webkit-scrollbar-thumb:hover {
   grid-column: 1 / -1;
   margin: 0;
   padding: 14px 16px;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(34, 197, 94, 0.09);
   border: 1px solid rgba(34, 197, 94, 0.28);
   font-size: 0.9375rem;
@@ -3185,7 +3185,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: block;
   width: 14px;
   height: 14px;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--live);
   /* a white collar so the dot separates from the map beneath it, whatever
      colour it lands on */
@@ -3198,7 +3198,7 @@ html::-webkit-scrollbar-thumb:hover {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--live);
   animation: map-pin-pulse 2.2s ease-out infinite;
 }
@@ -3256,7 +3256,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: flex-end;
   gap: clamp(20px, 2.6vw, 32px);
   padding: clamp(22px, 2.6vw, 30px);
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.04);
 }
 
@@ -3384,7 +3384,7 @@ html::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   gap: clamp(22px, 3vw, 34px);
   padding: clamp(24px, 3vw, 36px);
-  border-radius: 4px;
+  border-radius: 0;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
 }
@@ -3477,7 +3477,7 @@ html::-webkit-scrollbar-thumb:hover {
   gap: clamp(26px, 3.5vw, 42px);
   min-height: clamp(170px, 17vw, 200px);
   padding: clamp(20px, 2.4vw, 28px);
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(50, 56, 58, 0.04);
 }
 
@@ -3553,7 +3553,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .feature-figure {
   margin: 0;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   /* the artwork carries its own light panel, so the frame matches it rather
      than the section */
@@ -3883,7 +3883,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   padding: 15px 30px;
   border: 1px solid rgba(50, 56, 58, 0.28);
-  border-radius: 4px;
+  border-radius: 0;
   font-family: "Inter Tight", Inter, system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -3952,7 +3952,7 @@ html::-webkit-scrollbar-thumb:hover {
   min-height: clamp(168px, 15vw, 210px);
   padding: clamp(20px, 2.2vw, 28px);
   border: 1px solid rgba(50, 56, 58, 0.12);
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--page);
 }
 
@@ -4115,7 +4115,7 @@ html::-webkit-scrollbar-thumb:hover {
 .voices-card {
   display: flex;
   border: 1px solid rgba(50, 56, 58, 0.14);
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--page);
 }
 
@@ -4226,7 +4226,7 @@ html::-webkit-scrollbar-thumb:hover {
 .portrait-figure {
   margin: 0;
   width: min(420px, 100%);
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   background: var(--black);
 }
@@ -4325,7 +4325,7 @@ html::-webkit-scrollbar-thumb:hover {
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: clamp(16px, 2vw, 26px);
   padding: clamp(20px, 2.4vw, 28px);
-  border-radius: 4px;
+  border-radius: 0;
   background-color: rgba(50, 56, 58, 0.04);
   transition:
     background-color 0.45s ease,
@@ -4579,7 +4579,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid rgba(50, 56, 58, 0.08);
   box-shadow:
     0 2px 6px rgba(16, 20, 24, 0.05),
@@ -4894,7 +4894,7 @@ html::-webkit-scrollbar-thumb:hover {
 .faq-summary:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .faq-question {
@@ -5072,7 +5072,7 @@ html::-webkit-scrollbar-thumb:hover {
   /* the encodes are both 16:9, so this reserves the right box before the
      poster decodes and nothing below it jumps */
   aspect-ratio: 16 / 9;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--ink);
 }
 
@@ -5413,7 +5413,7 @@ html::-webkit-scrollbar-thumb:hover {
   align-items: center;
   gap: 16px;
   padding: 12px 12px 12px 30px;
-  border-radius: 4px;
+  border-radius: 0;
   background: var(--black);
   color: #fff;
   text-decoration: none;
@@ -5442,7 +5442,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: 44px;
   height: 44px;
   flex: none;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.14);
   transition: background-color 0.2s ease;
 }
@@ -5522,7 +5522,7 @@ html::-webkit-scrollbar-thumb:hover {
 .footer-logo:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: 6px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .footer-tagline {
@@ -5568,7 +5568,7 @@ html::-webkit-scrollbar-thumb:hover {
 .footer-list a:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .footer-list--contact span {
@@ -5657,7 +5657,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: 200px;
   max-width: 100%;
   margin: 22px 0 0;
-  border-radius: 4px;
+  border-radius: 0;
   transition: opacity 0.2s ease;
 }
 
@@ -5691,7 +5691,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   width: 38px;
   height: 38px;
-  border-radius: 4px;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.8);
   transition: background-color 0.18s ease, color 0.18s ease;
@@ -5734,7 +5734,7 @@ html::-webkit-scrollbar-thumb:hover {
 .footer-top:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .footer-top svg {
