@@ -55,6 +55,17 @@ picture {
   display: contents;
 }
 
+/* The other half of that. display: contents promotes the <picture>'s children,
+   which is the <img> — and the <source> beside it, which then lays out as a
+   zero-width box of its own. In a plain block container nothing shows for it,
+   but in a flex or grid parent it counts as an item and takes a gap: it is what
+   put the wordmark 14px inside its own link in the header and the footer, and
+   made the link 124px wide for a 110px image. A <source> is metadata; taking
+   its box away does not affect which file the browser picks. */
+source {
+  display: none;
+}
+
 html,
 body {
   margin: 0;
