@@ -5365,23 +5365,27 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Outlined cards ---------- */
 
-/* /web-design draws its cards rather than filling them: a hairline where the
-   4% grey used to be, and nothing behind it. Carried by a class on <main> so it
-   stays on the one page — the same card classes are filled on the others.
+/* The pages that draw their cards rather than filling them: a hairline where
+   the 4% grey used to be, and nothing behind it. Carried by a class on <main>,
+   so a page opts in — the same classes are filled on the ones that have not.
+   /web-design and /green-energy so far.
 
-   Declared after the rules it overrides, which is also why the two lit states
-   below have to be restated: they sit at the same specificity as the rule
-   above and would otherwise lose on order. */
+   Declared after the rules it overrides, which is also why the lit and accent
+   states below have to be restated: they sit at the same specificity as the
+   rule above and would otherwise lose on order. */
 .page--outlined .benefit-card,
 .page--outlined .feature-tile,
-.page--outlined .approach-card {
+.page--outlined .approach-card,
+.page--outlined .impact-card {
   background: transparent;
   border: 1px solid rgba(50, 56, 58, 0.14);
 }
 
-/* Not part of the set. This is the black tile the features grid is built
-   around — "User Experience" — and the approach card the scroll lights up. */
+/* Not part of the set: the black tile the features grid is built around
+   ("User Experience"), the one black card in the impact grid ("What You Can
+   Do"), and the approach card the scroll lights up. */
 .page--outlined .feature-tile--tall,
+.page--outlined .impact-card--accent,
 .page--outlined .approach-card.is-active {
   background-color: var(--black);
   border-color: transparent;
