@@ -600,21 +600,26 @@ html::-webkit-scrollbar-thumb:hover {
   background: var(--ink);
 }
 
-/* The homepage hero carries no footage — it is the flat logo black on its own,
-   with everything on it inverted. The section pages below run video and keep
-   the same dark base under their veil. */
+/* The homepage hero carries no footage — it is one flat black on its own, with
+   everything on it inverted. The section pages below run video and keep the
+   logo black under their veil.
+
+   A colder, deeper black than the logo's --black, and its own token: it is the
+   hero's ground, not a site colour, and the parts drawn on it read it from
+   here rather than each naming a literal. */
 .hero--plain {
-  background: var(--black);
+  --hero-ground: #222222;
+  background: var(--hero-ground);
 }
 
 /* White, not an off-white: the ground is flat and there is nothing behind the
-   type to soften it against. 11.9:1. */
+   type to soften it against. 15.9:1. */
 .hero--plain .hero-title {
   color: #fff;
 }
 
 /* A step back from the headline so the two do not read as one weight. Lands
-   near 7.5:1 once blended against the ground. */
+   near 9.5:1 once blended against the ground. */
 .hero--plain .hero-desc {
   color: rgba(255, 255, 255, 0.78);
 }
@@ -640,7 +645,7 @@ html::-webkit-scrollbar-thumb:hover {
    child of the frame and takes its own ink from that token — moved a level up,
    this would put white type on the neon. */
 .hero--plain .cta-frame::before {
-  --page: var(--black);
+  --page: var(--hero-ground);
   --ink: #fff;
 }
 
