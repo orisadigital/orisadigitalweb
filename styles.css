@@ -1340,7 +1340,11 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* Sections that carry the grid backdrop. */
+/* These seven used to carry a ruled grid backdrop, painted into a ::before and
+   masked to a soft edge at all four corners. The pattern is gone. The
+   positioning it needed stays: it is the containing block anything absolutely
+   placed inside these sections resolves against, and taking it away is a
+   separate change with its own way of going wrong. */
 .portfolio,
 .gallery,
 .cta,
@@ -1349,42 +1353,6 @@ html::-webkit-scrollbar-thumb:hover {
 .feature,
 .hosting {
   position: relative;
-  --grid-cell: clamp(38px, 4.4vw, 62px);
-  /* a variable so a dark section can invert the lines without a second rule */
-  --grid-line: rgba(50, 56, 58, 0.085);
-}
-
-/* Grid backdrop. Two 1px gradients make the lines; the mask fades them out
-   toward all four edges so the pattern has no hard boundary. */
-.portfolio::before,
-.gallery::before,
-.cta::before,
-.about-hero::before,
-.page-hero::before,
-.feature::before,
-.hosting::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: var(--grid-cell) var(--grid-cell);
-  -webkit-mask-image: radial-gradient(
-    ellipse 66% 66% at 50% 50%,
-    #000 18%,
-    rgba(0, 0, 0, 0.55) 52%,
-    rgba(0, 0, 0, 0.12) 78%,
-    transparent 94%
-  );
-  mask-image: radial-gradient(
-    ellipse 66% 66% at 50% 50%,
-    #000 18%,
-    rgba(0, 0, 0, 0.55) 52%,
-    rgba(0, 0, 0, 0.12) 78%,
-    transparent 94%
-  );
 }
 
 /* ---------- Section furniture ---------- */
@@ -1565,9 +1533,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .about-hero-inner {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
@@ -1624,9 +1592,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .page-hero-inner {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   /* narrower than a full section: centred text gets hard to track much past this */
   max-width: 760px;
   margin: 0 auto;
@@ -3417,9 +3385,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .hosting-inner {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   max-width: 1160px;
   margin: 0 auto;
 }
@@ -3437,10 +3405,10 @@ html::-webkit-scrollbar-thumb:hover {
   list-style: none;
 }
 
-/* Solid rather than the 4% tint the other card sets use: this section carries
-   the grid backdrop, and a near-transparent fill lets the lines run straight
-   through the card so it stops reading as one. Flat, though — the fill and the
-   hairline are what hold it against the pattern, with nothing lifting it off. */
+/* Solid white rather than the 4% tint the other card sets use, and flat: the
+   fill and the hairline are the whole card. It kept the solid fill when the
+   section carried a ruled backdrop, because a near-transparent one let the
+   lines read straight through and the card stopped reading as one. */
 .hosting-card {
   display: flex;
   flex-direction: column;
@@ -3572,10 +3540,8 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Feature split ---------- */
 
-/* Same two-column shape as the About hero, on black. The grid backdrop comes
-   from the shared rule; only the line colour is flipped. */
+/* Same two-column shape as the About hero, on black. */
 .feature {
-  --grid-line: rgba(255, 255, 255, 0.07);
   padding: clamp(56px, 8vw, 104px) 24px;
   background: var(--black);
   color: #fff;
@@ -3583,9 +3549,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .feature-inner {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
@@ -4657,10 +4623,9 @@ html::-webkit-scrollbar-thumb:hover {
   text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
-  /* Opaque on purpose, not --ink at a low alpha: the grid backdrop sits behind
-     this and a translucent fill let the lines read straight through the
-     letterforms. This is roughly --ink at 21% over the white page, but mixed
-     down to a flat value so the glyphs cover what is behind them. */
+  /* A flat value rather than --ink at a low alpha. It is roughly --ink at 21%
+     over the white page, mixed down so the glyphs cover what is behind them
+     rather than letting it read through. */
   color: #d4d6d7;
   pointer-events: none;
   user-select: none;
@@ -4828,64 +4793,14 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Portfolio ---------- */
 
-/* The shared mask is an ellipse centred on the section, densest at 50% height.
-   Here that lands squarely behind the card row, which is opaque and covers the
-   middle ~half of the section — so the grid would only ever show through in the
-   faded margins above and below it. Re-aiming the ellipse at the heading band,
-   the one part of this section the cards do not cover, is what makes the
-   backdrop visible at all. The fade stays elliptical so all four edges still
-   dissolve the way every other grid section does. */
-.portfolio::before {
-  /* Two mask layers, intersected. The ellipse aims the grid at the heading band
-     and dissolves it left, right and below; the linear pass takes the top edge
-     to nothing, so the pattern arrives out of the white above rather than
-     butting against it at ~70% ink, which is where the ellipse alone left it.
-
-     A browser with mask layers but no mask-composite falls back to the spec
-     default of `add` — the union, which is the ellipse on its own. That is the
-     behaviour this replaces, so the degradation costs nothing. */
-  -webkit-mask-image:
-    radial-gradient(
-      ellipse 74% 58% at 50% 22%,
-      #000 14%,
-      rgba(0, 0, 0, 0.55) 50%,
-      rgba(0, 0, 0, 0.12) 76%,
-      transparent 94%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.28) 10%,
-      rgba(0, 0, 0, 0.75) 20%,
-      #000 32%
-    );
-  -webkit-mask-composite: source-in;
-  mask-image:
-    radial-gradient(
-      ellipse 74% 58% at 50% 22%,
-      #000 14%,
-      rgba(0, 0, 0, 0.55) 50%,
-      rgba(0, 0, 0, 0.12) 76%,
-      transparent 94%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.28) 10%,
-      rgba(0, 0, 0, 0.75) 20%,
-      #000 32%
-    );
-  mask-composite: intersect;
-}
-
 .portfolio {
   padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 6vw, 80px);
 }
 
 .portfolio-head {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   max-width: 1160px;
   margin: 0 auto clamp(28px, 3.6vw, 48px);
   /* the row below is full bleed, so the heading carries the gutter itself */
@@ -4917,9 +4832,9 @@ html::-webkit-scrollbar-thumb:hover {
 /* Full bleed and scrolled by hand. scroll-padding matches the card inset so a
    snapped card never lands under the fixed header when someone tabs to it. */
 .portfolio-row {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   display: flex;
   margin: 0;
   padding: 0;
@@ -5344,7 +5259,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: clamp(72px, 10vw, 132px) 24px;
   background: var(--blue);
   color: #fff;
-  /* the grid backdrop is masked to a soft edge, so nothing should bleed */
+  /* clips the rounded top corners this takes when it covers a sticky band */
   overflow: hidden;
 }
 
@@ -5353,9 +5268,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .cta-inner {
-  /* sits above the grid backdrop */
+  /* the backdrop it used to stack above is gone; descendants still position
+     against it */
   position: relative;
-  z-index: 1;
   max-width: 1160px;
   margin: 0 auto;
   text-align: center;
