@@ -524,11 +524,6 @@ html::-webkit-scrollbar-thumb:hover {
 /* The cards. GSAP set xPercent 115 and staggered them 0.07s apart behind a
    0.04s lead; these are the same numbers as transition-delay, and power3.out
    is this bezier. */
-.drawer-card {
-  transform: translateX(115%);
-  transition: transform 0.62s cubic-bezier(0.215, 0.61, 0.355, 1) var(--card-delay, 0ms);
-}
-
 .drawer.is-open .drawer-card {
   transform: translateX(0);
 }
@@ -560,6 +555,17 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: 0;
   overflow: hidden;
   text-decoration: none;
+  transform: translateX(115%);
+  /* Both properties live here, not one here and one on --neon. A modifier
+     rule setting its own `transition` replaces this whole shorthand rather
+     than adding to it, and .drawer-card--neon did exactly that: it sat
+     later in the sheet at the same specificity and left the middle card
+     with a filter transition and no travel at all, so it appeared instantly
+     while the two either side of it slid. Nothing filters at rest, so
+     listing it for every card costs nothing. */
+  transition:
+    transform 0.62s cubic-bezier(0.215, 0.61, 0.355, 1) var(--card-delay, 0ms),
+    filter 0.2s ease;
 }
 
 /* Solid white, not the blurred wash it was, and flat. The class name stays: it
@@ -580,7 +586,6 @@ html::-webkit-scrollbar-thumb:hover {
 .drawer-card--neon {
   background: var(--blue);
   color: #fafafa;
-  transition: filter 0.2s ease;
 }
 
 .drawer-card--neon:hover {
