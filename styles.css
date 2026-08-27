@@ -946,31 +946,8 @@ html::-webkit-scrollbar-thumb:hover {
   pointer-events: none;
 }
 
-/* Drawn on, left to right, finishing exactly as the headline finishes
-   settling. --scramble-ms comes from the scramble module, which knows the real
-   figure; the fallback only matters if that module never runs.
-
-   clip-path rather than an animated background-size: the background is stretched
-   to the word by preserveAspectRatio="none", so growing its width would squash
-   and unsquash the stroke rather than reveal it. Clipping moves a window across
-   a stroke that is already the right shape.
-
-   The clip lives here, under the class, not on the rule above — so a visitor
-   with no JS, or with reduced motion (where the scramble module returns before
-   setting this class), gets the finished stroke rather than an invisible one. */
-.is-scrambling .hero-mark::after {
-  clip-path: inset(0 100% 0 0);
-  animation: mark-draw var(--scramble-ms, 1200ms) cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
-}
-
-@keyframes mark-draw {
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
 /* Explicit line breaks — the wrap point is a design decision, not something
-   left to the browser (and it must not move while the text is scrambling). */
+   left to the browser. */
 .hero-line {
   display: block;
   white-space: nowrap;
@@ -988,13 +965,6 @@ html::-webkit-scrollbar-thumb:hover {
   /* round, not the 5px the rest of the site carries: the artwork is already a
      circular crop, and square corners would clip its edge */
   border-radius: 50%;
-}
-
-/* Fixed-width cell so a scrambled glyph occupies exactly the space its final
-   character will. Without this the line width shifts frame to frame. */
-.scramble-cell {
-  display: inline-block;
-  text-align: center;
 }
 
 /* Weightier and darker than body copy elsewhere: this one sits over moving
