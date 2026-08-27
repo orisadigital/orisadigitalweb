@@ -29,8 +29,9 @@
   --menu-icon-size: 24px;
   /* How far the homepage showcase panel is pulled up over the foot of the hero.
      Read by the panel's own top margin and by the hero's scroll cue, which
-     clears it by the same figure. */
-  --showcase-lift: clamp(110px, 13vw, 172px);
+     clears it by the same figure. Enough to read as an overlap and no more —
+     deeper than this and the panel crowds the cue and the copy above it. */
+  --showcase-lift: clamp(56px, 6.5vw, 92px);
 }
 
 *,
@@ -616,6 +617,25 @@ html::-webkit-scrollbar-thumb:hover {
 .hero--plain {
   --hero-ground: #222222;
   background: var(--hero-ground);
+  /* A floor rather than a fixed height. At 100vh exactly, a short window left
+     the copy nowhere to go: the panel is pulled up over a fixed number of
+     pixels whatever the window is doing, and below about 700px it was covering
+     the button. The section grows instead, and centring becomes a no-op once
+     it does — which is what keeps the copy off the header down there. */
+  height: auto;
+  min-height: 100vh;
+}
+
+/* Centred like the video heroes, but against padding that is not symmetric, so
+   the block settles just above the true middle rather than on it.
+
+   The top is measured from the header, so the gap under the bar is the same
+   figure whatever the header is doing. The bottom is the panel's overlap plus
+   the band the scroll cue lives in — the room the copy has to leave below
+   itself, and what the section grows by on a short window. */
+.hero--plain .hero-content {
+  padding-top: calc(var(--header-height) + clamp(40px, 11vh, 168px));
+  padding-bottom: calc(var(--showcase-lift) + clamp(96px, 12vh, 150px));
 }
 
 /* White, not an off-white: the ground is flat and there is nothing behind the
@@ -664,10 +684,11 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* Lifted clear of the showcase panel, which is pulled up over this corner of
-   the hero. Same figure the panel is lifted by, plus the gap the cue would
-   otherwise keep from the section edge. */
+   the hero. Same figure the panel is lifted by, plus a gap of its own — the
+   cue is a 58px rail that has to read as travelling into open space, so it
+   needs more room under it than a label would. */
 .hero--plain .hero-scroll {
-  bottom: calc(var(--showcase-lift) + clamp(14px, 2vh, 26px));
+  bottom: calc(var(--showcase-lift) + clamp(28px, 4.5vh, 52px));
 }
 
 .hero--plain .hero-scroll-label {
