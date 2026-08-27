@@ -5434,19 +5434,11 @@ html::-webkit-scrollbar-thumb:hover {
   border-color: transparent;
 }
 
-@media (hover: hover) {
-  /* The fill the card gave up, put to work as the hover state. These turn white
-     on the other pages, which on an outlined card over a white page would have
-     been no change at all. */
-  .page--outlined .benefit-card:hover,
-  .page--outlined .feature-tile:hover {
-    background: rgba(50, 56, 58, 0.04);
-  }
-
-  .page--outlined .feature-tile--tall:hover {
-    background: var(--black-hover);
-  }
-}
+/* No hover state on any of them. The shared rules turn these cards white and
+   the dark tile a shade darker; both are declared earlier in the sheet at the
+   same specificity as the two rules above, so leaving those to win on order is
+   all it takes — there is nothing here to switch the hover off, because there
+   is nothing left switching it on. */
 
 /* ---------- The page measure ---------- */
 
