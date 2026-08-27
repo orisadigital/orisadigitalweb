@@ -7,11 +7,19 @@
   --black-hover: #262b2d;
   --neon: #ccff00;
   --neon-hover: #bcee00;
+  /* header only — the contact button in the bar */
+  --header-accent: #3c7aff;
+  --header-accent-hover: #2f6ae8;
   /* status green — the only green on the site, reserved for "we're available" */
   --live: #22c55e;
   --page: #ffffff;
-  --header-height: 84px;
-  --header-offset: 22px;
+  --header-height: 76px;
+  /* The header is flush with the top of the viewport. Kept as a variable, and
+     at zero, because every block that clears the fixed bar measures itself
+     against it. */
+  --header-offset: 0px;
+  /* the gap the drawer keeps from the edges of the window */
+  --drawer-gap: 18px;
   /* Height of the nav row the bar wraps onto below 960px. Zero here, because
      the bar is a single row; anything clearing the header has to add it. */
   --header-nav-row: 0px;
@@ -105,45 +113,31 @@ html::-webkit-scrollbar-thumb:hover {
   border: 0;
 }
 
-/* ---------- Floating glass header ---------- */
+/* ---------- Header ---------- */
 
+/* A plain bar pinned to the top of the page. The background and the hairline
+   run the full width of the viewport; the contents are held to the same 1400px
+   measure everything else on the page uses. */
 .site-header {
   position: fixed;
-  top: var(--header-offset);
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 0 18px;
-  pointer-events: none;
+  background: var(--page);
+  border-bottom: 1px solid rgba(50, 56, 58, 0.12);
 }
 
 .header-bar {
-  pointer-events: auto;
   max-width: 1400px;
   margin: 0 auto;
   height: var(--header-height);
   display: flex;
   align-items: center;
-  /* Symmetric. The icon buttons carry their own internal padding, so
-     .header-actions is pulled right by exactly that much to make the icon ink
-     line up with the logo rather than the button box. */
+  /* The icon buttons carry their own internal padding, so .header-actions is
+     pulled right by exactly that much to make the icon ink line up with the
+     gutter rather than the button box. */
   padding: 0 30px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(47, 52, 55, 0.08);
-  box-shadow:
-    0 1px 2px rgba(16, 20, 24, 0.04),
-    0 12px 32px rgba(16, 20, 24, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
-/* Browsers without backdrop-filter get a solid-enough bar instead of a washed-out one */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .header-bar {
-    background: rgba(255, 255, 255, 0.92);
-  }
 }
 
 /* ---------- Logo ---------- */
@@ -172,8 +166,10 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---------- Navigation ---------- */
 
+/* The nav follows the logo. The slack in the bar goes to .header-actions, which
+   is the only thing pushed to the right-hand edge. */
 .nav {
-  margin-left: auto;
+  margin-left: 26px;
 }
 
 .nav-list {
@@ -242,18 +238,10 @@ html::-webkit-scrollbar-thumb:hover {
   opacity: 1;
 }
 
-/* ---------- Hamburger ---------- */
-
-.header-divider {
-  width: 1px;
-  height: 26px;
-  margin: 0 14px 0 16px;
-  background: rgba(50, 56, 58, 0.14);
-}
-
 /* ---------- Right-hand actions ---------- */
 
 .header-actions {
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -279,16 +267,19 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 0;
   border: 0;
   border-radius: 5px;
-  /* Neon box, so the icon inverts with it — the stroke is currentColor, and
-     white on this ground is barely 1.2:1 where the ink is past 10:1. */
-  background: var(--neon);
-  color: var(--ink);
+  /* The one filled button in the bar. Blue rather than the site neon: the neon
+     is the page's call-to-action colour and reading it up here as well made the
+     header compete with the hero. White icon, not ink — on this blue white is
+     3.9:1 against the ink's 3.1:1, and the stroke is currentColor so the whole
+     mark follows the one declaration. */
+  background: var(--header-accent);
+  color: #fff;
   cursor: pointer;
   transition: background-color 0.18s ease;
 }
 
 .chat-toggle:hover {
-  background: var(--neon-hover);
+  background: var(--header-accent-hover);
 }
 
 .chat-icon {
@@ -440,10 +431,10 @@ html::-webkit-scrollbar-thumb:hover {
   position: fixed;
   /* Fallback only — main.js measures the real bar and overrides this. The bar
      wraps to two rows below 960px, so --header-height alone under-measures it. */
-  top: calc(var(--header-height) + var(--header-offset) * 2);
-  right: var(--header-offset);
-  bottom: var(--header-offset);
-  width: min(400px, calc(100vw - var(--header-offset) * 2));
+  top: calc(var(--header-height) + var(--drawer-gap));
+  right: var(--drawer-gap);
+  bottom: var(--drawer-gap);
+  width: min(400px, calc(100vw - var(--drawer-gap) * 2));
   z-index: 90;
   display: grid;
   /* 3/5, 1/5, 1/5 */
@@ -4188,10 +4179,6 @@ html::-webkit-scrollbar-thumb:hover {
     margin-left: auto;
   }
 
-  .header-divider {
-    display: none;
-  }
-
   .nav {
     order: 3;
     flex-basis: 100%;
@@ -4202,10 +4189,13 @@ html::-webkit-scrollbar-thumb:hover {
     border-top: 1px solid rgba(50, 56, 58, 0.09);
   }
 
-  /* tablet has room to spare — keep the links grouped, not stretched apart */
+  /* The row has wrapped under the logo, so it starts under the logo too — the
+     negative inline margin cancels the first link's own padding so the label
+     lines up with the lockup rather than its invisible box edge. */
   .nav-list {
-    justify-content: center;
+    justify-content: flex-start;
     gap: 2px;
+    margin-inline: -16px;
     padding: 6px 0 8px;
     /* narrower phones scroll rather than squash */
     overflow-x: auto;
@@ -4228,19 +4218,14 @@ html::-webkit-scrollbar-thumb:hover {
 @media (max-width: 600px) {
   :root {
     --header-height: 60px;
-    --header-offset: 12px;
     --toggle-size: 40px;
     /* measured: 106px bar against a 60px top row */
     --header-nav-row: 46px;
-  }
-
-  .site-header {
-    padding: 0 12px;
+    --drawer-gap: 12px;
   }
 
   .header-bar {
     padding: 0 18px;
-    border-radius: 5px;
   }
 
   .logo-mark {
