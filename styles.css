@@ -4624,19 +4624,24 @@ html::-webkit-scrollbar-thumb:hover {
     height: 28px;
   }
 
-  /* Home and About are dropped on a phone so the three service pages fit the
-     row without scrolling. Neither is lost: the logo links home, and the drawer
-     still lists every page. They are always first and last in the header. */
+  /* First and last go on a phone, so what is left fits the row without
+     scrolling: Home, which the logo already links, and Website Pricing, which
+     is .nav-item--wide-only and hidden from 960 down anyway. The drawer still
+     lists every page. Two links stand here now that Web App has gone from the
+     bar — they are grouped rather than spread, since two items pushed to
+     opposite edges read as a gap rather than as a pair. */
   .nav-list li:first-child,
   .nav-list li:last-child {
     display: none;
   }
 
-  /* on a phone the row is tight, so spread the links edge to edge. The negative
-     inline margin cancels the links' own padding so the first and last labels
-     line up with the logo above them, not their invisible box edges. */
+  /* Grouped from the left, not spread. With three links edge-to-edge filled the
+     row; with the two that are left it would have parked one at each end with a
+     third of the bar empty between them. The negative inline margin cancels the
+     first link's own padding so its label lines up with the logo above it,
+     not with its invisible box edge. */
   .nav-list {
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 4px;
     padding: 5px 0 7px;
     margin-inline: -5px;
