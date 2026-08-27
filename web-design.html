@@ -160,18 +160,15 @@
       <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.412c0-3.026 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.971H15.83c-1.491 0-1.956.93-1.956 1.886v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
     </symbol>
     <!-- The marquee repeats this once per item, twice over — worth a symbol. -->
-    <!-- A star of life: one capsule struck through the centre three times, at
-         60 degrees to each other. Three rects rather than one path because the
-         shape is one bar repeated, and a transform says that where a path would
-         only spell it out. They inherit the fill from .ai-star like the mark
-         they replace, so nothing in the sheet had to change.
+    <!-- A middle dot between the marquee's words. Drawn small inside the same
+         24-unit box the mark before it used, so the space it sits in and the
+         gap either side of it are unchanged — .ai-star still sizes the box and
+         still supplies the fill.
 
          This sprite is per-page, so the marquee on the other pages that run it
          still carries the four-point star. -->
     <symbol id="icon-star" viewBox="0 0 24 24">
-      <rect x="9.2" y="2.2" width="5.6" height="19.6" rx="2.8"/>
-      <rect x="9.2" y="2.2" width="5.6" height="19.6" rx="2.8" transform="rotate(60 12 12)"/>
-      <rect x="9.2" y="2.2" width="5.6" height="19.6" rx="2.8" transform="rotate(120 12 12)"/>
+      <circle cx="12" cy="12" r="5.5"/>
     </symbol>
   </svg>
 
