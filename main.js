@@ -495,6 +495,169 @@
   });
 })();
 
+/* Case-study strip — drifts on its own, and can be grabbed and pulled.
+
+   The loop is scrollLeft rather than an animated transform, which is what lets
+   a drag, a wheel, a trackpad swipe and a touch flick all move the same number
+   instead of fighting an animation for the transform. It has its own cloning
+   rather than the [data-loop] module's for one reason: a scroll container
+   clamps at zero, so to be endless in both directions it has to rest a whole
+   group in from the start with a group's worth of run-up behind it. That needs
+   at least three copies, where a transform loop is happy with two.
+
+   The scroll is kept inside [group, 2 x group). Stepping a whole group either
+   way lands on identical content, so the wrap is invisible. */
+(() => {
+  "use strict";
+
+  const strip = document.querySelector(".portfolio-strip");
+  const track = strip && strip.querySelector(".portfolio-track");
+  const original = track && track.firstElementChild;
+  if (!original) return;
+
+  // px per second
+  const SPEED = parseFloat(track.dataset.strip) || 45;
+  // a pointer that travelled this far was dragging, not clicking
+  const SLOP = 6;
+
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const groupWidth = () => original.getBoundingClientRect().width;
+
+  function build() {
+    // start from a single group so a rebuild stays idempotent
+    while (track.children.length > 1) track.lastElementChild.remove();
+
+    const width = groupWidth();
+    if (!width) return;
+
+    // the two buffer groups either side of the resting window, plus enough to
+    // cover the box itself
+    const copies = Math.max(3, Math.ceil(strip.clientWidth / width) + 2);
+    for (let i = 1; i < copies; i++) {
+      const clone = original.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      // A copy is hidden from assistive tech, so nothing inside it may take
+      // focus: tabbing into aria-hidden content lands a keyboard user somewhere
+      // their screen reader says does not exist.
+      clone
+        .querySelectorAll("a[href], button, input, select, textarea, [tabindex]")
+        .forEach((el) => el.setAttribute("tabindex", "-1"));
+      track.append(clone);
+    }
+
+    strip.scrollLeft = width;
+  }
+
+  /* Holds the scroll in the middle group. Runs every frame rather than only
+     while drifting, so a flick or a wheel wraps as cleanly as the drift does. */
+  function wrap() {
+    const width = groupWidth();
+    if (!width) return;
+    if (strip.scrollLeft >= width * 2) strip.scrollLeft -= width;
+    else if (strip.scrollLeft < width) strip.scrollLeft += width;
+  }
+
+  let hovered = false;
+  let dragging = false;
+  let held = false;
+  let last = null;
+
+  function frame(now) {
+    const elapsed = last === null ? 0 : (now - last) / 1000;
+    last = now;
+
+    // A tab in the background hands back a gap of whole seconds; capping it
+    // stops the strip jumping the moment someone comes back to the page.
+    const drifting = !hovered && !dragging && !held && !still.matches;
+    if (drifting) strip.scrollLeft += SPEED * Math.min(elapsed, 0.05);
+
+    wrap();
+    requestAnimationFrame(frame);
+  }
+
+  const ready = document.fonts ? document.fonts.ready : Promise.resolve();
+  ready.then(() => {
+    build();
+    requestAnimationFrame(frame);
+
+    let timer;
+    if (window.ResizeObserver) {
+      new ResizeObserver(() => {
+        clearTimeout(timer);
+        timer = setTimeout(build, 200);
+      }).observe(strip);
+    }
+  });
+
+  strip.addEventListener("pointerenter", () => { hovered = true; });
+  strip.addEventListener("pointerleave", () => { hovered = false; });
+
+  let startX = 0;
+  let startScroll = 0;
+  let travelled = 0;
+
+  strip.addEventListener("pointerdown", (event) => {
+    // Touch already scrolls this natively and does it better — momentum, and
+    // the browser's own feel. All that is wanted there is to stop drifting
+    // under the finger.
+    if (event.pointerType === "touch") {
+      held = true;
+      return;
+    }
+    if (event.button !== 0) return;
+
+    dragging = true;
+    travelled = 0;
+    startX = event.clientX;
+    startScroll = strip.scrollLeft;
+    strip.classList.add("is-dragging");
+    // Capture keeps the drag alive when the pointer leaves the strip. It throws
+    // if the pointer has already gone, which a real one will not have done by
+    // here — the drag works without it either way, so it is not worth failing
+    // the handler over.
+    try {
+      strip.setPointerCapture(event.pointerId);
+    } catch (err) {
+      /* no capture, drag still tracks while the pointer stays over the strip */
+    }
+  });
+
+  strip.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    const moved = event.clientX - startX;
+    travelled = Math.max(travelled, Math.abs(moved));
+    strip.scrollLeft = startScroll - moved;
+    wrap();
+  });
+
+  function release(event) {
+    held = false;
+    if (!dragging) return;
+    dragging = false;
+    strip.classList.remove("is-dragging");
+    if (strip.hasPointerCapture(event.pointerId)) {
+      strip.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  strip.addEventListener("pointerup", release);
+  strip.addEventListener("pointercancel", release);
+
+  /* Every card is a link, so a drag that finishes on one would otherwise open
+     it. Captured on the way down, before the anchor sees the click. */
+  strip.addEventListener(
+    "click",
+    (event) => {
+      if (travelled > SLOP) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+})();
+
 /* Footer year — the markup carries the year it was written, so the page is
    still correct with JS off; this just keeps it from going stale. */
 (() => {

@@ -384,11 +384,11 @@
          it used to be duplicated on the homepage, which carries the same four
          projects as a panel under the hero instead.
 
-         It runs as an endless strip on the same [data-loop] machinery as the
-         client logos: main.js clones the group until it covers the box, so
-         there is no seam to reach. The cards are links, which a moving row
-         normally makes hard to hit — the strip stops while a pointer is over
-         it, and reduced motion stops it outright. -->
+         It runs as an endless strip that can also be grabbed and pulled. main.js
+         clones the group and drives scrollLeft, so there is no seam and no end
+         to reach. The cards are links, which a moving row would make hard to
+         hit — it stops while a pointer is over it, a drag that lands on a card
+         does not follow it, and reduced motion stops the drift outright. -->
     <section class="portfolio" aria-labelledby="portfolio-title">
       <header class="portfolio-head">
         <p class="section-eyebrow section-eyebrow--center">Case Studies</p>
@@ -396,7 +396,7 @@
       </header>
 
       <div class="portfolio-strip">
-        <div class="portfolio-track" data-loop="45">
+        <div class="portfolio-track" data-strip="45">
           <ul class="portfolio-group">
             <li class="portfolio-item">
               <a class="portfolio-card" href="https://tyleobattery.com" target="_blank" rel="noopener noreferrer">

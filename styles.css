@@ -4744,21 +4744,44 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--ink);
 }
 
-/* Full bleed, and running rather than scrolled by hand. Same machinery as the
-   client logos: main.js clones the group until the track covers this box, then
-   shifts by exactly one group, so there is no seam and no end to reach. */
+/* Full bleed, running on its own, and grabbable.
+
+   A real scroll container rather than an animated transform: main.js advances
+   scrollLeft a frame at a time and wraps it by one group, which is seamless
+   because the group is cloned. Driving the loop through scroll rather than
+   through a transform is what lets a drag and a touch swipe move the same
+   number — a transform animation would have had to be unwound and re-timed on
+   every grab. */
 .portfolio-strip {
   /* the backdrop it used to stack above is gone; descendants still position
      against it */
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* a flick that reaches the end of the strip must not drag the page with it */
+  overscroll-behavior-x: contain;
+  /* The bar would sit under a full-bleed row of photographs and the strip is
+     self-evidently draggable without it. It still scrolls by wheel, trackpad,
+     touch and keyboard — only the chrome is gone. */
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.portfolio-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Set while a pointer is down, so the cursor answers the grab and a drag across
+   the cards does not select the names inside them. */
+.portfolio-strip.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .portfolio-track {
   display: flex;
-  /* max-content so the shift lands exactly one group along */
+  /* max-content so the copies sit in one row rather than wrapping */
   width: max-content;
-  animation: marquee-scroll 40s linear infinite;
 }
 
 .portfolio-group {
@@ -4766,18 +4789,6 @@ html::-webkit-scrollbar-thumb:hover {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-/* The cards are links, and a link that is moving is a link that is hard to
-   hit — so the strip stops while a pointer is anywhere over it. */
-.portfolio-strip:hover .portfolio-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-track {
-    animation: none;
-  }
 }
 
 /* No gap between cards, the way the reference butts them together — the 1px
