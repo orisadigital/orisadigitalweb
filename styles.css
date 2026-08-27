@@ -4323,12 +4323,13 @@ html::-webkit-scrollbar-thumb:hover {
   padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 120px);
 }
 
-/* max-width has to carry the gutter as well, or box-sizing eats it out of the
-   1160 column and the text lands 24px inside every other section's edge */
+/* The homepage measure, the same one the pitch, the logo strip and the showcase
+   panel above it run to. A width plus auto margins rather than a max-width and
+   padding, so box-sizing has no gutter to eat out of the column — which is what
+   the calc() this replaces was working around. */
 .services-head {
-  max-width: calc(1160px + 48px);
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: 0 auto clamp(36px, 5vw, 64px);
-  padding: 0 24px;
   text-align: center;
 }
 
@@ -4383,15 +4384,16 @@ html::-webkit-scrollbar-thumb:hover {
   transition: background-color 0.3s ease;
 }
 
-/* contents re-constrained to the page column */
+/* The row itself is full bleed, so its hover tint and the rules above and below
+   it run to the window. Only the contents come back to the page column — the
+   same measure as the pitch above. */
 .service-row-inner {
   display: grid;
   grid-template-columns: 3.25rem minmax(0, 1fr) minmax(0, 24rem) 3rem;
   align-items: center;
   gap: clamp(16px, 3vw, 48px);
-  max-width: calc(1160px + 48px);
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: 0 auto;
-  padding: 0 24px;
   /* shifted rather than padded, so the full-width tint stays put */
   transition: transform 0.3s ease;
 }
