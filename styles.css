@@ -5270,36 +5270,51 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* The features bento takes the same rules. Its tiles span two columns and two
-   rows, so nth-child cannot say which of them land on an outer edge — instead
-   the grid itself carries the rule colour and the 1px gap between tiles is what
-   shows it. Every internal join gets a hairline whatever the spans do, and the
-   outer boundary gets none, because the tiles cover the container everywhere
-   except those gaps. */
-.features-grid--ruled {
+/* The other grids are ruled rather than crossed. Their tiles span two columns
+   or two rows, so nth-child cannot say which of them land on an outer edge the
+   way it can in the tidy 2x2 above. Instead the grid itself carries the rule
+   colour and the 1px gap between tiles is what shows it: every internal join
+   gets a hairline whatever the spans do, and the outer boundary gets none,
+   because the tiles cover the container everywhere except those gaps.
+
+   One shared class rather than four near-identical ones, since the only thing
+   that differs between these grids is what their cells are called.
+
+   Declared after .page--outlined, which is what gives these cards their
+   hairline box on four of the pages: same specificity, so source order is what
+   takes the box off. */
+.grid--ruled {
   gap: 1px;
   background: rgba(50, 56, 58, 0.14);
 }
 
-.features-grid--ruled .feature-tile {
-  /* opaque rather than transparent: these tiles are what hide the container's
+.grid--ruled .feature-tile,
+.grid--ruled .impact-card,
+.grid--ruled .value-card,
+.grid--ruled .benefit-card {
+  /* opaque rather than transparent: these cells are what hide the container's
      colour everywhere except the gaps */
   background: var(--page);
   border: 0;
   border-radius: 0;
 }
 
-/* Restated because .page--outlined paints this one black earlier in the sheet
-   at the same specificity, and the rule above would otherwise take it white. */
-.features-grid--ruled .feature-tile--tall {
+/* The one filled cell in each grid. Restated because .page--outlined paints
+   them earlier in the sheet at the same specificity, and the rule above would
+   otherwise take all three white. */
+.grid--ruled .feature-tile--tall,
+.grid--ruled .impact-card--accent,
+.grid--ruled .value-card--statement {
   background-color: var(--black);
 }
 
-/* Two columns leaves the last tile alone on its row, and an empty cell shows
-   as a block of the rule colour rather than as a line. Widening it fills the
-   row — measured, it was a 457x195 hole. */
+/* Only the features bento leaves a hole: at two columns its last tile sits
+   alone on its row, and an empty cell in this scheme is not a missing line but
+   a 457x195 block of solid rule colour. Widening it fills the row. The impact
+   and values grids reflow to exact rectangles at every breakpoint on their own,
+   which their own comments already say and which measuring confirms. */
 @media (max-width: 1040px) {
-  .features-grid--ruled .feature-tile:last-child {
+  .grid--ruled .feature-tile:last-child {
     grid-column: span 2;
   }
 }
@@ -5307,7 +5322,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* One column has no second track to span into, and asking for one would build
    an implicit column that nothing else fills. */
 @media (max-width: 620px) {
-  .features-grid--ruled .feature-tile:last-child {
+  .grid--ruled .feature-tile:last-child {
     grid-column: span 1;
   }
 }
