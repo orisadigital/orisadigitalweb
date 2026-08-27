@@ -4362,9 +4362,11 @@ html::-webkit-scrollbar-thumb:hover {
   transition: color 0.35s ease;
 }
 
-/* The accent only on the lit card, in the lifted tint: it is type on black. */
+/* White on the lit card, matching the title above it. It was --blue-lift,
+   the tint the site uses for type on black; the number reads as part of the
+   card now rather than as the one accent in it. */
 .approach-card.is-active::before {
-  color: var(--blue-lift);
+  color: #fff;
 }
 
 /* The copy inverts with the panel it is sitting on. */
