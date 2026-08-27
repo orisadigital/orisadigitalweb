@@ -3755,32 +3755,12 @@ html::-webkit-scrollbar-thumb:hover {
   max-height: var(--logo-h, 46px);
 }
 
-/* The default above assumes the file is cropped to its ink. This one is not —
-   about a third of its canvas is padding, so the shared cap sizes the mark
-   itself 40% small. --logo-h is the escape hatch for that: raise it until the
-   ink matches, and leave it alone for anything cropped tight. */
-.clients-item .clients-logo--rose {
-  --logo-h: 60px;
-}
-
 /* Square badges rather than wide lockups. Matching their ink area to the wide
    marks would want ~75-93px and they would tower over the row — a badge reads
    by its height, not its area. This sits between the two: the same ~50px of ink
    height the tallest lockups show, which is about a 48px mark. */
 .clients-item .clients-logo--badge {
   --logo-h: 50px;
-}
-
-/* As --badge, but this file carries ~16% padding inside its canvas. */
-.clients-item .clients-logo--safar {
-  --logo-h: 60px;
-}
-
-/* Cropped tight like the lockups, but a much chunkier mark — at the default cap
-   its ink comes out a quarter short of theirs. This matches it, and lands on
-   the same height as the badges it shares a row with. */
-.clients-item .clients-logo--tvs {
-  --logo-h: 53px;
 }
 
 
