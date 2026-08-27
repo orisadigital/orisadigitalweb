@@ -5366,7 +5366,8 @@ html::-webkit-scrollbar-thumb:hover {
 /* The pages that draw their cards rather than filling them: a hairline where
    the 4% grey used to be, and nothing behind it. Carried by a class on <main>,
    so a page opts in — the same classes are filled on the ones that have not.
-   /web-design and /green-energy so far.
+   /web-design, /green-energy and /web-app so far; /start-free is the last one
+   still filled.
 
    Declared after the rules it overrides, which is also why the lit and accent
    states below have to be restated: they sit at the same specificity as the
