@@ -277,41 +277,11 @@
       </div>
     </section>
 
-    <!-- Not the decorative .video-band the other pages use. That component is
-         muted, looping, aria-hidden and has no controls, which is right for
-         abstract footage and wrong for this: the clip is Faruqi speaking to
-         camera, making the same offer the page makes. Muting it or
-         hiding it from assistive tech would throw the content away.
+    <!-- The same two logo rows the homepage runs. They used to sit straight
+         under the video, which made the claim these are the answer to; with
+         the clip gone until the new one lands they sit one section higher,
+         directly under the hero that makes the offer.
 
-         So: real controls, audio intact, no autoplay, and preload="none" so
-         the 5MB only leaves the server for a visitor who actually presses
-         play. The poster carries the frame until then.
-
-         The clip has its subtitles burned into the picture, which serves deaf
-         viewers but not screen readers — a <track> caption file is still worth
-         adding when there is a transcript. -->
-    <section class="prototype-video" aria-label="Video: how the free prototype works">
-      <div class="prototype-video-inner">
-        <!-- Same bracket as the hero button on the homepage: .cta-frame, with a
-             modifier for block layout and a slightly larger mark, since this
-             frame is a thousand pixels wide rather than a hundred and fifty. -->
-        <div class="cta-frame cta-frame--media">
-          <video class="prototype-video-media" controls playsinline preload="none"
-                 poster="image/poster/startfree.webp" width="1280" height="720"
-                 aria-label="Faruqi explains the free website prototype offer">
-            <source src="video/startfree-854.mp4" media="(max-width: 600px)" type="video/mp4">
-            <source src="video/startfree-1280.mp4" type="video/mp4">
-            <p class="prototype-video-fallback">
-              Your browser cannot play this video.
-              <a href="video/startfree-1280.mp4">Download it instead</a>.
-            </p>
-          </video>
-        </div>
-      </div>
-    </section>
-
-    <!-- The same two logo rows the homepage runs, placed straight under the
-         video: the clip makes a claim, and these are who already took it up.
          main.js clones each group until the strip covers the viewport, so the
          markup only lists each logo once.
 
