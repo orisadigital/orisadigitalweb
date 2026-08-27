@@ -5270,6 +5270,48 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
+/* The features bento takes the same rules. Its tiles span two columns and two
+   rows, so nth-child cannot say which of them land on an outer edge — instead
+   the grid itself carries the rule colour and the 1px gap between tiles is what
+   shows it. Every internal join gets a hairline whatever the spans do, and the
+   outer boundary gets none, because the tiles cover the container everywhere
+   except those gaps. */
+.features-grid--ruled {
+  gap: 1px;
+  background: rgba(50, 56, 58, 0.14);
+}
+
+.features-grid--ruled .feature-tile {
+  /* opaque rather than transparent: these tiles are what hide the container's
+     colour everywhere except the gaps */
+  background: var(--page);
+  border: 0;
+  border-radius: 0;
+}
+
+/* Restated because .page--outlined paints this one black earlier in the sheet
+   at the same specificity, and the rule above would otherwise take it white. */
+.features-grid--ruled .feature-tile--tall {
+  background-color: var(--black);
+}
+
+/* Two columns leaves the last tile alone on its row, and an empty cell shows
+   as a block of the rule colour rather than as a line. Widening it fills the
+   row — measured, it was a 457x195 hole. */
+@media (max-width: 1040px) {
+  .features-grid--ruled .feature-tile:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* One column has no second track to span into, and asking for one would build
+   an implicit column that nothing else fills. */
+@media (max-width: 620px) {
+  .features-grid--ruled .feature-tile:last-child {
+    grid-column: span 1;
+  }
+}
+
 /* ---------- The page measure ---------- */
 
 /* One width for every section on the site, the one the homepage was rebuilt to.
