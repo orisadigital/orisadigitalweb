@@ -287,30 +287,22 @@
   </aside>
 
   <main class="page page--outlined" id="top">
-    <section class="about-hero" aria-labelledby="about-title">
-      <div class="about-hero-inner">
-        <div class="about-hero-copy">
+    <section class="page-hero" aria-labelledby="about-title">
+      <div class="page-hero-inner">
+        <!-- A plain eyebrow now the star has gone. The --star variant existed
+             to put a mark ahead of the rule, and hid the base rule's ::before
+             to do it; with no mark left, the ::before draws the same 30px
+             dash the span did. /website-pricing still runs the variant, with
+             an icon of its own. -->
+        <p class="section-eyebrow section-eyebrow--center">About Us</p>
+        <h1 class="section-title page-hero-title" id="about-title">Your Trusted Digital<br>
+          Growth Partner</h1>
 
-          <!-- A plain eyebrow now the star has gone. The --star variant existed
-               to put a mark ahead of the rule, and hid the base rule's ::before
-               to do it; with no mark left, the ::before draws the same 30px
-               dash the span did. /website-pricing still runs the variant, with
-               an icon of its own. -->
-          <p class="section-eyebrow">About Us</p>
-          <h1 class="section-title about-title" id="about-title">Your Trusted Digital<br>
-            Growth Partner</h1>
-
-          <p class="section-text">
-            A web design company in Kuching, Sarawak. We combine
-            strategy, design, and technology to create digital experiences that
-            deliver measurable results and long-term value.
-          </p>
-        </div>
-
-        <figure class="about-figure">
-          <picture><source srcset="image/orisa2.avif" type="image/avif"><img src="image/orisa2.webp" width="1536" height="1024" decoding="async"
-               alt="The Orisa Digital team"></picture>
-        </figure>
+        <p class="section-text page-hero-text">
+          A web design company in Kuching, Sarawak. We combine
+          strategy, design, and technology to create digital experiences that
+          deliver measurable results and long-term value.
+        </p>
       </div>
     </section>
 
@@ -363,7 +355,7 @@
           <p class="section-eyebrow">Leadership</p>
           <h2 class="section-title" id="leadership-title">Driving Sarawak&rsquo;s<br>
             Digital Future</h2>
-          <p class="section-text">
+        <p class="section-text page-hero-text">
             Faruqi, Founder of Orisa Digital, is committed to helping SMEs, corporations,
             and government agencies across Sarawak with web design and
             development. Guided by the
