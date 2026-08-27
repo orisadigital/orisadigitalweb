@@ -1183,23 +1183,29 @@ html::-webkit-scrollbar-thumb:hover {
   list-style: none;
 }
 
-/* 3:2, the ratio the case-study cards further down already crop to, so the two
-   sets of the same screenshots agree. */
+/* The screenshots' own 840x410, so that contained they fill the box exactly:
+   whole shot, no crop, and no bars either. The case-study cards below crop the
+   same images to 3:2, but they are twice the size there and can afford it.
+
+   White, because it is the mat the odd one out sits on. Three of the four fill
+   the box and never show it; the Wija wordmark is wider than this ratio, is
+   transparent, and is half black — on the panel's own grey that half would
+   disappear. */
 .showcase-shot {
   display: block;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 840 / 410;
   overflow: hidden;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #fff;
 }
 
 .showcase-img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* screenshots: the masthead is the part worth keeping when the crop bites */
-  object-position: center top;
+  /* Nothing is cut off. Anything that is not this ratio is centred in the
+     white and letterboxed rather than cropped to fit. */
+  object-fit: contain;
 }
 
 .showcase-name {
