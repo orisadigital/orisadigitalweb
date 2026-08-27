@@ -3853,8 +3853,15 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: clamp(22px, 2.6vw, 32px);
 }
 
-/* .testimonial-avatar's treatment at a larger size: ink ground carrying the
-   initials, image over the top, both clipped round.
+/* .testimonial-avatar's treatment at a larger size, with one difference: no
+   ground behind the image.
+
+   Two of the three sources are circular cutouts with an alpha channel. The
+   avatars in the testimonials sit on ink, which the antialiased edge of a
+   cutout lets through as a dark rim — invisible at 40px against a dark
+   portrait, a drawn-on border at 44px against a light one. Nothing behind them
+   here, so the edge fades into the page instead. The initials keep their job,
+   in ink rather than white: they are what shows if an image never arrives.
 
    44px rather than the reference's 50: the smallest of the three sources is a
    36px cutout, and this is as far as it can be pushed before it softens. */
@@ -3868,8 +3875,8 @@ html::-webkit-scrollbar-thumb:hover {
   height: 44px;
   /* the same exception the testimonial avatars take: a face reads as a portrait */
   border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
+  background: transparent;
+  color: rgba(50, 56, 58, 0.6);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
