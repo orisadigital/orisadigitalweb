@@ -481,16 +481,16 @@ html::-webkit-scrollbar-thumb:hover {
   text-decoration: none;
 }
 
-/* Solid white, not the blurred wash it was. The class name stays: it is still
-   the pale card of the three, and renaming it would touch the drawer markup on
-   every page to say the same thing. The shadow stays too — all three cards
-   carry one, and it is what holds them off the dimmed page behind. */
+/* Solid white, not the blurred wash it was, and flat. The class name stays: it
+   is still the pale card of the three, and renaming it would touch the drawer
+   markup on every page to say the same thing.
+
+   The hairline stays, and it is the only one of the three that has one — the
+   other two are dark on a dimmed page and read as their own edge; this is white
+   on white and would not. */
 .drawer-card--glass {
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
-  box-shadow:
-    0 2px 4px rgba(16, 20, 24, 0.05),
-    0 18px 44px rgba(16, 20, 24, 0.12);
   color: var(--ink);
 }
 
@@ -499,7 +499,6 @@ html::-webkit-scrollbar-thumb:hover {
 .drawer-card--neon {
   background: var(--blue);
   color: #fff;
-  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.14);
   transition: filter 0.2s ease;
 }
 
@@ -510,7 +509,6 @@ html::-webkit-scrollbar-thumb:hover {
 .drawer-card--black {
   background: var(--black);
   color: #fff;
-  box-shadow: 0 14px 34px rgba(16, 20, 24, 0.18);
 }
 
 .drawer-eyebrow {
