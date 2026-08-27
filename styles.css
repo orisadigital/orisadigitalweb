@@ -626,14 +626,18 @@ html::-webkit-scrollbar-thumb:hover {
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* The pill was a white wash blurring whatever sat behind it. There is nothing
-   behind it now, so the blur only costs a compositing layer: it becomes a plain
-   hairline outline holding a lit face. */
+/* No box at all: the pill's wash, blur and hairline were there to lift the
+   label off moving footage, and this hero has none — the flag and the words on
+   a flat ground are enough. The bottom margin absorbs the padding it loses so
+   the gap to the headline does not close up. */
 .hero--plain .hero-eyebrow {
-  background: rgba(255, 255, 255, 0.06);
+  margin-bottom: 26px;
+  padding: 0;
+  background: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-color: rgba(255, 255, 255, 0.18);
+  border: 0;
+  border-radius: 0;
   color: rgba(255, 255, 255, 0.88);
 }
 
