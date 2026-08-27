@@ -2785,42 +2785,15 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* The technology band pins to the viewport and the section after it — the CTA —
-   scrolls up and covers it. Only above the breakpoint below, where the band is
-   a fixed-height scatter; once it becomes a stacked wrap its height is content
-   driven and pinning it would crop the chips on a short screen.
+/* The technology band used to pin to the viewport while the section after it —
+   the CTA on /about, the only page it ran on — scrolled up and covered it. That
+   CTA is gone, so the band is the last thing in <main> and has nothing to be
+   covered by: sticky with no room to travel in its containing block does
+   nothing at all, and the pinning, the 100vh floor and the panel that slid over
+   it go with the section they were choreographed against.
 
-   `.tech + .cta` rather than a class on the CTA itself: it scopes the treatment
-   to the page where the two are actually adjacent, leaving the home page's CTA
-   untouched. */
-@media (min-width: 1041px) {
-  .tech {
-    position: sticky;
-    top: 0;
-    min-height: 100vh;
-  }
-
-  .tech + .cta {
-    position: relative;
-    /* lifts the CTA over the pinned band; without this they paint in DOM order
-       and the sticky section would show through */
-    z-index: 1;
-    /* reads as a panel sliding over rather than an abutting section */
-    border-radius: 5px 5px 0 0;
-    /* At least as tall as the band it covers. Sticky releases when its
-       containing block runs out of room, so a shorter CTA lets the band drift
-       upward before the cover completes. */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-
-  /* .cta is a flex container here, and its inner used to be a shrink-to-fit
-     item that needed stretching before its max-width could bite. The page
-     measure gives it an explicit width and auto inline margins, which is the
-     same thing said properly — so there is nothing left for a width: 100% to
-     do here except outrank it. */
-}
+   What is left below the old breakpoint is the layout for the chips, which is
+   its own thing and unchanged. */
 
 /* No room to scatter chips around the copy here, so they line up under it.
    The threshold is set by the copy, not the chips: it is capped at 640px, so
