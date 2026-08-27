@@ -3884,7 +3884,11 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 15px 30px;
   border: 1px solid rgba(50, 56, 58, 0.28);
   border-radius: 0;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  /* Inter rather than Inter Tight, for the same reason as .hero-btn: Inter
+     Tight is self-hosted at one static weight, Black, so this rule already
+     said 700 and still rendered as 900. Inter is the variable file loaded
+     on every page and it has a real bold. */
+  font-family: Inter, system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1;
