@@ -2860,9 +2860,11 @@ html::-webkit-scrollbar-thumb:hover {
     align-items: center;
   }
 
-  .tech + .cta .cta-inner {
-    width: 100%;
-  }
+  /* .cta is a flex container here, and its inner used to be a shrink-to-fit
+     item that needed stretching before its max-width could bite. The page
+     measure gives it an explicit width and auto inline margins, which is the
+     same thing said properly — so there is nothing left for a width: 100% to
+     do here except outrank it. */
 }
 
 /* No room to scatter chips around the copy here, so they line up under it.
@@ -2906,16 +2908,17 @@ html::-webkit-scrollbar-thumb:hover {
    padding runs together, so without it the two read as one long stretch.
 
    A pseudo-element rather than a border-top on the section: that would run to
-   the window, and this holds the line to the same 1160px the copy sits in. It
+   the window, and this holds the line to the same measure the copy sits in. It
    sits on the section's own top edge, so the padding either side of it is the
    air the two sections already had. Same weight as the service list dividers. */
 .benefits + .features::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 24px;
-  right: 24px;
-  max-width: 1160px;
+  /* zero either side with an auto margin, so the cap below is what centres it */
+  left: 0;
+  right: 0;
+  max-width: min(1560px, calc(100% - var(--panel-gutter)));
   height: 1px;
   margin: 0 auto;
   background: rgba(50, 56, 58, 0.14);
@@ -5397,6 +5400,55 @@ html::-webkit-scrollbar-thumb:hover {
   max-width: 1160px;
   margin: 0 auto;
   text-align: center;
+}
+
+/* ---------- The page measure ---------- */
+
+/* One width for every section on the site, the one the homepage was rebuilt to.
+   Declared here, after all of them, so each section's own rule stays readable
+   and this is the single place the measure is set.
+
+   Two halves. The sections give up the 24px of inline padding they carried,
+   and the block inside each one takes a width and centres itself — a width
+   rather than a max-width, so box-sizing has no padding to eat out of the
+   column. That is the same pattern the homepage's blocks already use.
+
+   Not everything is on it. The calculator keeps its own; so do the blocks whose
+   cap is a reading measure rather than a page measure — .page-hero-inner at
+   760, .legal-inner at 720, .prototype-video-inner at 1040 — which are narrower
+   on purpose and have nothing to do with the width of a section. */
+.about-hero,
+.values,
+.team,
+.features,
+.impact,
+.hosting,
+.benefits,
+.feature,
+.clients,
+.leadership,
+.approach,
+.portfolio-head,
+.cta {
+  padding-inline: 0;
+}
+
+.about-hero-inner,
+.values-inner,
+.team-inner,
+.features-inner,
+.impact-inner,
+.hosting-inner,
+.benefits-inner,
+.feature-inner,
+.clients-inner,
+.leadership-inner,
+.approach-inner,
+.portfolio-head,
+.cta-inner {
+  max-width: none;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
+  margin-inline: auto;
 }
 
 
