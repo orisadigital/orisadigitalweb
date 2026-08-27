@@ -746,15 +746,16 @@
          more than one row can sit open, which costs nothing. -->
     <section class="faq" aria-labelledby="faq-title">
       <div class="faq-inner">
-        <div class="faq-intro">
-          <p class="section-eyebrow">Questions</p>
-          <h2 class="section-title" id="faq-title">Before You<br>
-            Get in Touch</h2>
-          <p class="section-text">
-            The things people ask us most, answered plainly. If yours is not
-            here, send it over — we would rather answer it than have you guess.
-          </p>
-        </div>
+        <!-- Centred over the full-width list, to a supplied reference. It used
+             to be a sticky left column carrying an eyebrow, "Before You Get in
+             Touch", and a paragraph; the reference has a heading and the rows
+             and nothing else, and the paragraph's offer to answer anything
+             missing is what the call to action right below already makes.
+
+             The newline after <br> keeps a space in the text content, so the
+             heading does not read as "Frequently AskedQuestions". -->
+        <h2 class="faq-title" id="faq-title">Frequently Asked<br>
+          Questions</h2>
 
         <ul class="faq-list">
           <li class="faq-item">

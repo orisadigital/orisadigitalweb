@@ -5021,23 +5021,28 @@ html::-webkit-scrollbar-thumb:hover {
 /* Same two-column split as the approach section — a short intro that holds
    position beside the longer list — so the page keeps one rhythm rather than
    introducing a second one this close to the end. */
+/* No side padding — .faq-inner carries the page measure, the same one every
+   other block on this page runs to. */
 .faq {
-  padding: clamp(56px, 8vw, 104px) 24px clamp(64px, 9vw, 120px);
+  padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 9vw, 120px);
 }
 
 .faq-inner {
-  max-width: 1160px;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: start;
 }
 
-.faq-intro {
-  position: sticky;
-  /* clears the fixed header, which is what the offset variable is for */
-  top: calc(var(--header-height) + var(--header-offset) + 24px);
+/* Title case, not the uppercase .section-title carries, and centred over the
+   full-width list rather than beside it. */
+.faq-title {
+  margin: 0 0 clamp(28px, 3.6vw, 48px);
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  text-align: center;
+  color: var(--ink);
 }
 
 .faq-list {
@@ -5056,7 +5061,7 @@ html::-webkit-scrollbar-thumb:hover {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: clamp(20px, 2.4vw, 26px) 0;
+  padding: clamp(24px, 2.9vw, 34px) 0;
   cursor: pointer;
   list-style: none;
   transition: color 0.3s ease;
@@ -5089,27 +5094,24 @@ html::-webkit-scrollbar-thumb:hover {
   text-wrap: balance;
 }
 
+/* A bare plus on the rule, no chip behind it — the reference draws it as one
+   more mark on the row rather than as a button. */
 .faq-marker {
   flex: none;
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
-  border-radius: 5px;
-  background: rgba(50, 56, 58, 0.06);
-  transition: background-color 0.3s ease;
 }
 
-.faq-details[open] .faq-marker {
-  background: var(--neon);
-}
-
+/* currentColor, so it dims with the question when the row is hovered instead of
+   staying at full strength beside greyed type. */
 .faq-marker svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   fill: none;
-  stroke: var(--ink);
-  stroke-width: 1.75;
+  stroke: currentColor;
+  stroke-width: 2;
   stroke-linecap: round;
 }
 
@@ -5129,7 +5131,8 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .faq-answer {
-  padding: 0 54px clamp(22px, 2.4vw, 28px) 0;
+  /* the right inset clears the marker: 24px of mark plus the 20px gap */
+  padding: 0 44px clamp(22px, 2.4vw, 28px) 0;
 }
 
 .faq-answer p {
@@ -5173,17 +5176,6 @@ html::-webkit-scrollbar-thumb:hover {
 
   .faq-details[open]::details-content {
     height: auto;
-  }
-}
-
-@media (max-width: 860px) {
-  .faq-inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Nothing left to hold position beside once the columns stack. */
-  .faq-intro {
-    position: static;
   }
 }
 
