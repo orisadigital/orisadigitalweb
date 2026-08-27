@@ -4503,13 +4503,14 @@ html::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
-  /* Centred. The three links very nearly fill the row, so this only shows on
-     the wider phones — but where there is slack it is split either side rather
-     than left at one end. The negative inline margin is buying width, not
-     alignment: it cancels the outer links' own padding, which is 10px the row
-     does not have to find. */
+  /* Space around: each link gets the same room either side of it, so the two
+     gaps at the ends come to half the ones between. The three very nearly fill
+     the row, so there is little to hand out and this reads as evenly spread
+     rather than as gaps — which is the point of it here. The negative inline
+     margin is buying width, not alignment: it cancels the outer links' own
+     padding, which is 10px the row does not have to find. */
   .nav-list {
-    justify-content: center;
+    justify-content: space-around;
     gap: 3px;
     padding: 5px 0 7px;
     margin-inline: -5px;
