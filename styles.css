@@ -4024,11 +4024,14 @@ html::-webkit-scrollbar-thumb:hover {
 .voices-quote p {
   max-width: 34ch;
   margin: 0 auto;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(1.5rem, 3vw, 2.75rem);
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.18;
-  letter-spacing: -0.01em;
+  /* Was -0.01em, which existed to tighten Inter Tight Black. Playfair is a
+     serif set large here, and pulling it in crowds the serifs where they
+     meet; the headings it now matches sit at 0.01em. */
+  letter-spacing: 0;
   color: var(--ink);
   text-wrap: pretty;
 }
