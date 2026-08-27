@@ -3439,7 +3439,8 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Solid rather than the 4% tint the other card sets use: this section carries
    the grid backdrop, and a near-transparent fill lets the lines run straight
-   through the card so it stops reading as one. */
+   through the card so it stops reading as one. Flat, though — the fill and the
+   hairline are what hold it against the pattern, with nothing lifting it off. */
 .hosting-card {
   display: flex;
   flex-direction: column;
@@ -3448,9 +3449,6 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: 5px;
   background: #fff;
   border: 1px solid rgba(50, 56, 58, 0.09);
-  box-shadow:
-    0 1px 2px rgba(16, 20, 24, 0.04),
-    0 10px 28px rgba(16, 20, 24, 0.06);
 }
 
 /* A fixed slot, so both marks occupy the same band and the copy beneath them
