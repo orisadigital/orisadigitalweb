@@ -5434,6 +5434,16 @@ html::-webkit-scrollbar-thumb:hover {
   border-color: transparent;
 }
 
+/* The lit card changes colour and nothing else. It carried a two-layer drop
+   shadow that raised it off the page as the scroll reached it, which is the one
+   thing on this page still pretending to depth now that the cards around it are
+   outlines. The base rule keeps transitioning box-shadow, harmlessly: there is
+   nothing left for it to move between here, and the other two pages that run
+   this section still have a shadow to ease. */
+.page--outlined .approach-card.is-active {
+  box-shadow: none;
+}
+
 /* No hover state on any of them. The shared rules turn these cards white and
    the dark tile a shade darker; both are declared earlier in the sheet at the
    same specificity as the two rules above, so leaving those to win on order is
