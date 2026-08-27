@@ -1383,11 +1383,6 @@ html::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
-.section-eyebrow .ai-star {
-  width: 13px;
-  height: 13px;
-}
-
 /* An outlined mark in the same slot as the solid star. Two points apart from it:
    a couple of pixels larger, because an outline reads smaller than a filled
    shape at the same box, and a heavier stroke, because 1.4 disappears at this

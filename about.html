@@ -291,13 +291,12 @@
       <div class="about-hero-inner">
         <div class="about-hero-copy">
 
-          <p class="section-eyebrow section-eyebrow--star">
-            <svg class="ai-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M12 1.6c.62 5.4 4.4 9.18 9.8 9.8-5.4.62-9.18 4.4-9.8 9.8-.62-5.4-4.4-9.18-9.8-9.8 5.4-.62 9.18-4.4 9.8-9.8Z"/>
-            </svg>
-            <span class="eyebrow-rule" aria-hidden="true"></span>
-            About Us
-          </p>
+          <!-- A plain eyebrow now the star has gone. The --star variant existed
+               to put a mark ahead of the rule, and hid the base rule's ::before
+               to do it; with no mark left, the ::before draws the same 30px
+               dash the span did. /website-pricing still runs the variant, with
+               an icon of its own. -->
+          <p class="section-eyebrow">About Us</p>
           <h1 class="section-title about-title" id="about-title">Your Trusted Digital<br>
             Growth Partner</h1>
 
