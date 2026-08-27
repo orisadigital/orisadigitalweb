@@ -484,21 +484,19 @@
       </ul>
     </section>
 
-    <!-- main.js clones the group until the strip covers the viewport, the same
-         way the services and gallery strips work. about.html runs the same
-         two rows under its own heading. -->
-    <section class="clients" aria-label="Trusted by">
+    <!-- One row here, where about.html runs the same logos as two. main.js
+         clones the group until the strip covers the viewport, the same way the
+         gallery and testimonial strips work — so one line of logos still fills
+         it however few of them there are.
+
+         The label is a real heading rather than the section's aria-label it
+         replaces: it is on the page now, so it belongs in the outline too. -->
+    <section class="clients clients--titled" aria-labelledby="clients-title">
+      <h2 class="section-eyebrow section-eyebrow--center" id="clients-title">Trusted by Locals</h2>
+
       <div class="clients-inner clients-inner--strip">
         <div class="clients-track" data-loop="30">
           <ul class="clients-group">
-            <li class="clients-item">
-              <picture><source srcset="image/Suara-Sarawak.avif" type="image/avif"><img src="image/Suara-Sarawak.webp" width="744" height="199"
-                   loading="lazy" decoding="async" alt="Suara Sarawak"></picture>
-            </li>
-            <li class="clients-item">
-              <picture><source srcset="image/Sarawak-Tribune.avif" type="image/avif"><img src="image/Sarawak-Tribune.webp" width="744" height="199"
-                   loading="lazy" decoding="async" alt="Sarawak Tribune"></picture>
-            </li>
             <li class="clients-item">
               <picture><source srcset="image/Utusan-Sarawak.avif" type="image/avif"><img class="clients-logo--flat" src="image/Utusan-Sarawak.webp" width="744" height="199"
                    loading="lazy" decoding="async" alt="Utusan Sarawak"></picture>
@@ -513,27 +511,12 @@
                    loading="lazy" decoding="async" alt="Intercargo"></picture>
             </li>
             <li class="clients-item">
-              <picture><source srcset="image/tvs.avif" type="image/avif"><img class="clients-logo--tight clients-logo--tvs" src="image/tvs.webp"
-                   width="214" height="106"
-                   loading="lazy" decoding="async" alt="TVS"></picture>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Second row, running the other way. Add further logos to this group. -->
-        <div class="clients-track clients-track--reverse" data-loop="30">
-          <ul class="clients-group">
-            <li class="clients-item">
               <picture><source srcset="image/morsidi.avif" type="image/avif"><img class="clients-logo--tight" src="image/morsidi.webp" width="222" height="81"
                    loading="lazy" decoding="async" alt="Morsidi Group of Companies"></picture>
             </li>
             <li class="clients-item">
               <picture><source srcset="image/um.avif" type="image/avif"><img class="clients-logo--tight" src="image/um.webp" width="280" height="92"
                    loading="lazy" decoding="async" alt="Universiti Malaya"></picture>
-            </li>
-            <li class="clients-item">
-              <picture><source srcset="image/yale.avif" type="image/avif"><img class="clients-logo--tight" src="image/yale.webp" width="329" height="92"
-                   loading="lazy" decoding="async" alt="Yale University"></picture>
             </li>
             <li class="clients-item">
               <picture><source srcset="image/rose.avif" type="image/avif"><img class="clients-logo--tight clients-logo--rose" src="image/rose.webp"

@@ -27,6 +27,10 @@
   --header-nav-row: 0px;
   --toggle-size: 44px;
   --menu-icon-size: 24px;
+  /* The homepage's own measure: the showcase panel and the logo strip under it
+     both run to min(1560px, 100% - this), so their edges line up with each
+     other and with the header's padding at the same width. */
+  --panel-gutter: 60px;
   /* How far the homepage showcase panel is pulled up over the foot of the hero.
      Read by the panel's own top margin and by the hero's scroll cue, which
      clears it by the same figure. Enough to read as an overlap and no more —
@@ -1180,12 +1184,11 @@ html::-webkit-scrollbar-thumb:hover {
   /* Wider than the 1160px the sections below it run to — the header is full
      bleed now, and a narrow panel under it read as the odd one out.
 
-     The panel is the only section carrying the page gutter itself, since it has
-     a visible edge where the others are just type on the ground. 30px each
-     side, which is the header's own padding, so the panel's edges land under
-     the logo and the icon buttons rather than near them. The two narrow
-     breakpoints below follow the header's figures for the same reason. */
-  width: min(1560px, calc(100% - 60px));
+     The panel carries the page gutter itself, since it has a visible edge where
+     most sections are just type on the ground. --panel-gutter is twice the
+     header's own padding at each width, so the panel's edges land under the
+     logo and the icon buttons rather than near them. */
+  width: min(1560px, calc(100% - var(--panel-gutter)));
   /* The lift is the overlap. It comes off the top margin here and is added to
      the hero's scroll cue below, so the two move together and the cue is never
      covered. */
@@ -1246,19 +1249,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* Both of these track the header's padding at the same width, so the panel's
-   edges stay under the logo and the icon buttons. */
-@media (max-width: 960px) {
-  .showcase {
-    width: min(1560px, calc(100% - 40px));
-  }
-}
-
 @media (max-width: 600px) {
-  .showcase {
-    width: min(1560px, calc(100% - 36px));
-  }
-
   .showcase-name {
     font-size: 13px;
   }
@@ -3661,6 +3652,26 @@ html::-webkit-scrollbar-thumb:hover {
   padding-top: 0;
 }
 
+/* With a heading above it, the strip's own top margin is a second gap doing
+   the same job — the heading's 20px is the one that should show. */
+.clients--titled .clients-track:first-child {
+  margin-top: 0;
+}
+
+/* The section's own side padding goes, so the strip can carry the homepage
+   measure instead and line its clipped edges up with the panel above it. The
+   heading is centred either way. */
+.clients--titled {
+  padding-inline: 0;
+}
+
+.clients--titled .clients-inner--strip {
+  /* the base .clients-inner caps at 1160px, which is narrower than the panel */
+  max-width: none;
+  width: min(1560px, calc(100% - var(--panel-gutter)));
+  margin-inline: auto;
+}
+
 .clients--tight .clients-track:first-child {
   margin-top: 0;
 }
@@ -4264,6 +4275,8 @@ html::-webkit-scrollbar-thumb:hover {
     --toggle-size: 42px;
     /* measured: the wrapped bar runs 129px against a 72px top row */
     --header-nav-row: 57px;
+    /* the header pads to 20px here, so the panel and strip do too */
+    --panel-gutter: 40px;
   }
 
   .logo-mark {
@@ -4327,6 +4340,8 @@ html::-webkit-scrollbar-thumb:hover {
     --toggle-size: 40px;
     /* measured: 106px bar against a 60px top row */
     --header-nav-row: 46px;
+    /* the header pads to 18px here */
+    --panel-gutter: 36px;
     --drawer-gap: 12px;
   }
 
