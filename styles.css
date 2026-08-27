@@ -4374,53 +4374,6 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: 20px;
 }
 
-/* ---------- Approach progress ---------- */
-
-.approach-progress {
-  max-width: 320px;
-  margin-top: clamp(26px, 3.2vw, 40px);
-}
-
-.approach-progress-count {
-  margin: 0 0 12px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  color: rgba(50, 56, 58, 0.45);
-  /* the step number changes width between "1" and "6" in Inter's proportional
-     figures, which would jog the slash — tabular figures hold it still */
-  font-variant-numeric: tabular-nums;
-}
-
-.approach-progress-count [data-step] {
-  color: var(--ink);
-}
-
-.approach-progress-track {
-  position: relative;
-  height: 3px;
-  border-radius: 5px;
-  background: rgba(50, 56, 58, 0.12);
-}
-
-.approach-progress-fill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  border-radius: inherit;
-  background: var(--ink);
-  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .approach-progress-fill {
-    transition: none;
-  }
-}
-
 .approach-steps {
   display: flex;
   flex-direction: column;

@@ -1688,21 +1688,6 @@
 
   const inBand = new Set();
 
-  const fill = document.querySelector(".approach-progress-fill");
-  const stepLabel = document.querySelector(".approach-progress [data-step]");
-  const totalLabel = document.querySelector(".approach-progress [data-total]");
-  const pad = (n) => String(n).padStart(2, "0");
-
-  if (totalLabel) totalLabel.textContent = pad(cards.length);
-
-  function progress(index) {
-    if (fill) fill.style.width = ((index + 1) / cards.length) * 100 + "%";
-    if (stepLabel) stepLabel.textContent = pad(index + 1);
-  }
-
-  // the bar reads as "step one, not yet started" until a card takes the line
-  progress(0);
-
   function mark() {
     const line = window.innerHeight * LINE;
 
@@ -1723,7 +1708,6 @@
     if (!best) return;
 
     cards.forEach((card) => card.classList.toggle("is-active", card === best));
-    progress(cards.indexOf(best));
   }
 
   // A band rather than a line: a zero-height root is fragile, and this still
