@@ -77,7 +77,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* The page scrollbar, in the site's neon.
+/* The page scrollbar, in the site's dark grey — the same ink the type is set
+   in, so it reads as part of the furniture rather than as a fifth accent.
 
    Scoped to html rather than left bare: an unqualified ::-webkit-scrollbar
    would repaint every scrolling box on the site, including the two that hide
@@ -100,17 +101,17 @@ html::-webkit-scrollbar-track {
 
 html::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: var(--neon);
+  background: var(--ink);
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-hover);
+  background: var(--black-hover);
 }
 
 @supports (scrollbar-color: auto) and (not selector(::-webkit-scrollbar)) {
   html {
     scrollbar-width: thin;
-    scrollbar-color: var(--neon) transparent;
+    scrollbar-color: var(--ink) transparent;
   }
 }
 
