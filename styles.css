@@ -5201,6 +5201,75 @@ html::-webkit-scrollbar-thumb:hover {
    all it takes — there is nothing here to switch the hover off, because there
    is nothing left switching it on. */
 
+/* ---------- Benefits as quadrants ---------- */
+
+/* /web-design draws its four benefits as quadrants of a single cross rather
+   than as four separate cards. Declared after .page--outlined above, which is
+   what gives every other card on that page its hairline box: same specificity,
+   so source order is what takes the box off these four. */
+.benefits-grid--ruled {
+  gap: 0;
+}
+
+.benefits-grid--ruled .benefit-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  /* centred in the quadrant rather than pinned to the bottom: with a rule
+     under the top row, flex-end would sit those two labels on the line */
+  justify-content: center;
+  gap: 0;
+  min-height: clamp(132px, 13vw, 164px);
+  padding: clamp(20px, 2.2vw, 28px);
+}
+
+/* The cross. Two borders draw all four arms: in a two-column grid the odd
+   cells are the left column and the first two are the top row, so a right edge
+   on one pair and a bottom edge on the other meet at the centre and stop at the
+   block's outer edge — nothing doubles, and no box is drawn around the figure.
+   Padding goes on the inner sides only, so the labels keep clear of the rules
+   while the block still starts flush with the copy column beside it.
+
+   Above the single-column breakpoint only: stacked, there is no cross. */
+@media (min-width: 561px) {
+  .benefits-grid--ruled .benefit-card:nth-child(odd) {
+    border-right: 1px solid rgba(50, 56, 58, 0.14);
+    padding-left: 0;
+  }
+
+  .benefits-grid--ruled .benefit-card:nth-child(even) {
+    padding-right: 0;
+  }
+
+  .benefits-grid--ruled .benefit-card:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(50, 56, 58, 0.14);
+    padding-top: 0;
+  }
+
+  .benefits-grid--ruled .benefit-card:nth-child(n + 3) {
+    padding-bottom: 0;
+  }
+}
+
+/* One column, so the same hairline becomes a divider between the four. The
+   last one has nothing under it to divide from. */
+@media (max-width: 560px) {
+  .benefits-grid--ruled .benefit-card {
+    min-height: 0;
+    padding: clamp(18px, 5vw, 24px) 0;
+    border-bottom: 1px solid rgba(50, 56, 58, 0.14);
+  }
+
+  .benefits-grid--ruled .benefit-card:first-child {
+    padding-top: 0;
+  }
+
+  .benefits-grid--ruled .benefit-card:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
 /* ---------- The page measure ---------- */
 
 /* One width for every section on the site, the one the homepage was rebuilt to.
