@@ -2614,13 +2614,6 @@ html::-webkit-scrollbar-thumb:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-
-@media (hover: hover) {
-  .team-card:hover .team-photo img {
-    transform: scale(1.045);
-  }
 }
 
 .team-name {
@@ -2654,12 +2647,6 @@ html::-webkit-scrollbar-thumb:hover {
   color: #fafafa;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .team-photo img {
-    transition: none;
-  }
 }
 
 /* Four across needs the full 1160px to keep the longer roles on one line.
