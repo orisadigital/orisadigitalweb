@@ -5093,43 +5093,6 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* A tinted, dotted band behind the "what you get" grid, so it does not run
-   together with the white sections either side of it.
-
-   Dots rather than the ruled grid the other bands carry: over a set of bordered
-   cards a full grid reads as a second set of card edges. */
-.benefits--dotted {
-  position: relative;
-  overflow: hidden;
-  background: #f4f5f5;
-  --dot-cell: clamp(22px, 2.2vw, 30px);
-  --dot-ink: rgba(50, 56, 58, 0.16);
-}
-
-.benefits--dotted::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle at center, var(--dot-ink) 1px, transparent 1.5px);
-  background-size: var(--dot-cell) var(--dot-cell);
-}
-
-.benefits--dotted .benefits-inner {
-  /* sits above the dot backdrop */
-  position: relative;
-  z-index: 1;
-}
-
-/* A near-white fill and a hairline instead of the flat 4% ink these cards use
-   on a white page — at that tint they would all but vanish against this
-   ground. Hover still resolves to solid white, so the state has somewhere to
-   go. */
-.benefits--dotted .benefit-card {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(50, 56, 58, 0.12);
-}
-
 /* Heading above the cards rather than beside them, and six cards as 3 x 2.
    The shared bento pairs a short intro with a 2-up grid in two columns; here
    the six items are the point and the copy is a caption, so the intro takes
