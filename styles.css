@@ -1201,14 +1201,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* ---------- Stats ---------- */
-
-.stats {
-  padding: clamp(56px, 8vw, 104px) 24px;
-}
-
 /* Sections that carry the grid backdrop. */
-.stats,
 .portfolio,
 .gallery,
 .cta,
@@ -1224,7 +1217,6 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Grid backdrop. Two 1px gradients make the lines; the mask fades them out
    toward all four edges so the pattern has no hard boundary. */
-.stats::before,
 .portfolio::before,
 .gallery::before,
 .cta::before,
@@ -1254,91 +1246,6 @@ html::-webkit-scrollbar-thumb:hover {
     rgba(0, 0, 0, 0.12) 78%,
     transparent 94%
   );
-}
-
-
-.stats-grid {
-  /* sits above the grid backdrop */
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-.stat-card {
-  padding: 34px 24px 30px;
-  border-radius: 5px;
-  background: #fff;
-  border: 1px solid rgba(50, 56, 58, 0.09);
-  box-shadow:
-    0 1px 2px rgba(16, 20, 24, 0.04),
-    0 10px 28px rgba(16, 20, 24, 0.06);
-  text-align: center;
-}
-
-.stat-value {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  margin: 0 0 10px;
-  font-family: "Inter Tight", Inter, system-ui, sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.75rem, 5.2vw, 4rem);
-  line-height: 1;
-  letter-spacing: 0.01em;
-  color: var(--ink);
-}
-
-/* main.js reserves the settled width here so the digits can't jitter the
-   layout as they count (Anton's "1" is much narrower than its other digits). */
-.stat-number {
-  display: inline-block;
-  /* centred so any reserved slack splits evenly instead of shunting the suffix */
-  text-align: center;
-}
-
-.stat-suffix {
-  color: rgba(50, 56, 58, 0.45);
-}
-
-.stat-unit {
-  margin-left: 0.14em;
-  font-size: 0.5em;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.stat-label {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  line-height: 1.45;
-  text-transform: uppercase;
-  color: rgba(50, 56, 58, 0.6);
-}
-
-@media (max-width: 860px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-}
-
-@media (max-width: 420px) {
-  .stat-card {
-    padding: 26px 14px 22px;
-  }
-
-  .stat-label {
-    font-size: 11.5px;
-    letter-spacing: 0.05em;
-  }
 }
 
 /* ---------- Section furniture ---------- */
@@ -3387,8 +3294,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Solid rather than the 4% tint the other card sets use: this section carries
    the grid backdrop, and a near-transparent fill lets the lines run straight
-   through the card so it stops reading as one. Same treatment as .stat-card,
-   which sits over the same grid on the home page. */
+   through the card so it stops reading as one. */
 .hosting-card {
   display: flex;
   flex-direction: column;
@@ -3629,8 +3535,8 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* ---- Homepage: the logos run as a strip ---- */
 
-/* The strip is clipped here rather than at the section edge, so it runs to the
-   same 1160px as .stats-grid above it instead of bleeding to the window. The
+/* The strip is clipped here rather than at the section edge, so it runs to a
+   1160px measure instead of bleeding to the window. The
    modifier keeps that off about.html, where the wrapper holds a static grid
    that should never be clipped. main.js also measures this box to decide how
    many copies of the group it needs. */
