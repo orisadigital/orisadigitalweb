@@ -217,12 +217,15 @@ html::-webkit-scrollbar-thumb:hover {
   white-space: nowrap;
   color: rgba(50, 56, 58, 0.66);
   text-decoration: none;
-  transition: color 0.18s ease, background-color 0.18s ease;
+  /* colour only — the hover plate this used to carry is gone. The radius stays
+     for the focus ring, which follows the box's corners. */
+  transition: color 0.18s ease;
 }
 
+/* Colour alone. The link sits at 66% ink and comes to full strength, which is
+   enough of a state change without a plate appearing behind it. */
 .nav-link:hover {
   color: var(--ink);
-  background: rgba(50, 56, 58, 0.055);
 }
 
 .nav-link.is-current {
