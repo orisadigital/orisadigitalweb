@@ -298,150 +298,6 @@
   if (el) el.textContent = String(new Date().getFullYear());
 })();
 
-/* Contact form — hands the enquiry to WhatsApp.
-
-   There is no server behind this page, so nothing is posted anywhere. The send
-   button is a plain link to WhatsApp and this keeps its href written with
-   whatever is in the fields, so pressing it is an ordinary click on an ordinary
-   link — the same thing the header button is, which is what lets the browser
-   offer to open the installed app rather than falling through to a QR code.
-
-   The visitor sends the message from their own WhatsApp, which puts the enquiry
-   in the same thread as the header button and gives both sides a conversation
-   rather than a one-way form. */
-(() => {
-  "use strict";
-
-  const form = document.querySelector(".contact-form");
-  if (!form) return;
-
-  const button = form.querySelector(".contact-submit");
-  if (!button) return;
-
-  // WhatsApp wants digits only: country code first, no plus, no spaces
-  const number = (form.dataset.whatsapp || "").replace(/\D/g, "");
-  if (!number) return;
-
-  const status = form.querySelector(".form-status");
-
-  /* Two addresses for the same conversation, because no single one reaches
-     every WhatsApp.
-
-     On a phone wa.me opens the app with the message written. On a desktop it
-     cannot: it lands on a splash page whose "Open app" button points at
-     web.whatsapp.com, so an installed desktop app is never offered the message
-     and anyone not already paired gets a QR code instead. The whatsapp://
-     protocol is the only address the desktop app answers to directly.
-
-     Which leaves desktop visitors without the app, for whom the protocol does
-     nothing at all — so the status line hands them the web address the moment
-     they click, rather than leaving them waiting on a window that is not
-     coming. */
-  const onPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-
-  const webUrl = (text) =>
-    `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
-
-  const appUrl = (text) =>
-    `whatsapp://send?phone=${number}&text=${encodeURIComponent(text)}`;
-
-  const value = (name) => {
-    const field = form.elements[name];
-    return field ? field.value.trim() : "";
-  };
-
-  const compose = () => {
-    /* The label, not the value: "Free Website Prototype" reads better in a chat
-       than "free-prototype". The placeholder carries no value, which is what
-       keeps "Looking for: Choose one" out of an enquiry nobody filled in. */
-    const select = form.elements.service;
-    const chosen = select && select.value && select.options[select.selectedIndex];
-    const need = chosen ? chosen.text : "";
-
-    /* Falsy entries drop out, so an omitted phone leaves no empty line behind —
-       and since this runs on every keystroke, a half-filled form produces a
-       half-written message rather than a row of empty labels. */
-    const details = [
-      value("name") && `Name: ${value("name")}`,
-      value("email") && `Email: ${value("email")}`,
-      value("phone") && `Phone: ${value("phone")}`,
-      need && `Looking for: ${need}`,
-    ].filter(Boolean);
-
-    // joined in blocks so the greeting, the details and the brief stay apart
-    return [
-      "Hi Orisa Digital — enquiry from your website.",
-      details.join("\n"),
-      value("message"),
-    ]
-      .filter(Boolean)
-      .join("\n\n");
-  };
-
-  const rewrite = () => {
-    const text = compose();
-
-    if (onPhone) {
-      button.href = webUrl(text);
-      return;
-    }
-
-    /* A protocol link hands off to the app without navigating, so a new tab
-       would only be opened to sit there empty. */
-    button.href = appUrl(text);
-    button.removeAttribute("target");
-    button.removeAttribute("rel");
-  };
-
-  /* Kept current as they type rather than written on the way out, so the href
-     is already right at the moment of the click and nothing has to run in
-     between. The markup ships a bare wa.me number as the href, so the link
-     still reaches the same conversation if this never runs at all. */
-  form.addEventListener("input", rewrite);
-  form.addEventListener("change", rewrite);
-  rewrite();
-
-  button.addEventListener("click", (event) => {
-    /* Without a submit button the browser no longer checks required fields, so
-       ask it to, and stay put if anything is missing. */
-    if (!form.reportValidity()) {
-      event.preventDefault();
-      return;
-    }
-
-    rewrite();
-
-    // the click itself does the navigating — everything below is just reporting
-    if (status) {
-      status.dataset.state = "info";
-      status.textContent = "";
-
-      // the handoff only drafts the message — saying so avoids a silent drop
-      status.append(
-        "WhatsApp is opening with your message ready. Press send there and it reaches us. "
-      );
-
-      /* Always the web address, never the protocol one the button may have just
-         tried: this line exists for the people that protocol did nothing for. */
-      const retry = document.createElement("a");
-      retry.href = webUrl(compose());
-      retry.target = "_blank";
-      retry.rel = "noopener noreferrer";
-      retry.textContent = onPhone
-        ? "Not opening? Tap here."
-        : "No WhatsApp app? Open WhatsApp Web instead.";
-      status.append(retry);
-    }
-  });
-
-  /* Enter inside a field submitted the form back when a submit button existed.
-     Nothing hears that now, so route it to the link. */
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    button.click();
-  });
-})();
-
 /* Counting sliders — a drawn face over a native range input.
 
    The input stays the control: it holds the value, answers the arrow keys and
@@ -789,7 +645,6 @@
   const output = document.querySelector("[data-estimate-total]");
   if (!root || !list || !output) return;
 
-  const send = document.querySelector("[data-estimate-send]");
   const download = document.querySelector("[data-estimate-pdf]");
 
   // what the panel is showing right now, for whatever is asked to write it out
@@ -975,39 +830,13 @@
     return found;
   };
 
-  /* The estimate as a message, on the button that sends it.
-
-     Written into the href rather than built on click, so it is an ordinary link
-     — long-pressable, copyable, openable in a new tab — and so the visitor can
-     see where it goes before pressing it. Nothing is sent from here: WhatsApp
-     opens with the message filled in and they press send themselves.
-
-     wa.me carries text and nothing else. It cannot take an attachment, which is
-     why the quote is written out in full here rather than linked to as a file. */
-  const WHATSAPP = "60139975304";
-
-  const quote = (found, total) => {
-    current = { found, total, message: "" };
-
-    /* One line each, price on the same line. No attempt to align the figures
-       into a column: WhatsApp sets messages in a proportional font, so padding
-       with spaces or dots lines nothing up and falls apart on the long labels. */
-    const body = found.length
-      ? found.map((line) => `• ${line.label} — ${money(line.price)}`).join("\n")
-      : "• Nothing selected yet";
-
-    const text =
-      "Hello Orisa Digital, here is my estimate from your pricing page.\n\n" +
-      "*MY ESTIMATE*\n" +
-      body +
-      `\n\n*Estimated total: ${money(total)}*\n\n` +
-      "Please confirm this and send me a proper quote.";
-
-    current.message = text;
-    if (send) send.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  /* What the panel is showing, kept for whoever writes it out — the PDF is the
+     only thing that asks for it now. */
+  const record = (found, total) => {
+    current = { found, total };
   };
 
-  /* The estimate as a file, for anyone who wants a document rather than a chat.
+  /* The estimate as a file.
 
      The library is fetched the first time the button is pressed rather than
      with the page. Most visitors never ask for a PDF, and 350KB of script to
@@ -1155,20 +984,16 @@
        particular contact: whoever ends up holding this needs to know where it
        is meant to go. */
     y += 10;
-    doc.text("Orisa Digital  ·  WhatsApp +60 13-997 5304  ·  orisadigital.com", LEFT, y);
+    doc.text("Orisa Digital  ·  hello@orisadigital.com  ·  orisadigital.com", LEFT, y);
 
     return doc;
   };
 
   const FILENAME = "orisa-digital-estimate.pdf";
 
-  /* Deliberately NOT routed through navigator.share, which on a phone could
-     hand the PDF straight to WhatsApp as an attachment. A share sheet cannot be
-     pointed at a particular contact: the visitor would choose the recipient,
-     and an estimate sent to the wrong chat — or to nobody, by someone who does
-     not have the number saved — is worse than one that arrives as text at the
-     right number every time. The button below goes to the number, and the PDF
-     is a separate download for whoever wants the document. */
+  /* Deliberately NOT routed through navigator.share: the estimate is a
+     download the visitor keeps and sends on themselves, so a share sheet would
+     only put a recipient choice in front of them that the page cannot make. */
   const busy = (button, text) => {
     const label = button.querySelector(".cta-button-label");
     const said = label ? label.textContent : "";
@@ -1249,7 +1074,7 @@
       list.innerHTML =
         '<li class="calc-estimate-empty">Answer the questions and the figures appear here.</li>';
       output.textContent = "—";
-      quote([], 0);
+      record([], 0);
       return;
     }
 
@@ -1272,7 +1097,7 @@
     // the sum of the lines above, exactly — no rounding, nothing added
     output.textContent = money(total);
 
-    quote(found, total);
+    record(found, total);
   };
 
   // input for the counts, change for everything that is ticked
@@ -1330,73 +1155,6 @@
     keyboard: false,
     alt: "Kuching, Sarawak",
   }).addTo(map);
-})();
-
-/* Enquiry tracking — reports WhatsApp handoffs to Analytics.
-
-   Every enquiry leaves the site the same way: a link to WhatsApp. Without this
-   Analytics counts the visit and stops there, so a page that brings people in
-   and a page that turns them into conversations look identical in the reports.
-
-   Delegated from the document rather than bound per link. The contact form
-   rewrites its button's href on every keystroke, the chat menu is built from
-   markup that may move, and a listener attached at load would have to be kept
-   in step with all of it; one listener on the document reads whatever href the
-   link happens to carry at the moment it is clicked.
-
-   Nothing here is load-bearing. If gtag is missing — blocked by an extension,
-   or Analytics simply failed — send() returns and the click proceeds untouched. */
-(() => {
-  "use strict";
-
-  const send = (name, params) => {
-    if (typeof window.gtag !== "function") return;
-    window.gtag("event", name, params);
-  };
-
-  const placeOf = (el) => {
-    if (el.closest(".contact-form")) return "contact_form";
-    if (el.closest(".site-header")) return "header";
-    if (el.closest(".drawer")) return "menu_drawer";
-    if (el.closest(".site-footer")) return "footer";
-    if (el.closest(".cta")) return "cta";
-    return "page";
-  };
-
-  /* Three addresses reach the same conversation: wa.me, the whatsapp:// the
-     desktop app answers to, and web.whatsapp.com. Matching only the first would
-     miss every desktop enquiry, which is the half most worth counting. */
-  const isWhatsApp = (href) =>
-    /^https?:\/\/(wa\.me|web\.whatsapp\.com)\b/i.test(href) ||
-    /^whatsapp:/i.test(href);
-
-  document.addEventListener(
-    "click",
-    (event) => {
-      /* The submit button blocks its own click when a required field is empty.
-         That click still bubbles to here, so without this an unfinished form
-         would report a lead it never sent. */
-      if (event.defaultPrevented) return;
-
-      const link = event.target.closest("a[href]");
-      if (!link) return;
-
-      const href = link.getAttribute("href") || "";
-      if (!isWhatsApp(href)) return;
-
-      const place = placeOf(link);
-
-      /* A form click carries a written brief — name, contact details and what
-         they are after — while the others open an empty chat. Only the first is
-         a lead; mark generate_lead as the key event in Analytics, not the click. */
-      if (place === "contact_form") {
-        send("generate_lead", { method: "whatsapp", link_location: place });
-      }
-
-      send("whatsapp_click", { link_location: place });
-    },
-    { passive: true }
-  );
 })();
 
 /* Video bands — hold the file back until the band is nearly on screen.
