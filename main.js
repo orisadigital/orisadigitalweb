@@ -1106,57 +1106,6 @@
   paint();
 })();
 
-/* Contact map — Leaflet on a dark basemap, centred on Kuching. */
-(() => {
-  "use strict";
-
-  const el = document.getElementById("map");
-  if (!el || !window.L) return;
-
-  const KUCHING = [1.5533, 110.3592];
-
-  const map = L.map(el, {
-    center: KUCHING,
-    zoom: 13,
-    // Default controls sit top-left, which is exactly where the floating
-    // header is; the zoom buttons are re-added bottom-right below.
-    zoomControl: false,
-    // A full-height map that swallowed the wheel would trap the page scroll,
-    // so zoom is by button, pinch, or double-click.
-    scrollWheelZoom: false,
-  });
-
-  // Voyager rather than the flat Positron light style: it keeps colour in the
-  // water, parks, and road hierarchy, so Kuching reads as a place at a glance.
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-    {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
-        ' &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    }
-  ).addTo(map);
-
-  // drops the "Leaflet" prefix; the tile and data credits stay, as they must
-  map.attributionControl.setPrefix(false);
-
-  L.control.zoom({ position: "bottomright" }).addTo(map);
-
-  // A styled div rather than Leaflet's default marker: no image to fetch, and
-  // it can carry the same pulsing green the header badge uses.
-  L.marker(KUCHING, {
-    icon: L.divIcon({
-      className: "map-pin",
-      html: "<span></span>",
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
-    }),
-    keyboard: false,
-    alt: "Kuching, Sarawak",
-  }).addTo(map);
-})();
-
 /* Video bands — hold the file back until the band is nearly on screen.
 
    These sit well below the fold, and an autoplaying <video> fetches its whole

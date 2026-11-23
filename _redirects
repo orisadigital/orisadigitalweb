@@ -10,3 +10,8 @@
 # 301 rather than 302 on both: the moves are permanent.
 /mobile-app  /web-design  301
 /web-app     /web-design  301
+
+# /contact was an indexed URL with an enquiry form on it. The form has gone and
+# so has the page; /start-free is the nearest thing that still exists — it is
+# the same ask, which is what keeps this from reading as a soft 404.
+/contact     /start-free  301
