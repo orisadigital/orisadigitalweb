@@ -2626,9 +2626,12 @@ html::-webkit-scrollbar-thumb:hover {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  /* Tighter than the other grids on the page, so the longest role keeps its
-     pill on one line down to the three-across breakpoint. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Capped rather than left to fill the row: two cards across the full 1160px
+     would blow the portraits up to half the page, so the grid keeps the card
+     width the three-across layout had and stays on the section's left edge. */
+  max-width: 764px;
+  /* Tighter than the other grids on the page — the pair reads as one block. */
   gap: clamp(16px, 1.8vw, 28px);
   margin: clamp(32px, 4.5vw, 56px) 0 0;
   padding: 0;
@@ -2685,13 +2688,9 @@ html::-webkit-scrollbar-thumb:hover {
   box-decoration-break: clone;
 }
 
-/* Three across holds down to about 900px. Below that they pair off, and below
-   560px the photo is the thing worth the width, so each card takes the row. */
+/* The pair holds all the way down to 560px, where the photo is the thing
+   worth the width, so each card takes the row. */
 @media (max-width: 900px) {
-  .team-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .team-role {
     font-size: 12px;
   }
