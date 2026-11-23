@@ -5112,6 +5112,10 @@ html::-webkit-scrollbar-thumb:hover {
    keeps this button standing at the same 68px as the ones beside it. */
 .cta-button--plain {
   padding-right: 30px;
+  /* An address is written in lower case and reads wrong shouted — the rest of
+     the button language keeps its caps. */
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .cta-button--plain .cta-button-label {
