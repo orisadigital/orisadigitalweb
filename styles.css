@@ -5107,6 +5107,19 @@ html::-webkit-scrollbar-thumb:hover {
   transform: translateX(3px);
 }
 
+/* No arrow tile. The right padding was an inset for that tile, so it goes back
+   to matching the left, and the label carries the tile's height instead — which
+   keeps this button standing at the same 68px as the ones beside it. */
+.cta-button--plain {
+  padding-right: 30px;
+}
+
+.cta-button--plain .cta-button-label {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cta-button-arrow svg {
     transition: none;
