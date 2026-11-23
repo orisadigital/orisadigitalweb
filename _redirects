@@ -15,3 +15,11 @@
 # so has the page; /start-free is the nearest thing that still exists — it is
 # the same ask, which is what keeps this from reading as a soft 404.
 /contact     /start-free  301
+
+# The blog and its one article were dropped in August, but unlike the service
+# URLs above they were left to 404 — both were in the sitemap and had been
+# indexed, so the 404s threw away whatever standing they had carried. The
+# article argued a website against a Facebook page, which is the web design
+# case, so it goes there; the index has no equivalent and goes home.
+/blog/website-vs-facebook-page  /web-design  301
+/blog                           /            301
